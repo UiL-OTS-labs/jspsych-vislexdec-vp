@@ -205,7 +205,39 @@ var stimuli = [
 
 
 ```
+Now, with that, we are already speaking some real javascript!
 
+###$ Arrays in javascript
+```
+//This defines an array named myArray
+var myArray = ['item', 'another item']; 
+```
+```
+//This is an array, too
+var myArrayToo = [
+    'item two', 
+    'another item two, too'
+    ];
+ ```
+ Note this.
+ ```
+ //This is an array, too
+ var myArrayToo = ['item two', 'another item two, too'];
+ ```
+ 
+ or 
+ ```
+ //This is an array, too
+var myArrayToo = [
+    "item two", 
+    'another item two, too'
+    ];
+```
+# Timelines and trials and designs
+
+There are many randomisation batteries included in jsPsych, if you have not read about timelines, you have to look for them using the link, they are important.
+
+(...todo)
 
 Typical folder structure:
 
@@ -219,7 +251,15 @@ visdeclex/
 
 ```
 
+# Plugins and it's format
 
+# Order
+
+# Data (current)
+
+# Github, bugs, feature request and contributing?
+  
+# License
 
 
 
