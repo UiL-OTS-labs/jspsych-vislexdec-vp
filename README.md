@@ -134,37 +134,34 @@ id | condition | string
 
 id | condition | string 
 ---|-----------|------- 
-1  | "gram"    | "I would like to have a real cool enter
-   |           |  right here but it's so difficult to 
-   |           |  have my cake and eat it."
-2  | "ungram"  | "I have would a like enter cool
-   |           |  so difficult but to no 
-   |           |  luck"
+1  | "gram"    | "I would like to have a real cool <linebreak under LibreOffice fiddly field layout> right here but it's so difficult to have my cake and eat it."
+2  | "ungram"  | "I have would a like enter <linebreak under Microsoft Office excel windows fiddly field layout> cool so difficult but to no luck"
    
 This last file could, exported from your tool of choice end up looking like:
 
 ```
 id,condition,string 
 1,"gram","I would like to have a real cool enter\nright here but it's so difficult to\n have my cake and eat it."
-2,"ungram","I have would a like enter cool\n so difficult but to no\nluck"
+2,"ungram","I have would a like enter cool\n so difficult but to no luck"
 ```
 Or, if you followed the old ZEP tutorial well and chose the ";" as field separator:
 
 ```
 id;condition;string 
 1;"gram";"I would like to have a real cool enter\nright here but it's so difficult to\n have my cake and eat it."
-2;"ungram";"I have would a like enter cool\n so difficult but to no\nluck"
+2;"ungram";"I have would a like enter cool\n so difficult but to no luck"
 ``` 
+
 Good luck figuring out why the program crashes at some trial where you made one quoting error in the excel sheet your partner exported, but is not at your disposal, especially if that file consists of a latin square with 200 multiline stimuli that is randomised by jsPsych in it's execution context.   
 
 In short:
 
 - Layouting, dealing with formatting, line breaks etc is always going to be a drag. 
 - But with swicthing between excel, plain text, exports etc, CSV, it can be terribly confusing.
-- But, if you keep it simple and are aware of things, you can use it. 
+- But, if you keep it simple and are aware of things, you can use converters from CSV to formats that we think are better. 
 (Link to converter code MJA)
 
-# JSON version:
+# JSON version
 ```
 [
     {
@@ -186,7 +183,7 @@ In short:
 ```
 
 # Current implementation: stimuli.js (javascript object)
-
+In the first templates we will deliver, we design out stimulus configurations in the javascript key-value pair style. It's not that difficult and has the benefits of being available without using extra code to implement the availablity ot test items in context of an experiment. 
 ```
 var stimuli = [
     {
@@ -205,9 +202,9 @@ var stimuli = [
         string: "pjrt"
     }
 ]
-```
 
-TODO, now let's just commit some context...
+
+```
 
 
 Typical folder structure:
