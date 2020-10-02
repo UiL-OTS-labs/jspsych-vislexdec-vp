@@ -1,7 +1,30 @@
 # jspsych-vislexdec-vp
 Template [visual lexical decision](https://en.wikipedia.org/wiki/Lexical_decision_task) experiment with visual prime
 
-# Context and status
+# Context
+In this experiment participant need to make a swift decision whether a presented
+set of letters - the test stimulus - form a word or a non exitant word (nonword).
+The participant first see a fixation cross, briefly a prime is presented followed
+by the test stimulus. The particpants are instructed to respond as quickly as
+possible to indicate wheter the test stimulus is a word or not.
+
+The reaction time and correctness of the response are recorded.
+
+# Getting started
+
+You need this github repository and to download the jsPsych library version 6.1
+complete the following steps. When downloading and extracting folders please
+keep in mind that once working on the server, filenames are case sensitive and
+"jsPsych.js" and "jspsyc.js" are two distinct filenames. It might work on your
+machine, but it might not work on the server hosting your experiment.
+
+1. Download this repository by clicking the green code button above and Download zip.
+2. Unzip the jspsych-vislexdec-vp.zip at a location of your choosing.
+3. Download jsPsych-6.1.0 (-6.1.0 is the version) from the jsPsych releases website
+   https://github.com/jspsych/jsPsych/releases. You might need to scroll down a little.
+4. Extract the jsPsych folder into the jspsych-vislexdec-vp folder you extracted earlier.
+5. Inside the folder is a file called vislexdec-vp, double click it in order to open it
+   in a browser.
 
 # Template paradigm documentation (concept)
 Lab support and teachers are in the process of creating template/boilerplate experiments for you to easily set up certain types of experiments. The idea behind this, is that within certain boundaries, it should be easy to get an experiment running without (too much) programming skills, by just editing the default stimulus files. Traditionally, we've used ZEP {link} all around our labs for time critical experimentation and there are many tempates to start with. ZEP was designed in house and has been designed to accurately sync sound, visuals/text and/or other hardware (eye tracking, EEG, EMG, etc) in a 'traditional' research lab setup. By that we mean:
