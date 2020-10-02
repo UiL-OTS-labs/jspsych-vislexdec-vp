@@ -2,13 +2,13 @@
 Template [visual lexical decision](https://en.wikipedia.org/wiki/Lexical_decision_task) experiment with visual prime
 
 # Context
-In this experiment participant need to make a swift decision whether a presented
+In this experiment participants need to make a swift decision whether a presented
 set of letters - the test stimulus - form a word or a non exitant word (nonword).
 The participant first see a fixation cross, briefly a prime is presented followed
 by the test stimulus. The particpants are instructed to respond as quickly as
 possible to indicate wheter the test stimulus is a word or not.
 
-The reaction time and correctness of the response are recorded.
+The reaction time, response and correctness of the response are recorded.
 
 # Getting started
 
