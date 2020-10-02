@@ -8,7 +8,7 @@ const practice_items = [
     {id: 2, item_type: REAL_WORD, word: "hot"}
 ];
 
-const test_items_1 = [
+const list_1 = [
     {id: 1, item_type: NON_WORD, word: "slirque"},
     {id: 2, item_type: NON_WORD, word: "crawse"},
     {id: 3, item_type: NON_WORD, word: "twurp"},
@@ -21,10 +21,10 @@ const test_items_1 = [
 ];
 
 const test_items = [
-    test_items_1
+    {group_name: "list_1", table: list_1}
 ];
 
 function pick_random_group() {
-    console.log("pick_random_group, make it random")
-    return test_items[0];
+    let shufarray = [0];
+    return test_items[jsPsych.randomization.repeat(shufarray, 1)];
 }
