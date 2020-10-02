@@ -53,5 +53,7 @@ function pick_random_group() {
         return empty_array;
     }
     let num_groups = test_items.length;
-    return test_items[jsPsych.randomization.repeat(range(num_groups), 1)];
+    var shuffled_range = jsPsych.randomization.repeat(range(num_groups), 1)
+    var retgroup = test_items[shuffled_range[0]];
+    return retgroup
 }
