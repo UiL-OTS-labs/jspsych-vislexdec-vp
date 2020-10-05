@@ -4,6 +4,7 @@
     <title>My experiment</title>
     <script src="jsPsych-6.1.0/jspsych.js"></script>
     <script src="jsPsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jsPsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
     <link href="jsPsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"/>
 
     <!-- Uil OTS scripts -->
@@ -16,6 +17,38 @@
     // remove logs when the stimuli variable is clear
     console.log("group " + stimuli.group_name);
     console.log("stim_table = " + stimuli.table);
-  </script>
+    
+    // start user I/O button activation screen
+    var start_screen = {
+      type: 'html-button-response',
+      stimulus: "click me to start anything", 
+      choices: ['Okay'],
+      response_ends_trial: true
+    };
+
+    // end screen
+    var end_screen = {
+      type: 'html-keyboard-response',
+      stimulus: "Thanks, you're done. Press spacebar to see data", 
+      choices: ['space']
+    };
+
+    //defining the timeline 
+    var myTimeline = []
+        
+    myTimeline.push(start_screen); 
+    myTimeline.push(end_screen); 
+
+    // init
+    jsPsych.init({
+      timeline: myTimeline,
+      show_preload_progress_bar: false,
+      use_webaudio: false,
+      on_finish: function() {
+        jsPsych.data.displayData();
+      }
+    })
+
+    </script>
 </html>
 
