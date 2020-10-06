@@ -9,23 +9,19 @@
 
     <!-- Uil OTS scripts -->
     <script src="stimuli.js"></script>
-    <script src="test_page.js"></script>
+    <script src="globals.js"></script>
+<!--     <script src="test_page.js"></script> -->
 
   </head>
   <body></body>
   <script>
     var stimuli = pick_random_group();
 
-    // generic 'page' 
-    var fixPage = presentFixation;
-
     // remove logs when the stimuli variable is clear
     console.log("group " + stimuli.group_name);
     console.log("stim_table = " + stimuli.table);
-
-    // remove 
     
-    // start user I/O button activation screen
+    // "test page flows" 
     var start_screen = {
       type: 'html-button-response',
       stimulus: "click me to start anything", 
@@ -33,20 +29,59 @@
       response_ends_trial: true
     };
 
-    // end screen
     var end_screen = {
       type: 'html-keyboard-response',
       stimulus: "Thanks, you're done. Press spacebar to see data", 
       choices: ['space']
     };
 
+    var presentFixation = {
+      type: 'html-keyboard-response',
+      stimulus: '<span style="font-size:40px;">+</span>',
+      choices: jsPsych.NO_KEYS,
+      trial_duration: FIXCROSS_DURATION
+    };
+
+    var presentWord = {
+      type: 'html-keyboard-response',
+      stimulus: function(){ return "<p class='stimulus'>"+jsPsych.timelineVariable('word', true)+"</p>"; },
+      choices: ['z','m'],
+      trial_duration: WORD_DURATION,
+      post_trial_gap: 0,
+      prompt: "<h6> real word [Z] <<<<--     -->>>>> [M] not a word</h6>",
+      data: {
+            word_type: jsPsych.timelineVariable('item_type'),
+          },
+      on_finish: function(data){
+        if(data.word_type == 'RELATED'){
+          var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
+        } else if (data.word_type == 'UNRELATED'){
+          var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
+        } else {
+          var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('m');
+        }
+        data.correct = correct;
+      }
+    };
+
+    var trialProcedure = {
+      timeline:[presentFixation, presentWord],
+      timeline_variables: stimuli.table,
+      randomize_order:false 
+    };
+
     //defining the timeline 
     var myTimeline = []
-        
+
+
     myTimeline.push(start_screen);
     
     // then we call the generic fixation page 
-    myTimeline.push(fixPage); 
+    //myTimeline.push(fixScreen)
+
+
+    myTimeline.push(trialProcedure);
+
     
     myTimeline.push(end_screen); 
 
