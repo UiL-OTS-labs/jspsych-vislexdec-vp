@@ -102,9 +102,19 @@
         presentFixation, 
         presentPrePrime, 
         presentWord, 
-        presentFeedback
         ],
       timeline_variables: stimuli.table,
+      randomize_order:true 
+    };
+    
+    var practiceProcedure = {
+      timeline:[
+        presentFixation, 
+        presentPrePrime, 
+        presentWord, 
+        presentFeedback
+        ],
+      timeline_variables: practice_items,
       randomize_order:false 
     };
 
@@ -118,7 +128,7 @@
     //myTimeline.push(fixScreen)
 
 
-    myTimeline.push(trialProcedure);
+    myTimeline.push(practiceProcedure);
 
     
     myTimeline.push(end_screen); 
