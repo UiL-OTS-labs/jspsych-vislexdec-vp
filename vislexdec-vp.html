@@ -48,7 +48,7 @@
       choices: ['z','m'],
       trial_duration: WORD_DURATION,
       post_trial_gap: 0,
-      prompt: "<h6> real word [Z] <<<<--     -->>>>> [M] not a word</h6>",
+      prompt: "",
       data: {
             word_type: jsPsych.timelineVariable('item_type'),
           },
@@ -63,9 +63,25 @@
         data.correct = correct;
       }
     };
+    
+    var presentPrePrime = {
+      type: 'html-keyboard-response',
+      stimulus: function(){ 
+        return "<p class='stimulus'>" + 
+        jsPsych.timelineVariable('prime', true)+"</p>"; 
+        },
+      choices: ['z','m'],
+      trial_duration: PRIME_DURATION,
+      post_trial_gap: 0,
+      prompt: "",
+      data: {
+        word_type: jsPsych.timelineVariable('item_type'),
+        prime: jsPsych.timelineVariable('prime')
+        }
+    };
 
     var trialProcedure = {
-      timeline:[presentFixation, presentWord],
+      timeline:[presentFixation, presentPrePrime, presentWord],
       timeline_variables: stimuli.table,
       randomize_order:false 
     };
