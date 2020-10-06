@@ -79,9 +79,31 @@
         prime: jsPsych.timelineVariable('prime')
         }
     };
+    
+    var presentFeedback = {
+      type: 'html-keyboard-response',
+      stimulus: function() {
+        var feedback_text = 
+          '<span style="color:red;font-size:30px;">Incorrect</span>';
+        var last_resp_acc = 
+          jsPsych.data.getLastTrialData().values()[0].correct;
+        if (last_resp_acc == true) {
+          feedback_text = 
+          '<span style="color:green;font-size:30px;">Correct!</span>'
+        }
+      return feedback_text;
+      },
+      choices: jsPsych.NO_KEYS,
+      trial_duration: FEEDBACK_DURATION
+      };
 
     var trialProcedure = {
-      timeline:[presentFixation, presentPrePrime, presentWord],
+      timeline:[
+        presentFixation, 
+        presentPrePrime, 
+        presentWord, 
+        presentFeedback
+        ],
       timeline_variables: stimuli.table,
       randomize_order:false 
     };
