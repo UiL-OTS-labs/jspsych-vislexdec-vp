@@ -10,8 +10,7 @@
     <!-- Uil OTS scripts -->
     <script src="stimuli.js"></script>
     <script src="globals.js"></script>
-<!--     <script src="test_page.js"></script> -->
-
+    <!-- Uil OTS scripts -->
   </head>
   <body></body>
   <script>
@@ -26,6 +25,13 @@
       type: 'html-button-response',
       stimulus: "click me to start anything", 
       choices: ['Okay'],
+      response_ends_trial: true
+    };
+    
+    var well_done_screen = {
+      type: 'html-button-response',
+      stimulus: "Well done, we guess, are you ready for the real deal?", 
+      choices: ['Sure'],
       response_ends_trial: true
     };
 
@@ -44,21 +50,25 @@
 
     var presentWord = {
       type: 'html-keyboard-response',
-      stimulus: function(){ return "<p class='stimulus'>"+jsPsych.timelineVariable('word', true)+"</p>"; },
+      stimulus: function(){ return "<p class='stimulus'>" + 
+        jsPsych.timelineVariable('word', true)+"</p>"; },
       choices: ['z','m'],
       trial_duration: WORD_DURATION,
-      post_trial_gap: 0,
+      post_trial_gap: WORD_GAP_DURATION,
       prompt: "",
       data: {
             word_type: jsPsych.timelineVariable('item_type'),
           },
       on_finish: function(data){
         if(data.word_type == 'RELATED'){
-          var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
+          var correct = data.key_press == 
+            jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
         } else if (data.word_type == 'UNRELATED'){
-          var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
+          var correct = data.key_press == 
+            jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
         } else {
-          var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('m');
+          var correct = data.key_press == 
+            jsPsych.pluginAPI.convertKeyCharacterToKeyCode('m');
         }
         data.correct = correct;
       }
@@ -72,7 +82,7 @@
         },
       choices: ['z','m'],
       trial_duration: PRIME_DURATION,
-      post_trial_gap: 0,
+      post_trial_gap: PRIME_GAP_DURATION,
       prompt: "",
       data: {
         word_type: jsPsych.timelineVariable('item_type'),
@@ -121,16 +131,11 @@
     //defining the timeline 
     var myTimeline = []
 
-
+    // best practice, usually, but maybe not in this case
     myTimeline.push(start_screen);
-    
-    // then we call the generic fixation page 
-    //myTimeline.push(fixScreen)
-
-
     myTimeline.push(practiceProcedure);
-
-    
+    myTimeline.push(well_done_screen);
+    myTimeline.push(trialProcedure);
     myTimeline.push(end_screen); 
 
     // init
