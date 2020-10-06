@@ -10,7 +10,7 @@ const groups = [
     // "group3"
 ];
 
-const practise_items = [
+const practice_items = [
     {id: 1, item_type: NON_WORD, word: "palve", prime: "onion"},
     {id: 2, item_type: UNRELATED, word: "hot", prime: "stapler"}
 ];
@@ -38,12 +38,12 @@ const test_items = [
     //{group_name: groups[1], table: list_group2}
 ];
 
-// Get the list of practise items
+// Get the list of practice items
 //
 // returns json object with a group and a table, the group will always indicate
-// "practise" since it are the practise items
-function get_practise_items() {
-    return {group_name: "practise", table: practise_items};
+// "practice" since it are the practice items
+function get_practice_items() {
+    return {group_name: "practice", table: practice_items};
 }
 
 // this function will pick a random group from the test_items array.
