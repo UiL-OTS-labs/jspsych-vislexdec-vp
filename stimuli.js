@@ -38,18 +38,27 @@ const test_items = [
     //{group_name: groups[1], table: list_group2}
 ];
 
-// Get the list of practice items
-//
-// returns json object with a group and a table, the group will always indicate
-// "practice" since it are the practice items
+
+/**
+ * Get the list of practice items
+ *
+ * Returns an object with a group and a table, the group will always indicate
+ * "practice" since it are the practice items
+ *
+ * @returns {object} object with group and table fields
+ */
 function get_practice_items() {
     return {group_name: "practice", table: practice_items};
 }
 
-// this function will pick a random group from the test_items array.
-//
-// returns json object with a group and a table, the group will always indicate
-// wich list has been chosen for the participant.
+/**
+ * This function will pick a random group from the test_items array.
+ *
+ * Returns an object with a group and a table, the group will always indicate
+ * which list has been chosen for the participant.
+ *
+ * @returns {object} object with group and table fields
+ */
 function pick_random_group() {
     let range = function (n) {
         let empty_array = []
