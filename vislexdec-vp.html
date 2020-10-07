@@ -10,7 +10,7 @@
     <!-- Uil OTS scripts -->
     <script src="stimuli.js"></script>
     <script src="globals.js"></script>
-    <!-- Uil OTS scripts -->
+    <script src="instructions.js"></script>
     <style>
     .stimulus { font-size: 30px; }
     </style>
@@ -26,8 +26,8 @@
     // "test page flows" 
     var start_screen = {
       type: 'html-button-response',
-      stimulus: "click me to start anything", 
-      choices: ['Okay'],
+      stimulus: PRE_PRACTICE_INSTRUCTION, 
+      choices: [OK_BUTTON_TEXT],
       response_ends_trial: true
     };
     

@@ -10,4 +10,5 @@ const PRIME_GAP_DURATION = 0;
 const WORD_GAP_DURATION = 0;
 
 const TRIAL_GAP_DURATION = 0;
- 
+
+const OK_BUTTON_TEXT = "OK";
