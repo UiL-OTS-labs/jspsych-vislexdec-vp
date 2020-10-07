@@ -19,6 +19,16 @@ const PRE_PRACTICE_INSTRUCTION =
     "Add instructions about which keys to press here."  +
     "</p>"                                              +
     "<p></p>"                                           +
-    "<p>Click me to start the practice phase.</p>"
+    "<p>Click below to start the practice phase.</p>"
     ;
 
+// this const could also be PRE_TEST_INSTRUCTION
+const POST_PRACTICE_INSTRUCTION =
+    "<p>Dear Participant,</p>"                          +
+    "<p></p>"                                           + // empty line.
+    "<p>"                                               +
+    " Add some feedback, or whatever seems fit here."   +
+    "</p>"                                              +
+    "<p></p>"                                           +
+    "<p>Click below to start the test phase.</p>"
+    ;
