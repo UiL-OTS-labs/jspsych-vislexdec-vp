@@ -68,7 +68,7 @@ Not all of our education staff and lab staff have a firm background in web devel
 In the case of web server setup, it is as good idea to initialise jsPysch with ```use_webaudio = true```, in case you use audio stimuli. This is typically faster than when false.
 
 ## Preload media, like images, video, audio
-In general, since timing is important, please make sure to [preload all media files](#https://www.jspsych.org/overview/media-preloading/).
+In general, since timing is important, please make sure to [pre-load all media files](https://www.jspsych.org/overview/media-preloading/).
 
 ## Always start an experiment with a html-button-response interaction part
 Browsers will often disallow auto-playing sound/video if there is no user activity related to a _mouse click_. It would be a shame to start of the experiment with errors of this type. An _instruction_ (plugin) with a mouse button response (or a multi-page instuction) will also fix this poitential error.
@@ -169,7 +169,7 @@ id | condition | string
 
 id | condition | string 
 ---|-----------|------- 
-1  | "gram"    | "I would like to have a real cool <linebreak under LibreOffice fiddly field layout> right here but it's so difficult to have my cake and eat it."
+1  | "gram"    | "I would like to have a real cool enter <linebreak under LibreOffice fiddly field layout> right here but it's so difficult to have my cake and eat it."
 2  | "ungram"  | "I have would a like enter <linebreak under Microsoft Office excel windows fiddly field layout> cool so difficult but to no luck"
    
 This last file could, exported from your tool of choice end up looking like:
@@ -282,15 +282,19 @@ visdeclex/
          /jspsych           <----The jsPsych official library, not our code!)
          /css               <----(Optional) experiment specific styling code 
          /js/               <----(template-specific Javascript code in this folder)
-            /stimuli.js     <---- Usually a file called stimuli.js  
+         /stimuli.js        <---- Usually a file called stimuli.js
 
 ```
 
-# Plugins and it's format
+# Plugins and its template format
 
 # Order
 
 # Data (current)
+
+# Canvas
+
+# Data storage 
 
 # Github, bugs, feature request and contributing?
   
