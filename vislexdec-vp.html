@@ -17,13 +17,25 @@
   </head>
   <body></body>
   <script>
+    //////////////// stimulus.js /////////////////////////////////
+    
     var stimuli = pick_random_group();
 
-    // remove logs when the stimuli variable is clear
-    console.log("group " + stimuli.group_name);
-    console.log("stim_table = " + stimuli.table);
+    // data one would like to add to __all__ trials, according to:
+    // https://www.jspsych.org/overview/data/
+    var subject_id = jsPsych.randomization.randomID(8);
+    var group_assigned = stimuli.group_name;
+
+    // record the condition assignment in the jsPsych data
+    // this adds a property called 'subject' and a property called 'conditio' to every trial
+    jsPsych.data.addProperties(
+    {
+      subject: subject_id,
+      condition: group_assigned
+    });
+
+    //////////////// test page flows ///////////////////////////////
     
-    // "test page flows" 
     var start_screen = {
       type: 'html-button-response',
       stimulus: PRE_PRACTICE_INSTRUCTION, 
@@ -60,8 +72,9 @@
       post_trial_gap: WORD_GAP_DURATION,
       prompt: "",
       data: {
-            word_type: jsPsych.timelineVariable('item_type'),
-          },
+        word_type: jsPsych.timelineVariable('item_type'),
+        word_presented: jsPsych.timelineVariable('word')
+      },
       on_finish: function(data){
         if(data.word_type == 'RELATED'){
           var correct = data.key_press == 
@@ -89,8 +102,8 @@
       prompt: "",
       data: {
         word_type: jsPsych.timelineVariable('item_type'),
-        prime: jsPsych.timelineVariable('prime')
-        }
+        presented_prime: jsPsych.timelineVariable('prime')
+      }
     };
     
     var present_feedback = {
@@ -131,7 +144,8 @@
       randomize_order:true 
     };
 
-    //defining the timeline 
+    //////////////// timeline /////////////////////////////////
+    
     var timeline = []
 
     // best practice to have user I/O first
