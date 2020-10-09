@@ -73,7 +73,8 @@
       prompt: "",
       data: {
         word_type: jsPsych.timelineVariable('item_type'),
-        word_presented: jsPsych.timelineVariable('word')
+        word_presented: jsPsych.timelineVariable('word'),
+        id_presented:jsPsych.timelineVariable('id') 
       },
       on_finish: function(data){
         if(data.word_type == 'RELATED'){
