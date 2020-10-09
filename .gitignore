@@ -34,3 +34,7 @@ Thumbs.db
 # IDE generated files
 .idea
 *.sw[opqrs]
+
+# python/virtualenv .bash_profile
+.bash_profile
+
