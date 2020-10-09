@@ -3,7 +3,7 @@ Template [visual lexical decision](https://en.wikipedia.org/wiki/Lexical_decisio
 
 # Context
 In this experiment participants need to make a swift decision whether a presented
-set of letters - the test stimulus - form a word or a non exitant word (nonword).
+set of letters - the test stimulus - form a word or a non existant word (nonword).
 The participant first see a fixation cross, briefly a prime is presented followed
 by the test stimulus. The particpants are instructed to respond as quickly as
 possible to indicate wheter the test stimulus is a word or not.
@@ -36,7 +36,8 @@ Lab support and teachers are in the process of creating template/boilerplate exp
 This type of training is probably going to be problematic for a while, due to COVID-19. So after a period of research & R&D, we've decided to choose the custom Javascipt library aimed at experimental research using a browser, called jsPsych {link} as our alternative for lab-based work. A couple of remarks here:
 
 - The 'web' can not offer the accuracy and precision needed for certain paradigms.
-- Variations in hardware, software, internet speed, random noise and distraction and many other aspects my cause variations at multiple levels. 
+- Variations in hardware, software, internet speed, random noise and distraction and many other aspects my cause variations at multiple levels.
+- Especially when sounds _and_ images need to be synced, be sure to define means to verify or falsify presentation and test well.
 
 On the other hand:
 - The _principles_ of most paradigms can still be taught and learned
@@ -55,11 +56,22 @@ These two modes will likely confuse those who are not web developers, but the bo
 
 - A locally developed experiment will not guarantee that the same experiment will run in a server setup, or vice versa. 
 
-Many browsers and versions have their own defaults for security like autoplay, allowing sounds, pop-ups, importing images from local sources, etc. It is impossible to know 100% sure if things will work in your browser in advance, so be prepared to deal with some confusion. 
+Many browsers and versions have their own defaults for security like autoplay, allowing sounds, pop-ups, importing images from local sources, etc. It is impossible to know 100% sure if things will work in your browser in advance, so be prepared to deal with some confusion.
 
 In this stage, we will limit things to running the templates __locally__, which has implications for the reliablity and format of the data. Also: locally does NOT mean that it can be run without an internet connection in most cases, due to the nature of loading external scripts.
 
 Not all of our education staff and lab staff have a firm background in web development, so things take time, experimentation and community building to make things better, but well, work in progress...
+
+# Some best practices for jsPsych experiments
+
+## Audio
+In the case of web server setup, it is as good idea to initialise jsPysch with ```use_webaudio = true```, in case you use audio stimuli. This is typically faster than when false.
+
+## Preload media, like images, video, audio
+In general, since timing is important, please make sure to [preload all media files](#https://www.jspsych.org/overview/media-preloading/).
+
+## Always start an experiment with a html-button-response interaction part
+Browsers will often disallow auto-playing sound/video if there is no user activity related to a _mouse click_. It would be a shame to start of the experiment with errors of this type. An _instruction_ (plugin) with a mouse button response (or a multi-page instuction) will also fix this poitential error.
 
 # HTML, CSS, Javascipt, jsPscyh, jsPsych default plugins
 
