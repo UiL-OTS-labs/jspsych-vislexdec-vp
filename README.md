@@ -253,7 +253,7 @@ var stimuli = [
 ```
 Now, with that, we are already speaking some real javascript!
 
-###$ Arrays in javascript
+### Arrays in javascript
 ```
 //This defines an array named myArray
 var myArray = ['item', 'another item']; 
@@ -289,12 +289,12 @@ Typical folder structure:
 
 ```
 visdeclex/
-         /visdeclex.html    <--- Double-click this .html file to start experiment)
-         /jspsych           <----The jsPsych official library, not our code!)
-         /css               <----(Optional) experiment specific styling code 
-         /js/               <----(template-specific Javascript code in this folder)
+         /index.html        <---- Double-click this (index).html file to start)
+         /jspsych           <---- Depends on configuration (web server or local)
+         /css               <---- Optionally, experiment specific styling code. 
          /stimuli.js        <---- Usually a file called stimuli.js
-
+         /globals.js        <---- Often a file called globals.js
+         /generic.js        <---- Usually a file called stimuli.js
 ```
 
 # Plugins and its template format
