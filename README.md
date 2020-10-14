@@ -169,36 +169,13 @@ id | condition | string
 3  | nonwords  | floep quotenot
 
 
-#### But consitency is often better
+#### But consistency is often better...
 id | condition | string 
 ---|-----------|------- 
 1  | nonwords  | "blerg noppa"
 2  | words     | "it's complicated"
 3  | nonwords  | "floep quotenot"
 
-#### Multiline text with quotes and how this
-
-id | condition | string 
----|-----------|------- 
-1  | "gram"    | "I would like to have a real cool enter <linebreak under LibreOffice fiddly field layout> right here but it's so difficult to have my cake and eat it."
-2  | "ungram"  | "I have would a like enter <linebreak under Microsoft Office excel windows fiddly field layout> cool so difficult but to no luck"
-   
-This last file could, exported from your tool of choice end up looking like:
-
-```
-id,condition,string 
-1,"gram","I would like to have a real cool enter\nright here but it's so difficult to\n have my cake and eat it."
-2,"ungram","I have would a like enter cool\n so difficult but to no luck"
-```
-Or, if you followed the old ZEP tutorial well and chose the ";" as field separator:
-
-```
-id;condition;string 
-1;"gram";"I would like to have a real cool enter\nright here but it's so difficult to\n have my cake and eat it."
-2;"ungram";"I have would a like enter cool\n so difficult but to no luck"
-``` 
-
-Good luck figuring out why the program crashes at some trial where you made one quoting error in the excel sheet your partner exported, but is not at your disposal, especially if that file consists of a latin square with 200 multiline stimuli that is randomised by jsPsych in it's execution context.   
 
 In short:
 
@@ -228,7 +205,7 @@ In short:
 ]
 ```
 
-# Current implementation: stimuli.js (javascript object)
+# Current implementation style: stimuli.js (javascript object)
 In the first templates we will deliver, we design out stimulus configurations in the javascript key-value pair style. It's not that difficult and has the benefits of being available without using extra code to implement the availablity ot test items in context of an experiment. 
 ```
 var stimuli = [
@@ -290,24 +267,38 @@ Typical folder structure:
 ```
 visdeclex/
          /index.html        <---- Double-click this (index).html file to start)
-         /jspsych           <---- Depends on configuration (web server or local)
+         /jspsych           <---- It depends on configuration (web server or local)
          /css               <---- Optionally, experiment specific styling code. 
          /stimuli.js        <---- Usually a file called stimuli.js
          /globals.js        <---- Often a file called globals.js
          /generic.js        <---- Usually a file called stimuli.js
 ```
+# Script imports
+Configuring the top script imports in index.html is important.
 
 # Plugins and its template format
+There are requirements to them.
 
-# Order
+# Ordering and execution context
+The design of a package and best prasctices.
 
-# Data (current)
+# Data (current: local, sever)
+Storage, formatting, subroutines, adding (sub)trial info.
 
-# Canvas
+# Grouping and such
+Generic vs specific grouping?
 
-# Data storage 
+# Canvas plugin (to investigate)
+Controlling the canvas within jsPsych, how about that?
+
+# Plugins, Styling, Lexing, Canvas
+It may be more complex than anticipated.
+
+# Data storage
+Sort of 'done'!
 
 # Github, bugs, feature request and contributing?
+This is becoming clearer and...better.
   
 # License
 
