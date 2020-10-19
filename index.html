@@ -17,9 +17,8 @@
   </head>
   <body></body>
   <script>
-    //////////////// stimulus.js /////////////////////////////////
     
-    var stimuli = pick_random_group();
+    var stimuli = pickRandomGroup();
 
     // data one would like to add to __all__ trials, according to:
     // https://www.jspsych.org/overview/data/
@@ -131,7 +130,7 @@
         present_word, 
         present_feedback
         ],
-      timeline_variables: practice_items,
+      timeline_variables: getPracticeItems().table,
       randomize_order:false 
     };
 

@@ -4,18 +4,18 @@ const NON_WORD = "NON_WORD";
 const UNRELATED = "UNRELATED";
 const RELATED = "RELATED";
 
-const groups = [
+const GROUPS = [
     "group1"
     // "group2",
     // "group3"
 ];
 
-const practice_items = [
+const PRACTICE_ITEMS = [
     {id: 1, item_type: NON_WORD, word: "palve", prime: "onion"},
     {id: 2, item_type: UNRELATED, word: "hot", prime: "stapler"}
 ];
 
-const list_group1 = [
+const LIST_GROUP1 = [
     {id: 1, item_type: NON_WORD, word: "slirque", prime: "eyes"},
     {id: 2, item_type: NON_WORD, word: "crawse", prime: "piano"},
     {id: 3, item_type: NON_WORD, word: "twurp", prime: "rabbit"},
@@ -28,14 +28,14 @@ const list_group1 = [
 ];
 
 // Add a second list of stimuli when required.
-// const list_group2 = [
+// const LIST_GROUP2 = [
 // ...
 // ]
 
-const test_items = [
-    {group_name: groups[0], table: list_group1}
+const TEST_ITEMS = [
+    {group_name: GROUPS[0], table: LIST_GROUP1}
     // Add the second group here, put a comma on the end of the line above here.
-    //{group_name: groups[1], table: list_group2}
+    //{group_name: GROUPS[1], table: LIST_GROUP2}
 ];
 
 
@@ -47,28 +47,29 @@ const test_items = [
  *
  * @returns {object} object with group and table fields
  */
-function get_practice_items() {
-    return {group_name: "practice", table: practice_items};
+function getPracticeItems() {
+    return {group_name : "practice", table : PRACTICE_ITEMS};
 }
 
 /**
- * This function will pick a random group from the test_items array.
+ * This function will pick a random group from the TEST_ITEMS array.
  *
  * Returns an object with a group and a table, the group will always indicate
  * which list has been chosen for the participant.
  *
  * @returns {object} object with group and table fields
  */
-function pick_random_group() {
+function pickRandomGroup() {
     let range = function (n) {
-        let empty_array = []
-        for (var i = 0; i < n; i++) {
+        let empty_array = [];
+        let i;
+        for (i = 0; i < n; i++) {
             empty_array.push(i);
         }
         return empty_array;
     }
-    let num_groups = test_items.length;
+    let num_groups = TEST_ITEMS.length;
     var shuffled_range = jsPsych.randomization.repeat(range(num_groups), 1)
-    var retgroup = test_items[shuffled_range[0]];
+    var retgroup = TEST_ITEMS[shuffled_range[0]];
     return retgroup
 }
