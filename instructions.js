@@ -30,13 +30,9 @@ const PRE_PRACTICE_INSTRUCTION =
     ;
 
 
-// this const could also be PRE_TEST_INSTRUCTION
-const POST_PRACTICE_INSTRUCTION =
-    "<p>Dear Participant,</p>"                          +
-    "<p></p>"                                           + // empty line.
-    "<p>"                                               +
-    " Add some feedback, or whatever seems fit here."   +
-    "</p>"                                              +
-    "<p></p>"                                           +
-    "<p>Click below to start the test phase.</p>"
+const PRE_TEST_INSTRUCTION = 
+    "End of the practice part.<BR><BR>"                 +
+    "If you have any questions at this moment, please " + 
+    " ask the experimenter now.<BR><BR>"                +
+    "If not, click OK to continue with the real task."
     ;
