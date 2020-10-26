@@ -13,14 +13,22 @@
  * together.
  */
 const PRE_PRACTICE_INSTRUCTION =
-    "<p>Dear Participant,</p>"                          +
-    "<p></p>"                                           + // empty line.
-    "<p>"                                               +
-    "Add instructions about which keys to press here."  +
-    "</p>"                                              +
-    "<p></p>"                                           +
-    "<p>Click below to start the practice phase.</p>"
+    "<b>Dear participant,</b><BR><BR>"                  +
+    "Thank you for participating in this experiment."   +
+    "<BR><BR>"                                          +
+    "You are now going to see words on the screen, one" + 
+    " after the other. The words come in pairs. "       + 
+    "Your task is to indicate for each pair as quickly" + 
+    " as possible whether you think "                   +  
+    "<i>both words are real words or not</i>."          + 
+    " Try to make no mistakes.<BR><BR>"                 +
+    "To respond, hit the <kbd>Z</kbd> key for "         +         
+    "<i>Yes</i> and the "                               +
+    "<kbd>M</kbd> key for <i>No</i><BR><BR>"            +
+    "First, you can practice.<BR><BR>"                  +
+    "<i>Click OK to start practicing</i>"
     ;
+
 
 // this const could also be PRE_TEST_INSTRUCTION
 const POST_PRACTICE_INSTRUCTION =
