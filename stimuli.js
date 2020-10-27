@@ -15,15 +15,13 @@ const PRACTICE_ITEMS = [
         id: 1, 
         item_type: NON_WORD, 
         word: "palve", 
-        prime: "onion", 
-        bothwords:false
+        prime: "onion"
     },
     {
         id: 2, 
         item_type: UNRELATED, 
         word: "hot", 
-        prime: "stapler",
-        bothwords:true
+        prime: "stapler"
     }
 ];
 
@@ -32,57 +30,49 @@ const LIST_GROUP1 = [
         id: 1, 
         item_type: NON_WORD, 
         word: "slirque", 
-        prime: "eyes", 
-        bothwords:false
+        prime: "eyes"
     },
     {
         id: 2, 
         item_type: NON_WORD, 
         word: "crawse", 
-        prime: "piano",
-        bothwords:false
+        prime: "piano"
     },
     {
         id: 3, 
         item_type: NON_WORD, 
         word: "twurp", 
-        prime: "rabbit",
-        bothwords:false
+        prime: "rabbit"
     },
     {
         id: 4, 
         item_type: NON_WORD, 
         word: "clem", 
-        prime: "flower",
-        bothwords:false
+        prime: "flower" 
     },
     {
         id: 5, 
         item_type: RELATED, 
         word: "white", 
-        prime: "snow",
-        bothwords:true
+        prime: "snow"
     },
     {
         id: 6, 
         item_type: RELATED, 
         word: "travel", 
-        prime: "suitcase",
-        bothwords:true
+        prime: "suitcase"
     },
     {
         id: 7, 
         item_type: UNRELATED, 
         word: "letter", 
-        prime: "garden",
-        bothwords:true
+        prime: "garden"
     },
     {
         id: 8, 
         item_type: UNRELATED, 
         word: "clown", 
-        prime: "forest",
-        bothwords:true
+        prime: "forest"
     }
 ];
 

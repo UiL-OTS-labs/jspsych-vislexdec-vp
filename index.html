@@ -48,20 +48,38 @@
       type: 'html-button-response',
       stimulus: PRE_PRACTICE_INSTRUCTION, 
       choices: [OK_BUTTON_TEXT],
-      response_ends_trial: true
+      response_ends_trial: true,
+      data: {
+        useful_data_flag: false 
+      }
     };
     
     var well_done_screen = {
       type: 'html-button-response',
       stimulus: PRE_TEST_INSTRUCTION, 
       choices: [OK_BUTTON_TEXT],
-      response_ends_trial: true
+      response_ends_trial: true,
+      data: {
+        useful_data_flag: false 
+      }
     };
 
-    var end_screen = {
+    var end_screen_local = {
       type: 'html-keyboard-response',
       stimulus: "Thanks, you're done. Press spacebar to see data", 
-      choices: ['space']
+      choices: ['space'],
+      data: {
+        useful_data_flag: false 
+      }
+    };
+
+    var end_screen_server = {
+      type: 'html-button-response',
+      stimulus: "Thanks, you're done. Would you like to click OK?", 
+      choices: [OK_BUTTON_TEXT, 'NO'],
+      data: {
+        useful_data_flag: false 
+      }
     };
 
     var present_fixation = {
@@ -74,7 +92,8 @@
         prime: jsPsych.timelineVariable('prime'),
         word: jsPsych.timelineVariable('word'),
         id:jsPsych.timelineVariable('id'),
-        trial_phase:'present_fixation'
+        trial_phase:'present_fixation',
+        useful_data_flag: false 
       }
     };
 
@@ -87,14 +106,15 @@
       choices: jsPsych.NO_KEYS,
       trial_duration: PRIME_DURATION,
       post_trial_gap: PRIME_GAP_DURATION,
-      prompt: "*", //testing prime duration
+      prompt: "",
       data: {
         condition: jsPsych.timelineVariable('item_type'),
         word: jsPsych.timelineVariable('word'),
         prime: jsPsych.timelineVariable('prime'),
         word: jsPsych.timelineVariable('word'),
         id:jsPsych.timelineVariable('id'),
-        trial_phase:'present_prime'
+        trial_phase:'present_prime',
+        useful_data_flag: false 
       }
     };
 
@@ -106,13 +126,14 @@
       response_ends_trial: true,
       stimulus_duration: WORD_DURATION,
       trial_duration: RESPONSE_TIMEOUT_DURATION,
-      prompt: "**",//and word duration
+      prompt: "",
       data: {
         condition: jsPsych.timelineVariable('item_type'),
         word: jsPsych.timelineVariable('word'),
         prime: jsPsych.timelineVariable('prime'),
         id:jsPsych.timelineVariable('id'),
-        trial_phase: 'present_word' 
+        trial_phase: 'present_word',
+        useful_data_flag: true
       },
       on_finish: function(data){
         if(data.condition == 'RELATED'){
@@ -173,11 +194,13 @@
 
     // best practice to have user I/O first
     timeline.push(start_screen);
+    
     // then push the rest
     timeline.push(practice_procedure);
     timeline.push(well_done_screen);
     timeline.push(trial_procedure);
-    timeline.push(end_screen); 
+    // i will wait for Maarten's util to implement a flexible if loop for data
+    timeline.push(end_screen_local); 
 
     // init
     jsPsych.init({
