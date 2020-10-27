@@ -19,7 +19,7 @@
       padding: 2px;
       border: 1px solid black;
     }
-    
+
     </style>
   </head>
   <body></body>
@@ -30,14 +30,14 @@
     // data one would like to add to __all__ trials, according to:
     // https://www.jspsych.org/overview/data/
     var subject_id = jsPsych.randomization.randomID(8);
-    var group_assigned = stimuli.group_name;
+    var group_name = stimuli.group_name;
 
     // record the condition assignment in the jsPsych data
     // this adds a property called 'subject' and a property called 'conditio' to every trial
     jsPsych.data.addProperties(
     {
       subject: subject_id,
-      condition: group_assigned
+      group: group_name
     });
 
     //////////////// test page flows ///////////////////////////////
@@ -66,7 +66,34 @@
       type: 'html-keyboard-response',
       stimulus: '<span style="font-size:40px;">+</span>',
       choices: jsPsych.NO_KEYS,
-      trial_duration: FIXCROSS_DURATION
+      trial_duration: FIXCROSS_DURATION,
+      data: {
+        condition: jsPsych.timelineVariable('item_type'),
+        prime: jsPsych.timelineVariable('prime'),
+        word: jsPsych.timelineVariable('word'),
+        id:jsPsych.timelineVariable('id'),
+        trial_phase:'present_fixation'
+      }
+    };
+
+    var present_prime = {
+      type: 'html-keyboard-response',
+      stimulus: function(){ 
+        return "<p class='stimulus'>" + 
+        jsPsych.timelineVariable('prime', true)+"</p>"; 
+        },
+      choices: jsPsych.NO_KEYS,
+      trial_duration: PRIME_DURATION,
+      post_trial_gap: PRIME_GAP_DURATION,
+      prompt: "*", //testing prime duration
+      data: {
+        condition: jsPsych.timelineVariable('item_type'),
+        word: jsPsych.timelineVariable('word'),
+        prime: jsPsych.timelineVariable('prime'),
+        word: jsPsych.timelineVariable('word'),
+        id:jsPsych.timelineVariable('id'),
+        trial_phase:'present_prime'
+      }
     };
 
     var present_word = {
@@ -74,19 +101,22 @@
       stimulus: function(){ return "<p class='stimulus'>" + 
         jsPsych.timelineVariable('word', true)+"</p>"; },
       choices: ['z','m'],
-      trial_duration: WORD_DURATION,
-      post_trial_gap: RESPONSE_DURATION_OPTION_ONE, //o my...
-      prompt: "",
+      response_ends_trial: true,
+      stimulus_duration: WORD_DURATION,
+      trial_duration: RESPONSE_TIMEOUT_DURATION,
+      prompt: "**",//and word duration
       data: {
-        word_type: jsPsych.timelineVariable('item_type'),
-        word_presented: jsPsych.timelineVariable('word'),
-        id_presented:jsPsych.timelineVariable('id') 
+        condition: jsPsych.timelineVariable('item_type'),
+        word: jsPsych.timelineVariable('word'),
+        prime: jsPsych.timelineVariable('prime'),
+        id:jsPsych.timelineVariable('id'),
+        trial_phase: 'present_word' 
       },
       on_finish: function(data){
-        if(data.word_type == 'RELATED'){
+        if(data.condition == 'RELATED'){
           var correct = data.key_press == 
             jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
-        } else if (data.word_type == 'UNRELATED'){
+        } else if (data.condition == 'UNRELATED'){
           var correct = data.key_press == 
             jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
         } else {
@@ -96,23 +126,7 @@
         data.correct = correct;
       }
     };
-    
-    var present_prime = {
-      type: 'html-keyboard-response',
-      stimulus: function(){ 
-        return "<p class='stimulus'>" + 
-        jsPsych.timelineVariable('prime', true)+"</p>"; 
-        },
-      choices: ['z','m'],
-      trial_duration: PRIME_DURATION,
-      post_trial_gap: PRIME_GAP_DURATION,
-      prompt: "",
-      data: {
-        word_type: jsPsych.timelineVariable('item_type'),
-        presented_prime: jsPsych.timelineVariable('prime')
-      }
-    };
-    
+      
     var present_feedback = {
       type: 'html-keyboard-response',
       stimulus: function() {
