@@ -31,13 +31,15 @@
     // https://www.jspsych.org/overview/data/
     var subject_id = jsPsych.randomization.randomID(8);
     var group_name = stimuli.group_name;
+    var timestamp_unit = 'milliseconds'
 
     // record the condition assignment in the jsPsych data
     // this adds a property called 'subject' and a property called 'conditio' to every trial
     jsPsych.data.addProperties(
     {
       subject: subject_id,
-      group: group_name
+      group: group_name,
+      time_unit: timestamp_unit
     });
 
     //////////////// test page flows ///////////////////////////////
