@@ -164,9 +164,18 @@
       return feedback_text;
       },
       choices: jsPsych.NO_KEYS,
-      trial_duration: FEEDBACK_DURATION
-      };
+      trial_duration: FEEDBACK_DURATION,
+      data: {
+        condition: jsPsych.timelineVariable('item_type'),
+        word: jsPsych.timelineVariable('word'),
+        prime: jsPsych.timelineVariable('prime'),
+        id:jsPsych.timelineVariable('id'),
+        trial_phase: 'present_word',
+        useful_data_flag: false
+      }
+    };
     
+    // procedures 
     var practice_procedure = {
       timeline:[
         present_fixation, 
@@ -188,6 +197,24 @@
       randomize_order:true 
     };
 
+    ///////////////////////////////////////////////////////////
+
+    // saveData function, will move at some point
+
+    function saveData(access_key) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://experiment-datastore.acc.lab.hum.uu.nl/api/' + access_key + '/upload/'); // change 'write_data.php' to point to php script.
+      xhr.setRequestHeader('Content-Type', 'text/plain');
+      xhr.onload = function() {
+        if(xhr.status == 200){
+          var response = JSON.parse(xhr.responseText);
+          console.log(response.success);
+        }
+      };
+      xhr.send(jsPsych.data.get().json());
+    }
+
+
     //////////////// timeline /////////////////////////////////
     var timeline = []
 
@@ -201,6 +228,7 @@
     
     // i will wait for Maarten's util to implement a flexible if loop for data
     timeline.push(end_screen_local); 
+    //timeline.push(end_screen_server);
 
     // choose which of the
     //two init blocks deserves an outcommented status 
