@@ -189,7 +189,6 @@
     };
 
     //////////////// timeline /////////////////////////////////
-    
     var timeline = []
 
     // best practice to have user I/O first
@@ -199,10 +198,25 @@
     timeline.push(practice_procedure);
     timeline.push(well_done_screen);
     timeline.push(trial_procedure);
+    
     // i will wait for Maarten's util to implement a flexible if loop for data
     timeline.push(end_screen_local); 
 
-    // init
+    // choose which of the
+    //two init blocks deserves an outcommented status 
+  
+    ////serverinit placeholder
+    // jsPsych.init({
+    //   timeline: timeline,
+    //   show_preload_progress_bar: false,
+    //   use_webaudio: true,
+    //   on_finish: function() {
+    //     saveData("myhugekeyhasthingiefromthebackendcode");
+    //     alert("Data saved!")
+    //   }
+    // })
+
+    // localinit placholder
     jsPsych.init({
       timeline: timeline,
       show_preload_progress_bar: false,
