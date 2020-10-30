@@ -45,8 +45,8 @@ keep in mind that once working on the server, filenames are case sensitive and
 "jsPsych.js" and "jspsych.js" are two distinct filenames. It might work on your
 machine, but it might not work on the server hosting your experiment.
 
-You will need to adapt your own directory structure/naming convention in the
-top <\script> tags as defined in index.html, if you want your own local jsPsych setup.
+You will need to adapt your own directory structure/naming convention in the 
+top ```<script>``` tags as defined in index.html, if you want your own local jsPsych setup.
 
 1. Download this repository by clicking the green code button above and Download zip.
 2. Unzip the jspsych-vislexdec-vp.zip at a location of your choosing.
