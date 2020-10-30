@@ -4,16 +4,16 @@ Template [visual lexical decision](https://en.wikipedia.org/wiki/Lexical_decisio
 # Task Description
 The participant first sees a fixation cross, then a prime is presented, followed by the test stimulus. Particpants are instructed to respond as quickly as possible to make this decision.
 
-- The prime is a string of letter and can be a real word or a nonword.
-- The test stimulus is a string of letters and can also be a real word or a nonword.
+- The _prime_ is a string of letters and can be a real word or a nonword.
+- The _test stimulus_ is a string of letters and can also be a real word or a nonword.
 
-There are many (slightly) different variations of a lexical decision task. In this variant, a trial consists of subsequently presenting _two_ words (or nonwords). The participant needs to make a swift decision whether the _pair_ of presented sets of letters - the test stimuli - are _both_ acutal words or not. 
+There are many (slightly) different variations of a lexical decision task. In this variant, a trial consists of subsequently presenting _two_ words or nonwords. The participant needs to make a swift decision whether the _pair_ of presented sets of letters - the test stimuli - are _both_ acutal words or not. 
 
-The naming conventions for this pair of stimuli can be slightly confusing. The general consensus will be to differentiate between a 'prime' and the 'test stimulus', even though in a way, the _pair_ _is_ the test stimulus in the stimuli list definitions (in stimuli.js). 
+The naming conventions for this pair can be slightly confusing. The general convention will be to differentiate between a 'prime' and the 'test stimulus', even though in a way, the _pair_ _is_ the test stimulus, both in what defines a single trial, and in the way to prepare the stimuli.js structure (the code).
 
 The idea behind this _primed_ variant is that there may be semantic (or visual or grammatical) associations that influence reaction time in the last decision stage. For instance, after presenting the word 'snow' as a prime, there might be a speedup in the reaction time to the test stimulus if it were 'white', as opposed to, say 'potato', due to semantic association.
 
-It is up to the researcher to balance the stimulus design according to the categorial speedup or slowdown effects thatb are hypothesised, amongst others. 
+It is up to the researcher to balance the stimulus design according to the categorial speedup or slowdown effects that are hypothesised, amongst others. 
 
 The essential sub trial phases for _one_ trial for this boilerplate experiment thus are:
 
@@ -23,7 +23,7 @@ The essential sub trial phases for _one_ trial for this boilerplate experiment t
 
 Only in this _last phase_, as soon as the "test item" is being presented, the participant can respond with the keyboard.
 
-The reaction time, response and correctness of the response are usually the important variables for analysis. By default, the data of all sub trial phases are logged in the data, but the output data could easily be filtered after data collection.
+The reaction time, response and correctness of the response are usually the important variables for analysis. By default, the data of all sub trial phases are logged in the data, but the output data can quite easily be filtered after data collection.
 
 
 # Getting started (the easy way, working internet connection required)
