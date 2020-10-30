@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-  <head>
+    <head>
     <title>Primed Lexical Decision Experiment</title>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/jspsych.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-button-response.js"></script>
-      <link href="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"/>
+        <link href="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"/>
 
     <!-- Uil OTS scripts -->
     <script src="stimuli.js"></script>
@@ -15,15 +15,15 @@
 
     .stimulus { font-size: 30px; }
     kbd {
-      border-radius: 2px;
-      padding: 2px;
-      border: 1px solid black;
+        border-radius: 2px;
+        padding: 2px;
+        border: 1px solid black;
     }
 
     </style>
-  </head>
-  <body></body>
-  <script>
+    </head>
+    <body></body>
+    <script>
     
     var stimuli = pickRandomGroup();
 
@@ -33,101 +33,99 @@
     var group_name = stimuli.group_name;
     var timestamp_unit = 'milliseconds'
 
-    // record the condition assignment in the jsPsych data
-    // this adds a property called 'subject' and a property called 'conditio' to every trial
     jsPsych.data.addProperties(
     {
-      subject: subject_id,
-      group: group_name,
-      time_unit: timestamp_unit
+        subject: subject_id,
+        group: group_name,
+        time_unit: timestamp_unit
     });
 
     //////////////// test page flows ///////////////////////////////
     
     var start_screen = {
-      type: 'html-button-response',
-      stimulus: PRE_PRACTICE_INSTRUCTION, 
-      choices: [OK_BUTTON_TEXT],
-      response_ends_trial: true,
-      data: {
+        type: 'html-button-response',
+        stimulus: PRE_PRACTICE_INSTRUCTION, 
+        choices: [OK_BUTTON_TEXT],
+        response_ends_trial: true,
+        data: {
         condition: jsPsych.timelineVariable('item_type'),
         prime: jsPsych.timelineVariable('prime'),
         word: jsPsych.timelineVariable('word'),
         id: jsPsych.timelineVariable('id'),
         trial_phase: 'present_fixation',
         useful_data_flag: false 
-      }
+        }
     };
     
     var well_done_screen = {
-      type: 'html-button-response',
-      stimulus: PRE_TEST_INSTRUCTION, 
-      choices: [OK_BUTTON_TEXT],
-      response_ends_trial: true,
-      data: {
+        type: 'html-button-response',
+        stimulus: PRE_TEST_INSTRUCTION, 
+        choices: [OK_BUTTON_TEXT],
+        response_ends_trial: true,
+        data: {
         condition: jsPsych.timelineVariable('item_type'),
         prime: jsPsych.timelineVariable('prime'),
         word: jsPsych.timelineVariable('word'),
         id: jsPsych.timelineVariable('id'),
         trial_phase: 'present_fixation',
         useful_data_flag: false 
-      }
+        }
     };
 
     var end_screen_local = {
-      type: 'html-keyboard-response',
-      stimulus: "Thanks, you're done. Press spacebar to see data", 
-      choices: ['space'],
-      data: {
+        type: 'html-keyboard-response',
+        stimulus: "Thanks, you're done. Press spacebar to see data", 
+        choices: ['space'],
+        data: {
         condition: jsPsych.timelineVariable('item_type'),
         prime: jsPsych.timelineVariable('prime'),
         word: jsPsych.timelineVariable('word'),
         id: jsPsych.timelineVariable('id'),
         trial_phase: 'present_fixation',
         useful_data_flag: false 
-      }
+        }
     };
 
     var end_screen_server = {
-      type: 'html-button-response',
-      stimulus: "Thanks, you're done. Would you like to click OK?", 
-      choices: [OK_BUTTON_TEXT, 'NO'],
-      data: {
+        type: 'html-button-response',
+        stimulus: "Thanks, you're done. Would you like to click OK?", 
+        choices: [OK_BUTTON_TEXT, 'NO'],
+        data: {
         condition: jsPsych.timelineVariable('item_type'),
         prime: jsPsych.timelineVariable('prime'),
         word: jsPsych.timelineVariable('word'),
         id: jsPsych.timelineVariable('id'),
         trial_phase: 'present_fixation',
         useful_data_flag: false 
-      }
+        }
     };
 
     var present_fixation = {
-      type: 'html-keyboard-response',
-      stimulus: '<span style="font-size:40px;">+</span>',
-      choices: jsPsych.NO_KEYS,
-      trial_duration: FIXCROSS_DURATION,
-      data: {
+        type: 'html-keyboard-response',
+        stimulus: '<span style="font-size:40px;">+</span>',
+        choices: jsPsych.NO_KEYS,
+        trial_duration: FIXCROSS_DURATION,
+        data: {
         condition: jsPsych.timelineVariable('item_type'),
         prime: jsPsych.timelineVariable('prime'),
         word: jsPsych.timelineVariable('word'),
         id: jsPsych.timelineVariable('id'),
         trial_phase: 'present_fixation',
         useful_data_flag: false 
-      }
+        }
     };
 
     var present_prime = {
-      type: 'html-keyboard-response',
-      stimulus: function(){ 
+        type: 'html-keyboard-response',
+        stimulus: function(){ 
         return "<p class='stimulus'>" + 
         jsPsych.timelineVariable('prime', true)+"</p>"; 
         },
-      choices: jsPsych.NO_KEYS,
-      trial_duration: PRIME_DURATION,
-      post_trial_gap: PRIME_GAP_DURATION,
-      prompt: "",
-      data: {
+        choices: jsPsych.NO_KEYS,
+        trial_duration: PRIME_DURATION,
+        post_trial_gap: PRIME_GAP_DURATION,
+        prompt: "",
+        data: {
         condition: jsPsych.timelineVariable('item_type'),
         word: jsPsych.timelineVariable('word'),
         prime: jsPsych.timelineVariable('prime'),
@@ -135,86 +133,86 @@
         id:jsPsych.timelineVariable('id'),
         trial_phase:'present_prime',
         useful_data_flag: false 
-      }
+        }
     };
 
     var present_word = {
-      type: 'html-keyboard-response',
-      stimulus: function(){ return "<p class='stimulus'>" + 
+        type: 'html-keyboard-response',
+        stimulus: function(){ return "<p class='stimulus'>" + 
         jsPsych.timelineVariable('word', true)+"</p>"; },
-      choices: ['z','m'],
-      response_ends_trial: true,
-      stimulus_duration: WORD_DURATION,
-      trial_duration: RESPONSE_TIMEOUT_DURATION,
-      prompt: "",
-      data: {
+        choices: ['z','m'],
+        response_ends_trial: true,
+        stimulus_duration: WORD_DURATION,
+        trial_duration: RESPONSE_TIMEOUT_DURATION,
+        prompt: "",
+        data: {
         condition: jsPsych.timelineVariable('item_type'),
         word: jsPsych.timelineVariable('word'),
         prime: jsPsych.timelineVariable('prime'),
         id:jsPsych.timelineVariable('id'),
         trial_phase: 'present_word',
         useful_data_flag: true
-      },
-      on_finish: function(data){
+        },
+        on_finish: function(data){
         if(data.condition == 'RELATED'){
-          var correct = data.key_press == 
+            var correct = data.key_press == 
             jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
         } else if (data.condition == 'UNRELATED'){
-          var correct = data.key_press == 
+            var correct = data.key_press == 
             jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
         } else {
-          var correct = data.key_press == 
+            var correct = data.key_press == 
             jsPsych.pluginAPI.convertKeyCharacterToKeyCode('m');
         }
         data.correct = correct;
-      }
-    };
-      
-    var present_feedback = {
-      type: 'html-keyboard-response',
-      stimulus: function() {
-        var feedback_text = 
-          '<span style="color:red;font-size:30px;">Incorrect</span>';
-        var last_resp_acc = 
-          jsPsych.data.getLastTrialData().values()[0].correct;
-        if (last_resp_acc == true) {
-          feedback_text = 
-          '<span style="color:green;font-size:30px;">Correct!</span>'
         }
-      return feedback_text;
-      },
-      choices: jsPsych.NO_KEYS,
-      trial_duration: FEEDBACK_DURATION,
-      data: {
+    };
+        
+    var present_feedback = {
+        type: 'html-keyboard-response',
+        stimulus: function() {
+        var feedback_text = 
+            '<span style="color:red;font-size:30px;">Incorrect</span>';
+        var last_resp_acc = 
+            jsPsych.data.getLastTrialData().values()[0].correct;
+        if (last_resp_acc == true) {
+            feedback_text = 
+            '<span style="color:green;font-size:30px;">Correct!</span>'
+        }
+        return feedback_text;
+        },
+        choices: jsPsych.NO_KEYS,
+        trial_duration: FEEDBACK_DURATION,
+        data: {
         condition: jsPsych.timelineVariable('item_type'),
         word: jsPsych.timelineVariable('word'),
         prime: jsPsych.timelineVariable('prime'),
         id:jsPsych.timelineVariable('id'),
         trial_phase: 'present_word',
         useful_data_flag: false
-      }
+        }
     };
     
     // procedures 
     var practice_procedure = {
-      timeline:[
+        timeline:[
         present_fixation, 
         present_prime, 
         present_word, 
         present_feedback
         ],
-      timeline_variables: getPracticeItems().table,
-      randomize_order:false 
+        timeline_variables: getPracticeItems().table,
+        randomize_order:false 
     };
 
     var trial_procedure = {
-      timeline:[
+        timeline:[
         present_fixation, 
         present_prime, 
         present_word, 
         ],
-      timeline_variables: stimuli.table,
-      randomize_order:true 
+        timeline_variables: stimuli.table,
+        randomize_order:true 
     };
 
     ///////////////////////////////////////////////////////////
@@ -222,16 +220,16 @@
     // saveData function, will move at some point
 
     function saveData(access_key) {
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'https://experiment-datastore.acc.lab.hum.uu.nl/api/' + access_key + '/upload/'); // change 'write_data.php' to point to php script.
-      xhr.setRequestHeader('Content-Type', 'text/plain');
-      xhr.onload = function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://experiment-datastore.acc.lab.hum.uu.nl/api/' + access_key + '/upload/');
+        xhr.setRequestHeader('Content-Type', 'text/plain');
+        xhr.onload = function() {
         if(xhr.status == 200){
-          var response = JSON.parse(xhr.responseText);
-          console.log(response.success);
+            var response = JSON.parse(xhr.responseText);
+            console.log(response.success);
         }
-      };
-      xhr.send(jsPsych.data.get().json());
+        };
+        xhr.send(jsPsych.data.get().json());
     }
 
 
@@ -246,32 +244,18 @@
     timeline.push(well_done_screen);
     timeline.push(trial_procedure);
     
-    // i will wait for Maarten's util to implement a flexible if loop for data
     timeline.push(end_screen_local); 
     //timeline.push(end_screen_server);
 
-    // choose which of the
-    // two init blocks deserves an outcommented status 
-  
-    ////serverinit placeholder
-    // jsPsych.init({
-    //   timeline: timeline,
-    //   show_preload_progress_bar: false,
-    //   use_webaudio: true,
-    //   on_finish: function() {
-    //     saveData("myhugekeyhasthingiefromthebackendcode");
-    //     alert("Data saved!")
-    //   }
-    // })
 
     // localinit placholder
     jsPsych.init({
-      timeline: timeline,
-      show_preload_progress_bar: false,
-      use_webaudio: false,
-      on_finish: function() {
+        timeline: timeline,
+        show_preload_progress_bar: false,
+        use_webaudio: false,
+        on_finish: function() {
         jsPsych.data.displayData();
-      }
+        }
     })
 
     </script>
