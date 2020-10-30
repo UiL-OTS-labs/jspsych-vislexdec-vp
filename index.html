@@ -50,6 +50,11 @@
       choices: [OK_BUTTON_TEXT],
       response_ends_trial: true,
       data: {
+        condition: jsPsych.timelineVariable('item_type'),
+        prime: jsPsych.timelineVariable('prime'),
+        word: jsPsych.timelineVariable('word'),
+        id: jsPsych.timelineVariable('id'),
+        trial_phase: 'present_fixation',
         useful_data_flag: false 
       }
     };
@@ -60,6 +65,11 @@
       choices: [OK_BUTTON_TEXT],
       response_ends_trial: true,
       data: {
+        condition: jsPsych.timelineVariable('item_type'),
+        prime: jsPsych.timelineVariable('prime'),
+        word: jsPsych.timelineVariable('word'),
+        id: jsPsych.timelineVariable('id'),
+        trial_phase: 'present_fixation',
         useful_data_flag: false 
       }
     };
@@ -69,6 +79,11 @@
       stimulus: "Thanks, you're done. Press spacebar to see data", 
       choices: ['space'],
       data: {
+        condition: jsPsych.timelineVariable('item_type'),
+        prime: jsPsych.timelineVariable('prime'),
+        word: jsPsych.timelineVariable('word'),
+        id: jsPsych.timelineVariable('id'),
+        trial_phase: 'present_fixation',
         useful_data_flag: false 
       }
     };
@@ -78,6 +93,11 @@
       stimulus: "Thanks, you're done. Would you like to click OK?", 
       choices: [OK_BUTTON_TEXT, 'NO'],
       data: {
+        condition: jsPsych.timelineVariable('item_type'),
+        prime: jsPsych.timelineVariable('prime'),
+        word: jsPsych.timelineVariable('word'),
+        id: jsPsych.timelineVariable('id'),
+        trial_phase: 'present_fixation',
         useful_data_flag: false 
       }
     };
@@ -91,8 +111,8 @@
         condition: jsPsych.timelineVariable('item_type'),
         prime: jsPsych.timelineVariable('prime'),
         word: jsPsych.timelineVariable('word'),
-        id:jsPsych.timelineVariable('id'),
-        trial_phase:'present_fixation',
+        id: jsPsych.timelineVariable('id'),
+        trial_phase: 'present_fixation',
         useful_data_flag: false 
       }
     };
@@ -231,7 +251,7 @@
     //timeline.push(end_screen_server);
 
     // choose which of the
-    //two init blocks deserves an outcommented status 
+    // two init blocks deserves an outcommented status 
   
     ////serverinit placeholder
     // jsPsych.init({
