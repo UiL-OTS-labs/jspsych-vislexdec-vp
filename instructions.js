@@ -37,12 +37,5 @@ const PRE_TEST_INSTRUCTION =
     "If not, click OK to continue with the real task."
     ;
 
-const MULTILINE_JS = `This
-    is
-    a
-    multiline
-    string
-    in
-    javascript`;
 
 
