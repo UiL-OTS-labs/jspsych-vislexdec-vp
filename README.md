@@ -1,14 +1,30 @@
 # jspsych-vislexdec-vp
-Template [visual lexical decision](https://en.wikipedia.org/wiki/Lexical_decision_task) experiment with visual prime
+Template [visual lexical decision](https://en.wikipedia.org/wiki/Lexical_decision_task) experiment with visual prime. 
 
-# Context
-In this experiment participants need to make a swift decision whether a presented
-set of letters - the test stimulus - form a word or a non existent word (nonword).
-The participant first see a fixation cross, briefly a prime is presented followed
-by the test stimulus. The particpants are instructed to respond as quickly as
-possible to indicate wheter the test stimulus is a word or not.
+# Task Description
+The participant first sees a fixation cross, then a prime is presented, followed by the test stimulus. Particpants are instructed to respond as quickly as possible to make this decision.
 
-The reaction time, response and correctness of the response are recorded.
+- The prime is a string of letter and can be a real word or a nonword.
+- The test stimulus is a string of letters and can also be a real word or a nonword.
+
+There are many (slightly) different variations of a lexical decision task. In this variant, a trial consists of subsequently presenting _two_ words (or nonwords). The participant needs to make a swift decision whether the _pair_ of presented sets of letters - the test stimuli - are _both_ acutal words or not. 
+
+The naming conventions for this pair of stimuli can be slightly confusing. The general consensus will be to differentiate between a 'prime' and the 'test stimulus', even though in a way, the _pair_ _is_ the test stimulus in the stimuli list definitions (in stimuli.js). 
+
+The idea behind this _primed_ variant is that there may be semantic (or visual or grammatical) associations that influence reaction time in the last decision stage. For instance, after presenting the word 'snow' as a prime, there might be a speedup in the reaction time to the test stimulus if it were 'white', as opposed to, say 'potato', due to semantic association.
+
+It is up to the researcher to balance the stimulus design according to the categorial speedup or slowdown effects thatb are hypothesised, amongst others. 
+
+The essential sub trial phases for _one_ trial for this boilerplate experiment thus are:
+
+1. Fixation cross presentation (fixed time, no responses are recorded) 
+2. Prime presentation (fixed time, no responses are recorded)
+3. Test stimulus presentation (the last string of letters of the presented pair). 
+
+Only in this _last phase_, as soon as the "test item" is being presented, the participant can respond with the keyboard.
+
+The reaction time, response and correctness of the response are usually the important variables for analysis. By default, the data of all sub trial phases are logged in the data, but the output data could easily be filtered after data collection.
+
 
 # Getting started (the easy way, working internet connection required)
 For now, the easiest way to test these templates, is:
@@ -27,7 +43,7 @@ keep in mind that once working on the server, filenames are case sensitive and
 machine, but it might not work on the server hosting your experiment.
 
 You will need to adapt your own directory structure/naming convention in the
-top <script> tags as defined in index.html, if you want your own local jsPsych setup.
+top <\script> tags as defined in index.html, if you want your own local jsPsych setup.
 
 1. Download this repository by clicking the green code button above and Download zip.
 2. Unzip the jspsych-vislexdec-vp.zip at a location of your choosing.
@@ -37,30 +53,30 @@ top <script> tags as defined in index.html, if you want your own local jsPsych s
 5. Inside the folder is a file called index.html, double click it in order to open it
    in a browser.
 
-# Template paradigm documentation (concept)
-Lab support and teachers are in the process of creating template/boilerplate experiments for you to easily set up certain types of experiments. The idea behind this, is that within certain boundaries, it should be easy to get an experiment running without (too much) programming skills, by just editing the default stimulus files. Traditionally, we've used ZEP {link} all around our labs for time critical experimentation and there are many tempates to start with. ZEP was designed in house and has been designed to accurately sync sound, visuals/text and/or other hardware (eye tracking, EEG, EMG, etc) in a 'traditional' research lab setup. By that we mean:
+# Template paradigm documentation (draft)
+Lab support and teachers are in the process of creating template/boilerplate experiments for you to easily set up certain types of experiments. The idea behind this, is that within certain boundaries, it should be easy to get an experiment running without (too much) programming skills, by just editing the default stimulus files. Traditionally, we've used [ZEP](https://www.beexy.nl/zep/wiki/doku.php) in the UiL OTS labs for time critical experimentation and there are many templates to start with using ZEP. ZEP was designed in house and has been designed to accurately sync sound, visuals/text and/or other hardware (eye tracking, EEG, EMG, etc) in a 'traditional' research lab setup. By that we mean:
 
-- A quite controlled/controllable environment qua hardware, software, possible distractions
-- Physically being bound to the lab
-- Relatively small samples, optimised for "Wilhelm Wund" style traditional research
+- A quite controlled/controllable environment in terms of hardware, software, possible distractions.
+- Physically being bound to the lab.
+- Relatively small samples, optimised for "Wilhelm Wundt" style traditional research.
 
-This type of training is probably going to be problematic for a while, due to COVID-19. So after a period of research & R&D, we've decided to choose the custom Javascipt library aimed at experimental research using a browser, called jsPsych {link} as our alternative for lab-based work. A couple of remarks here:
+This type of training is probably going to be problematic for a while, due to COVID-19. So after a period of research & development, we've decided to choose the custom Javascipt library aimed at experimental research using a browser, called [jsPsych](https://jspsych.org) as our alternative for lab-based work. A couple of remarks here:
 
-- The 'web' can not offer the accuracy and precision needed for certain paradigms.
-- Variations in hardware, software, internet speed, random noise and distraction and many other aspects my cause variations at multiple levels.
-- Especially when sounds _and_ images need to be synced, be sure to define means to verify or falsify presentation and test well.
+- The 'web' cannot offer the accuracy and precision needed for certain paradigms.
+- Variations in hardware, software, internet speed, random noise and distraction and many other aspects may cause variations at multiple levels.
+- Especially when sounds _and_ images need to be synced, be sure to define means to verify or falsify presentation syncing and test well.
 
 On the other hand:
-- The _principles_ of most paradigms can still be taught and learned
-- You could potentially get a lot more data, which may to some extent compensate noise and little control
-- Contrary to ZEP, you can find a lot of examples online, there is a huge user base for jsPsych
+- The _principles_ of most paradigms can still be taught and learned.
+- You could potentially get a lot more data, which may to some extent compensate noise and little control.
+- You can find a lot of code snippets and examples online, there is a huge user base for jsPsych and many plugins for certain paradigms can be used or adapted to certain needs.
 
 # Mini-overview of a jsPsych experiment
 It's a good idea to really read the documentation on https://www.jspsych.org. The basic things like how some 'experiment.html' file imports from the jspsych library, where and how plugins can be used are quite good to begin with.
 
-It gets a bit more complicated when you discover that there are two modes in which alll can be run:
+It gets a bit more complicated when you discover that there are two modes in which all can be run:
 
-- Locally on your PC, by double clicking the html file
+- Locally on your PC, by double clicking the html file.
 - Full web server implementation (getting a link to the experiment, served by ICT&Media).
 
 These two modes will likely confuse those who are not web developers, but the bottom line is: 
@@ -69,14 +85,13 @@ These two modes will likely confuse those who are not web developers, but the bo
 
 Many browsers and versions have their own defaults for security like autoplay, allowing sounds, pop-ups, importing images from local sources, etc. It is impossible to know 100% sure if things will work in your browser in advance, so be prepared to deal with some confusion.
 
-In this stage, we will limit things to running the templates __locally__, which has implications for the reliablity and format of the data. Also: locally does NOT mean that it can be run without an internet connection in most cases, due to the nature of loading external scripts.
+In this stage, we will limit things to running the templates __locally__, which has implications for the reliability and format of the data. Also: locally does __not__ mean that it can be run without an internet connection in most cases, due to the nature of loading external scripts. Browsers really are optimised for being online.
 
-Not all of our education staff and lab staff have a firm background in web development, so things take time, experimentation and community building to make things better, but well, work in progress...
-
-# Some best practices for jsPsych experiments
+# Some best practices for jsPsych experiments 
+(to be removed from this specific readme after next steps)
 
 ## Audio
-In the case of web server setup, it is as good idea to initialise jsPysch with ```use_webaudio = true```, in case you use audio stimuli. This is typically faster than when false.
+In the case of web server setup, it is as good idea to initialise jsPysch with ```use_webaudio = true```, in case you use audio stimuli. This is typically faster than when set to false.
 
 ## Preload media, like images, video, audio
 In general, since timing is important, please make sure to [pre-load all media files](https://www.jspsych.org/overview/media-preloading/).
@@ -104,8 +119,8 @@ How some concepts relate to each other:
 
 ## jsPsych
 - jspsych _uses_ Javascript code for a specific experimental purpose and the functions from this library need to be imported in the top op your html file before you can use them.
-- You *could* run an experiment in your browser while being offline, if you only refer to local sources that are imported in the relative path (todo)
-- If you would need or want to load scripts from an online location (```<script>https://some.cooljavacript.js</script>```) in your experiment, you _could_. 
+- You _could_ run an experiment in your browser while being offline, if you only refer to local sources that are imported in the relative path.
+- If you would need or want to load scripts from an online location in your experiment, you _could_. 
   - But then, do make sure that the locally run code *does* have a working internet connection!
 
 # You need a plain text editor
@@ -273,36 +288,6 @@ visdeclex/
          /globals.js        <---- Often a file called globals.js
          /generic.js        <---- Usually a file called stimuli.js
 ```
-# Script imports
-Configuring the top script imports in index.html is important.
-
-# Plugins and its template format
-There are requirements to them.
-
-# Ordering and execution context
-The design of a package and best prasctices.
-
-# Data (current: local, sever)
-Storage, formatting, subroutines, adding (sub)trial info.
-
-# Grouping and such
-Generic vs specific grouping?
-
-# Canvas plugin (to investigate)
-Controlling the canvas within jsPsych, how about that?
-
-# Plugins, Styling, Lexing, Canvas
-It may be more complex than anticipated.
-
-# Data storage
-Sort of 'done'!
-
-# Github, bugs, feature request and contributing?
-This is becoming clearer and...better.
-  
-# License
-
-
 
 
 
