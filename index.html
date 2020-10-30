@@ -48,12 +48,12 @@
         choices: [OK_BUTTON_TEXT],
         response_ends_trial: true,
         data: {
-        condition: jsPsych.timelineVariable('item_type'),
-        prime: jsPsych.timelineVariable('prime'),
-        word: jsPsych.timelineVariable('word'),
-        id: jsPsych.timelineVariable('id'),
-        trial_phase: 'present_fixation',
-        useful_data_flag: false 
+            condition: jsPsych.timelineVariable('item_type'),
+            prime: jsPsych.timelineVariable('prime'),
+            word: jsPsych.timelineVariable('word'),
+            id: jsPsych.timelineVariable('id'),
+            trial_phase: 'present_fixation',
+            useful_data_flag: false 
         }
     };
     
@@ -63,12 +63,12 @@
         choices: [OK_BUTTON_TEXT],
         response_ends_trial: true,
         data: {
-        condition: jsPsych.timelineVariable('item_type'),
-        prime: jsPsych.timelineVariable('prime'),
-        word: jsPsych.timelineVariable('word'),
-        id: jsPsych.timelineVariable('id'),
-        trial_phase: 'present_fixation',
-        useful_data_flag: false 
+            condition: jsPsych.timelineVariable('item_type'),
+            prime: jsPsych.timelineVariable('prime'),
+            word: jsPsych.timelineVariable('word'),
+            id: jsPsych.timelineVariable('id'),
+            trial_phase: 'present_fixation',
+            useful_data_flag: false 
         }
     };
 
@@ -77,12 +77,12 @@
         stimulus: "Thanks, you're done. Press spacebar to see data", 
         choices: ['space'],
         data: {
-        condition: jsPsych.timelineVariable('item_type'),
-        prime: jsPsych.timelineVariable('prime'),
-        word: jsPsych.timelineVariable('word'),
-        id: jsPsych.timelineVariable('id'),
-        trial_phase: 'present_fixation',
-        useful_data_flag: false 
+            condition: jsPsych.timelineVariable('item_type'),
+            prime: jsPsych.timelineVariable('prime'),
+            word: jsPsych.timelineVariable('word'),
+            id: jsPsych.timelineVariable('id'),
+            trial_phase: 'present_fixation',
+            useful_data_flag: false 
         }
     };
 
@@ -91,12 +91,12 @@
         stimulus: "Thanks, you're done. Would you like to click OK?", 
         choices: [OK_BUTTON_TEXT, 'NO'],
         data: {
-        condition: jsPsych.timelineVariable('item_type'),
-        prime: jsPsych.timelineVariable('prime'),
-        word: jsPsych.timelineVariable('word'),
-        id: jsPsych.timelineVariable('id'),
-        trial_phase: 'present_fixation',
-        useful_data_flag: false 
+            condition: jsPsych.timelineVariable('item_type'),
+            prime: jsPsych.timelineVariable('prime'),
+            word: jsPsych.timelineVariable('word'),
+            id: jsPsych.timelineVariable('id'),
+            trial_phase: 'present_fixation',
+            useful_data_flag: false 
         }
     };
 
@@ -106,39 +106,39 @@
         choices: jsPsych.NO_KEYS,
         trial_duration: FIXCROSS_DURATION,
         data: {
-        condition: jsPsych.timelineVariable('item_type'),
-        prime: jsPsych.timelineVariable('prime'),
-        word: jsPsych.timelineVariable('word'),
-        id: jsPsych.timelineVariable('id'),
-        trial_phase: 'present_fixation',
-        useful_data_flag: false 
+            condition: jsPsych.timelineVariable('item_type'),
+            prime: jsPsych.timelineVariable('prime'),
+            word: jsPsych.timelineVariable('word'),
+            id: jsPsych.timelineVariable('id'),
+            trial_phase: 'present_fixation',
+            useful_data_flag: false 
         }
     };
 
     var present_prime = {
         type: 'html-keyboard-response',
         stimulus: function(){ 
-        return "<p class='stimulus'>" + 
-        jsPsych.timelineVariable('prime', true)+"</p>"; 
+            return "<p class='stimulus'>" + 
+            jsPsych.timelineVariable('prime', true) + "</p>";
         },
         choices: jsPsych.NO_KEYS,
         trial_duration: PRIME_DURATION,
         post_trial_gap: PRIME_GAP_DURATION,
         prompt: "",
         data: {
-        condition: jsPsych.timelineVariable('item_type'),
-        word: jsPsych.timelineVariable('word'),
-        prime: jsPsych.timelineVariable('prime'),
-        word: jsPsych.timelineVariable('word'),
-        id:jsPsych.timelineVariable('id'),
-        trial_phase:'present_prime',
-        useful_data_flag: false 
+            condition: jsPsych.timelineVariable('item_type'),
+            word: jsPsych.timelineVariable('word'),
+            prime: jsPsych.timelineVariable('prime'),
+            word: jsPsych.timelineVariable('word'),
+            id: jsPsych.timelineVariable('id'),
+            trial_phase: 'present_prime',
+            useful_data_flag: false 
         }
     };
 
     var present_word = {
         type: 'html-keyboard-response',
-        stimulus: function(){ return "<p class='stimulus'>" + 
+        stimulus: function(){ return "<p class='stimulus'>" +
         jsPsych.timelineVariable('word', true)+"</p>"; },
         choices: ['z','m'],
         response_ends_trial: true,
@@ -146,12 +146,12 @@
         trial_duration: RESPONSE_TIMEOUT_DURATION,
         prompt: "",
         data: {
-        condition: jsPsych.timelineVariable('item_type'),
-        word: jsPsych.timelineVariable('word'),
-        prime: jsPsych.timelineVariable('prime'),
-        id:jsPsych.timelineVariable('id'),
-        trial_phase: 'present_word',
-        useful_data_flag: true
+            condition: jsPsych.timelineVariable('item_type'),
+            word: jsPsych.timelineVariable('word'),
+            prime: jsPsych.timelineVariable('prime'),
+            id:jsPsych.timelineVariable('id'),
+            trial_phase: 'present_word',
+            useful_data_flag: true
         },
         on_finish: function(data){
         if(data.condition == 'RELATED'){
@@ -171,12 +171,12 @@
     var present_feedback = {
         type: 'html-keyboard-response',
         stimulus: function() {
-        var feedback_text = 
+        var feedback_text =
             '<span style="color:red;font-size:30px;">Incorrect</span>';
-        var last_resp_acc = 
+        var last_resp_acc =
             jsPsych.data.getLastTrialData().values()[0].correct;
         if (last_resp_acc == true) {
-            feedback_text = 
+            feedback_text =
             '<span style="color:green;font-size:30px;">Correct!</span>'
         }
         return feedback_text;
@@ -184,33 +184,33 @@
         choices: jsPsych.NO_KEYS,
         trial_duration: FEEDBACK_DURATION,
         data: {
-        condition: jsPsych.timelineVariable('item_type'),
-        word: jsPsych.timelineVariable('word'),
-        prime: jsPsych.timelineVariable('prime'),
-        id:jsPsych.timelineVariable('id'),
-        trial_phase: 'present_word',
-        useful_data_flag: false
+            condition: jsPsych.timelineVariable('item_type'),
+            word: jsPsych.timelineVariable('word'),
+            prime: jsPsych.timelineVariable('prime'),
+            id:jsPsych.timelineVariable('id'),
+            trial_phase: 'present_word',
+            useful_data_flag: false
         }
     };
     
     // procedures 
     var practice_procedure = {
         timeline:[
-        present_fixation, 
-        present_prime, 
-        present_word, 
-        present_feedback
-        ],
+            present_fixation,
+            present_prime,
+            present_word,
+            present_feedback
+            ],
         timeline_variables: getPracticeItems().table,
-        randomize_order:false 
+        randomize_order: false 
     };
 
     var trial_procedure = {
         timeline:[
-        present_fixation, 
-        present_prime, 
-        present_word, 
-        ],
+            present_fixation,
+            present_prime,
+            present_word,
+            ],
         timeline_variables: stimuli.table,
         randomize_order:true 
     };
@@ -228,22 +228,20 @@
             var response = JSON.parse(xhr.responseText);
             console.log(response.success);
         }
-        };
-        xhr.send(jsPsych.data.get().json());
-    }
+    };
+    xhr.send(jsPsych.data.get().json());
+    };
 
 
     //////////////// timeline /////////////////////////////////
     var timeline = []
-
+    
     // best practice to have user I/O first
     timeline.push(start_screen);
-    
     // then push the rest
     timeline.push(practice_procedure);
     timeline.push(well_done_screen);
     timeline.push(trial_procedure);
-    
     timeline.push(end_screen_local); 
     //timeline.push(end_screen_server);
 
