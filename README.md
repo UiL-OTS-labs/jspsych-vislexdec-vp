@@ -42,7 +42,7 @@ For now, the easiest way to test these templates, is:
 You need this github repository and to download the jsPsych library version 6.1
 complete the following steps. When downloading and extracting folders please
 keep in mind that once working on the server, filenames are case sensitive and
-"jsPsych.js" and "jspsyc.js" are two distinct filenames. It might work on your
+"jsPsych.js" and "jspsych.js" are two distinct filenames. It might work on your
 machine, but it might not work on the server hosting your experiment.
 
 You will need to adapt your own directory structure/naming convention in the
