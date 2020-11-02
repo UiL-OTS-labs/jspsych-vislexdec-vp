@@ -288,7 +288,6 @@ visdeclex/
          /css               <---- Optionally, experiment specific styling code. 
          /stimuli.js        <---- Usually a file called stimuli.js
          /globals.js        <---- Often a file called globals.js
-         /generic.js        <---- Usually a file called stimuli.js
 ```
 
 
