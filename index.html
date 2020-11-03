@@ -31,7 +31,6 @@
     // https://www.jspsych.org/overview/data/
     var subject_id = jsPsych.randomization.randomID(8);
     var group_name = stimuli.group_name;
-    var timestamp_unit = 'milliseconds'
 
     jsPsych.data.addProperties(
     {
@@ -47,14 +46,7 @@
         stimulus: PRE_PRACTICE_INSTRUCTION, 
         choices: [OK_BUTTON_TEXT],
         response_ends_trial: true,
-        data: {
-            condition: jsPsych.timelineVariable('item_type'),
-            prime: jsPsych.timelineVariable('prime'),
-            word: jsPsych.timelineVariable('word'),
-            id: jsPsych.timelineVariable('id'),
-            trial_phase: 'present_fixation',
-            useful_data_flag: false 
-        }
+        data: { useful_data_flag: false }
     };
     
     var well_done_screen = {
@@ -62,42 +54,21 @@
         stimulus: PRE_TEST_INSTRUCTION, 
         choices: [OK_BUTTON_TEXT],
         response_ends_trial: true,
-        data: {
-            condition: jsPsych.timelineVariable('item_type'),
-            prime: jsPsych.timelineVariable('prime'),
-            word: jsPsych.timelineVariable('word'),
-            id: jsPsych.timelineVariable('id'),
-            trial_phase: 'present_fixation',
-            useful_data_flag: false 
-        }
+        data: { useful_data_flag: false }
     };
 
     var end_screen_local = {
         type: 'html-keyboard-response',
         stimulus: "Thanks, you're done. Press spacebar to see data", 
         choices: ['space'],
-        data: {
-            condition: jsPsych.timelineVariable('item_type'),
-            prime: jsPsych.timelineVariable('prime'),
-            word: jsPsych.timelineVariable('word'),
-            id: jsPsych.timelineVariable('id'),
-            trial_phase: 'present_fixation',
-            useful_data_flag: false 
-        }
+        data: { useful_data_flag: false }
     };
 
     var end_screen_server = {
         type: 'html-button-response',
         stimulus: "Thanks, you're done. Would you like to click OK?", 
         choices: [OK_BUTTON_TEXT, 'NO'],
-        data: {
-            condition: jsPsych.timelineVariable('item_type'),
-            prime: jsPsych.timelineVariable('prime'),
-            word: jsPsych.timelineVariable('word'),
-            id: jsPsych.timelineVariable('id'),
-            trial_phase: 'present_fixation',
-            useful_data_flag: false 
-        }
+        data: { useful_data_flag: false }
     };
 
     var present_fixation = {
@@ -105,14 +76,7 @@
         stimulus: '<span style="font-size:40px;">+</span>',
         choices: jsPsych.NO_KEYS,
         trial_duration: FIXCROSS_DURATION,
-        data: {
-            condition: jsPsych.timelineVariable('item_type'),
-            prime: jsPsych.timelineVariable('prime'),
-            word: jsPsych.timelineVariable('word'),
-            id: jsPsych.timelineVariable('id'),
-            trial_phase: 'present_fixation',
-            useful_data_flag: false 
-        }
+        data: { useful_data_flag: false }
     };
 
     var present_prime = {
@@ -125,15 +89,7 @@
         trial_duration: PRIME_DURATION,
         post_trial_gap: PRIME_GAP_DURATION,
         prompt: "",
-        data: {
-            condition: jsPsych.timelineVariable('item_type'),
-            word: jsPsych.timelineVariable('word'),
-            prime: jsPsych.timelineVariable('prime'),
-            word: jsPsych.timelineVariable('word'),
-            id: jsPsych.timelineVariable('id'),
-            trial_phase: 'present_prime',
-            useful_data_flag: false 
-        }
+        data: { useful_data_flag: false }
     };
 
     var present_word = {
@@ -183,14 +139,7 @@
         },
         choices: jsPsych.NO_KEYS,
         trial_duration: FEEDBACK_DURATION,
-        data: {
-            condition: jsPsych.timelineVariable('item_type'),
-            word: jsPsych.timelineVariable('word'),
-            prime: jsPsych.timelineVariable('prime'),
-            id:jsPsych.timelineVariable('id'),
-            trial_phase: 'present_word',
-            useful_data_flag: false
-        }
+        data: { useful_data_flag: false }
     };
     
     // procedures 
