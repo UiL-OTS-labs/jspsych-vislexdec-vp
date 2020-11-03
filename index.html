@@ -13,7 +13,17 @@
     <script src="instructions.js"></script>
     <style>
 
-    .stimulus { font-size: 30px; }
+    .stimulus { 
+        font-size: 30px; 
+        font-family: monospace;
+        font-weight: normal;
+    }
+
+    .instruction {
+        text-align: left;
+        margin: 5% 10% 5% 10%;
+    }
+
     kbd {
         border-radius: 2px;
         padding: 2px;
@@ -36,14 +46,16 @@
     {
         subject: subject_id,
         group: group_name,
-        time_unit: timestamp_unit
     });
 
     //////////////// test page flows ///////////////////////////////
     
     var start_screen = {
         type: 'html-button-response',
-        stimulus: PRE_PRACTICE_INSTRUCTION, 
+        stimulus: function(){ 
+            return "<div class='instruction' >" + 
+            '<p>' + PRE_PRACTICE_INSTRUCTION + '</p></div>';
+        }, 
         choices: [OK_BUTTON_TEXT],
         response_ends_trial: true,
         data: { useful_data_flag: false }
@@ -51,7 +63,10 @@
     
     var well_done_screen = {
         type: 'html-button-response',
-        stimulus: PRE_TEST_INSTRUCTION, 
+        stimulus: function(){ 
+            return "<div class='instruction' >" + 
+            '<p>' + PRE_TEST_INSTRUCTION + '</p></div>';
+        }, 
         choices: [OK_BUTTON_TEXT],
         response_ends_trial: true,
         data: { useful_data_flag: false }
