@@ -6,7 +6,7 @@
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/jspsych.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-button-response.js"></script>
-    
+    <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-audio-button-response.js"></script>
     <link href="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"/>
 
     <!-- Uil OTS libraries -->
@@ -73,6 +73,25 @@
             }
         },
         data: { useful_data_flag: false }
+    };
+
+    var test_audio_start = {
+        type: 'html-button-response',
+        stimulus: function(){ 
+            return "<div class='instruction' >" + 
+            '<p>' + AUDIO_CHECK_ONE + '</p></div>';
+        }, 
+        choices: ["OK"],
+        response_ends_trial: true,
+        data: { useful_data_flag: false }
+    };
+
+    var test_audio_test = {
+        type: 'audio-button-response',
+        stimulus: 'boat.wav',
+        choices: ['boat.png', 'key.png'],
+        prompt: "<p>Which image fits best to the sound you hear?</p>",
+        button_html: '<img src="%choice%" />'
     };
     
     var well_done_screen = {
@@ -194,6 +213,8 @@
     
     // best practice to have user I/O first
     timeline.push(start_screen);
+    timeline.push(test_audio_start);
+    timeline.push(test_audio_test);
     // then push the rest
     timeline.push(practice_procedure);
     timeline.push(well_done_screen);
