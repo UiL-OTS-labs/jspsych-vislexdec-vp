@@ -63,6 +63,15 @@
         }, 
         choices: [OK_BUTTON_TEXT],
         response_ends_trial: true,
+        on_load: function(){
+            var check = uil.isMobileOrTablet();
+            if (check == true){
+                console.log('tablet/mobile');
+                jsPsych.endExperiment("The experiment was ended because we fear you are not on the right type of device to proceed. You're on a laptop or PC with audio and keyboard and mouse or trackpad available, right? If not, please come back here on a device that qualifies!")
+            } else {
+                console.log("This device might be alright to proceed!");
+            }
+        },
         data: { useful_data_flag: false }
     };
     
