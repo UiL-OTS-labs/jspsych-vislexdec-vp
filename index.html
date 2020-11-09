@@ -2,9 +2,11 @@
 <html>
     <head>
     <title>Primed Lexical Decision Experiment</title>
+
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/jspsych.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-button-response.js"></script>
+    
     <link href="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"/>
 
     <!-- Uil OTS libraries -->
@@ -100,8 +102,7 @@
     var present_prime = {
         type: 'html-keyboard-response',
         stimulus: function(){ 
-            return "<p class='stimulus'>" + 
-            jsPsych.timelineVariable('prime', true) + "</p>";
+            return "<p class='stimulus'>" + jsPsych.timelineVariable('prime', true) + "</p>";
         },
         choices: jsPsych.NO_KEYS,
         trial_duration: PRIME_DURATION,
@@ -112,8 +113,9 @@
 
     var present_word = {
         type: 'html-keyboard-response',
-        stimulus: function(){ return "<p class='stimulus'>" +
-        jsPsych.timelineVariable('word', true)+"</p>"; },
+        stimulus: function(){ 
+            return "<p class='stimulus'>" + jsPsych.timelineVariable('word', true)+"</p>";
+        },
         choices: ['z','m'],
         response_ends_trial: true,
         stimulus_duration: WORD_DURATION,
@@ -128,32 +130,26 @@
             useful_data_flag: true
         },
         on_finish: function(data){
-        if(data.condition == 'RELATED'){
-            var correct = data.key_press == 
-            jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
-        } else if (data.condition == 'UNRELATED'){
-            var correct = data.key_press == 
-            jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
-        } else {
-            var correct = data.key_press == 
-            jsPsych.pluginAPI.convertKeyCharacterToKeyCode('m');
-        }
-        data.correct = correct;
+            if(data.condition == 'RELATED'){
+                var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
+            } else if (data.condition == 'UNRELATED'){
+                var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
+            } else {
+                var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('m');
+            }
+            data.correct = correct;
         }
     };
         
     var present_feedback = {
         type: 'html-keyboard-response',
         stimulus: function() {
-        var feedback_text =
-            '<span style="color:red;font-size:30px;">Incorrect</span>';
-        var last_resp_acc =
-            jsPsych.data.getLastTrialData().values()[0].correct;
-        if (last_resp_acc == true) {
-            feedback_text =
-            '<span style="color:green;font-size:30px;">Correct!</span>'
-        }
-        return feedback_text;
+            var feedback_text ='<span style="color:red;font-size:30px;">Incorrect</span>';
+            var last_resp_acc = jsPsych.data.getLastTrialData().values()[0].correct;
+            if (last_resp_acc == true) {
+                feedback_text = '<span style="color:green;font-size:30px;">Correct!</span>'
+            }
+            return feedback_text;
         },
         choices: jsPsych.NO_KEYS,
         trial_duration: FEEDBACK_DURATION,
@@ -193,12 +189,9 @@
     timeline.push(practice_procedure);
     timeline.push(well_done_screen);
     timeline.push(trial_procedure);
-    
-    //timeline.push(end_screen_local); 
     timeline.push(end_screen_server);
 
-
-    // localinit placholder
+    // localinit 
 
     // jsPsych.init({
     //     timeline: timeline,
@@ -209,12 +202,17 @@
     //     }
     // })
 
-    // serverinit
+    // serverinit, with --apparently -- fallback to
+    //```jsPsych.data.displayData();``` if ran locally ```
 
     jsPsych.init({
         timeline: timeline,
         show_preload_progress_bar: false,
         use_webaudio: false,
+        exclusions: {
+            min_width: 800,
+            min_height: 600
+        },
         on_finish: function() {
             uil.saveData(ACCESS_KEY, true);
         }

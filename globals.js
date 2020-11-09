@@ -13,4 +13,4 @@ const WORD_GAP_DURATION = 0;
 const TRIAL_GAP_DURATION = 1000;
 const OK_BUTTON_TEXT = "OK";
 
-const ACCES_KEY = 'verysecretsothiswontworkwithoutme';
+const ACCESS_KEY = 'verysecretsothiswontworkwithoutme';
