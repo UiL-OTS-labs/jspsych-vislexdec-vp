@@ -59,13 +59,13 @@
         type: 'html-button-response',
         stimulus: function(){ 
             return "<div class='instruction' >" + 
-            '<p>' + PRE_PRACTICE_INSTRUCTION + '</p></div>';
+            '<p>' + GENERIC_CHECK + '</p></div>';
         }, 
         choices: [OK_BUTTON_TEXT],
         response_ends_trial: true,
         on_load: function(){
-            var check = uil.isMobileOrTablet();
-            if (check == true){
+            var iamamobile = uil.isMobileOrTablet();
+            if (iamamobile == true){
                 console.log('tablet/mobile');
                 jsPsych.endExperiment("The experiment was ended because we fear you are not on the right type of device to proceed. You're on a laptop or PC with audio and keyboard and mouse or trackpad available, right? If not, please come back here on a device that qualifies!")
             } else {
