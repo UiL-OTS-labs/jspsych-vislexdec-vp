@@ -7,9 +7,8 @@
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-button-response.js"></script>
     <link href="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"/>
 
-    <!-- Uil OTS library on Monday, November 9, 14:33 Amsterdam time zone  -->
     <!-- Uil OTS libraries -->
-    <script src="https://web-experiments.lab.hum.uu.nl/jspsych-uil-utils/jspsych-uil-utils.js"></script>    
+    <script src="https://web-experiments.lab.hum.uu.nl/jspsych/uil-utils/dev/jspsych-uil-utils.js"></script>
 
     <!-- Uil OTS scripts -->
     <script src="stimuli.js"></script>
@@ -185,22 +184,6 @@
 
     ///////////////////////////////////////////////////////////
 
-    // saveData function, will move at some point
-
-    function saveData(access_key) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'https://experiment-datastore.acc.lab.hum.uu.nl/api/' + access_key + '/upload/');
-        xhr.setRequestHeader('Content-Type', 'text/plain');
-        xhr.onload = function() {
-        if(xhr.status == 200){
-            var response = JSON.parse(xhr.responseText);
-            console.log(response.success);
-        }
-    };
-    xhr.send(jsPsych.data.get().json());
-    };
-
-
     //////////////// timeline /////////////////////////////////
     var timeline = []
     
@@ -210,8 +193,9 @@
     timeline.push(practice_procedure);
     timeline.push(well_done_screen);
     timeline.push(trial_procedure);
+    
     //timeline.push(end_screen_local); 
-    //timeline.push(end_screen_server);
+    timeline.push(end_screen_server);
 
 
     // localinit placholder
@@ -232,7 +216,7 @@
         show_preload_progress_bar: false,
         use_webaudio: false,
         on_finish: function() {
-            uil.saveData(ACCESS_KEY);
+            uil.saveData(ACCESS_KEY, true);
         }
     })
 
