@@ -5,7 +5,11 @@
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/jspsych.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-button-response.js"></script>
-        <link href="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"/>
+    <link href="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Uil OTS library on Monday, November 9, 14:33 Amsterdam time zone  -->
+    <!-- Uil OTS libraries -->
+    <script src="https://web-experiments.lab.hum.uu.nl/jspsych-uil-utils/jspsych-uil-utils.js"></script>    
 
     <!-- Uil OTS scripts -->
     <script src="stimuli.js"></script>
@@ -206,17 +210,29 @@
     timeline.push(practice_procedure);
     timeline.push(well_done_screen);
     timeline.push(trial_procedure);
-    timeline.push(end_screen_local); 
+    //timeline.push(end_screen_local); 
     //timeline.push(end_screen_server);
 
 
     // localinit placholder
+
+    // jsPsych.init({
+    //     timeline: timeline,
+    //     show_preload_progress_bar: false,
+    //     use_webaudio: false,
+    //     on_finish: function() {
+    //         jsPsych.data.displayData();
+    //     }
+    // })
+
+    // serverinit
+
     jsPsych.init({
         timeline: timeline,
         show_preload_progress_bar: false,
         use_webaudio: false,
         on_finish: function() {
-        jsPsych.data.displayData();
+            uil.saveData(ACCESS_KEY);
         }
     })
 
