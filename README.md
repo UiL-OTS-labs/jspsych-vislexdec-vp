@@ -94,10 +94,21 @@ In this stage, we will limit things to running the templates __locally__, which 
 # Some best practices for jsPsych experiments 
 
 ## Audio
-In the case of web server setup, it is as good idea to initialise jsPysch with ```use_webaudio = true```, in case you use audio stimuli. This is typically faster than when set to false.
+In the case of web server setup, it is as good idea to initialise jsPysch with ```use_webaudio = true```, in case you use audio stimuli. This is typically faster than when set to false. This seems to be be redundant now, since we can do such things using ```jspsych-uil-utils```.
 
 ## Preload media, like images, video, audio
-In general, since timing is important, please make sure to [pre-load all media files](https://www.jspsych.org/overview/media-preloading/).
+In general, since timing is important, please make sure to [pre-load all media files](https://www.jspsych.org/overview/media-preloading/). This is because, we will typically use trials with a timelineVariables setup. 
+
+## Generic checks 
+Some generic instruction and test flows (like audio tests) will also be prepared in this specific boilerplate. This may seem an odd choice, since the current boilerplate task does not require audio. The reason to define some generic tests and checks here, is to make the process of making some other boilerplates a bit easier to branch off from the same documentation and reuse generic functionality. Things we habe in mind to check all the time:
+
+- Check if the participant is using a tablet or phone. (not intended for 'mobile devices')
+- Check if the audio works (and system sound loudness).
+- A generic survey asking about dominant hand, age, 'gender-related', etc. (not at this point?)
+- Keyboard layout and user-optimised response keys
+- A general consent page/flow
+- Etc.
+
 
 ## Always start an experiment with a html-button-response interaction part
 Browsers will often disallow auto-playing sound/video if there is no user activity related to a _mouse click_. It would be a shame to start of the experiment with errors of this type. An _instruction_ (plugin) with a mouse button response (or a multi-page instuction) will also fix this poitential error.
