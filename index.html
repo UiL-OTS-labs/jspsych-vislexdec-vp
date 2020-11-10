@@ -94,9 +94,12 @@
     // unused now
     var test_audio_single = {
         type: 'audio-button-response',
-        stimulus: './sounds/boat.mp3',
+        stimulus: './sounds/boat.mp3',//timelinevar for audio checks?
         choices: ['I hear a sound','I hear no sound'],
-        prompt: "<p>Make a choice</p>",
+        prompt: function(){ 
+            return "<div class='instruction' >" + 
+            '<p>' + AUDIO_CHECK_PROMPT_TEXT + '</p></div>';
+        },
         data: {
             trial_phase: 'test_audio_single',
             useful_data_flag: false,
@@ -107,7 +110,7 @@
             } else {
                 var audio_correct = false;
             }
-            data.audio_works = audio_correct;
+            data.audio_tested = audio_correct;
         }
     };
 
@@ -118,15 +121,22 @@
                 type: 'audio-button-response',
                 stimulus: './sounds/boat.mp3',
                 choices: ['Play Again', 'Continue'],
-                prompt: "<BR><BR>Please make sure your audio is audible, you can play the sound again to adjust your device volume. Once you're happy with the levels, click 'Continue'."
+                prompt: function(){ 
+                    return "<div class='instruction' >" + 
+                    '<p>' + AUDIO_CHECK_PROMPT_TEXT_LOOP + '</p></div>'
+                }
             }
         ],
         loop_function: function(data){
-            if(data.values()[0].button_pressed == 0){
+            if (data.values()[0].button_pressed == 0){
                 return true; // loop again!
             } else {
                 return false; // continue
             }
+        },
+        on_finish: function(data) {
+            data.audio_checked = true;
+            //console.log(data.audio_checked);
         }
     };
 
@@ -148,24 +158,32 @@
     var select_keyboard_two = {
         type: 'html-button-response',
         stimulus: '<h2>Choose your keyboard layout</h2>',
-        choices: ['QWERTY','AZERTY','DVORAK','QWERTZ','CUSTOM'],
+        choices: KEYBOARD_CHOICES,
         prompt: "Depending on your screen resolution, you may need to scroll a bit...",
         button_html: '<button class="img-btn"><img src=./images/%choice%.png></button>',
         on_finish: function(data) {
-
-            var my_choices = ['QWERTY','AZERTY','DVORAK','QWERTZ','CUSTOM'];//argh
-
-            console.log(my_choices);
-
             var button_id = data.button_pressed;
             var button_number = parseInt(button_id, 10);
-            var keyboard_chosen = my_choices[button_number];
-            
-            console.log(button_id);
-            console.log(button_number);
-            console.log(keyboard_chosen);
-
+            var keyboard_chosen = KEYBOARD_CHOICES[button_number]; 
             data.keyboard = keyboard_chosen;
+        }
+    };
+
+    var ask_hand_simple = {
+        type: 'html-button-response',
+        stimulus: function(){ 
+            return "<div class='instruction' >" + 
+            '<p>' + HAND_QUESTION + '</p></div>'
+        },
+        choices: HAND_CHOICES,
+        prompt: "Just trust your impulses...",
+        on_finish: function(data) {
+            var button_id = data.button_pressed;
+            var button_number = parseInt(button_id, 10);
+            var hand_chosen = HAND_CHOICES[button_number]; 
+            data.handedness = hand_chosen;
+            //db
+            console.log(data.handedness);
         }
     };
 
@@ -302,16 +320,25 @@
     timeline.push(test_audio_start);
     
     //timeline.push(test_audio_single);
-    //timeline.push(test_audio_looped);
+    timeline.push(test_audio_looped);
     // todo: keyboard checks:
+
+            // first a non-survey item tot test
+    timeline.push(ask_hand_simple);
 
     // some reading up: https://hacks.mozilla.org/2017/03/internationalize-your-keyboard-controls/
     
-    //timeline.push(select_keyboard_one);
+    timeline.push(select_keyboard_one);
     timeline.push(select_keyboard_two);
+    
 
+
+    //now for finding out the real bits..
+
+    
 
     timeline.push(instruction_screen_practice);
+
     // then push the rest
     timeline.push(practice_procedure);
     timeline.push(well_done_screen);
