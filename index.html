@@ -133,7 +133,7 @@
     var select_keyboard_one = {
         type: 'instructions',
         pages: [
-            "<h1>Keyboard checks</h1><BR>" +
+            "<h1>Keyboard layout</h1><BR>" +
             "<p>Let's figure out what keyboard you use. A couple of well known layouts will be shown with a caption</p>" +
             "<p>Please have a look at the following layouts and remember the one that look most like the keyboard you're using.</p>" + "Click 'next' to proceed and 'back' to review layouts",
             'QWERTY:<BR><BR><img src="./images/QWERTY.png"></img>',
@@ -147,12 +147,13 @@
 
     var select_keyboard_two = {
         type: 'html-button-response',
+        stimulus: '<h2>Choose your keyboard layout</h2>',
         choices: ['QWERTY','AZERTY','DVORAK','QWERTZ','CUSTOM'],
-        prompt: "Select the keyboard that looks most like the on you use. You may need to scroll a bit...",
+        prompt: "Depending on your screen resolution, you may need to scroll a bit...",
         button_html: '<button class="img-btn"><img src=./images/%choice%.png></button>',
         on_finish: function(data) {
             var button_id = data.button_pressed;
-            var keyboard_chosen = jsPsych.timelineVariable('choices')[used_button];
+            var keyboard_chosen = jsPsych.timelineVariable('choices')[button_id];
             data.keyboard = keyboard_chosen;
         }
     };
@@ -287,10 +288,10 @@
     
     // best practice to have user I/O first
     timeline.push(start_screen);
-    //timeline.push(test_audio_start);
+    timeline.push(test_audio_start);
     
     //timeline.push(test_audio_single);
-    //timeline.push(test_audio_looped);
+    timeline.push(test_audio_looped);
     // todo: keyboard checks:
 
     // some reading up: https://hacks.mozilla.org/2017/03/internationalize-your-keyboard-controls/
