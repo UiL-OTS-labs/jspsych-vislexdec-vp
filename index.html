@@ -9,7 +9,7 @@
 
     <!-- Generic check libraries -->
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-audio-button-response.js"></script>
-    <script src="/jspsych/6.1.0/plugins/jspsych-instructions.js"></script>
+    <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-instructions.js"></script>
 
     <!-- Generic jspsych style sheets -->
     <link href="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"/>
@@ -91,6 +91,7 @@
         data: { useful_data_flag: false }
     };
 
+    // unused now
     var test_audio_single = {
         type: 'audio-button-response',
         stimulus: './sounds/boat.mp3',
@@ -139,9 +140,21 @@
             'AZERTY:<BR><BR><img src="./images/AZERTY.png"></img>',
             'DVORAK:<BR><BR><img src="./images/DVORAK.png"></img>',
             'QWERTZ:<BR><BR><img src="./images/QWERTZ.png"></img>',
-            'Other: If you have your own, custom (mechanical) keyboard, this will be dealt with in the next step...'
+            'OTHER:<BR><BR><img src="./images/CUSTOM.png"></img><BR><BR>If you have your own, custom (mechanical) keyboard...'
             ],
         show_clickable_nav: true
+    };
+
+    var select_keyboard_two = {
+        type: 'html-button-response',
+        choices: ['QWERTY','AZERTY','DVORAK','QWERTZ','CUSTOM'],
+        prompt: "Select the keyboard that looks most like the on you use. You may need to scroll a bit...",
+        button_html: '<button class="img-btn"><img src=./images/%choice%.png></button>',
+        on_finish: function(data) {
+            var button_id = data.button_pressed;
+            var keyboard_chosen = jsPsych.timelineVariable('choices')[used_button];
+            data.keyboard = keyboard_chosen;
+        }
     };
 
     var instruction_screen_practice = {
@@ -274,16 +287,16 @@
     
     // best practice to have user I/O first
     timeline.push(start_screen);
-    timeline.push(test_audio_start);
+    //timeline.push(test_audio_start);
     
     //timeline.push(test_audio_single);
-    timeline.push(test_audio_looped);
+    //timeline.push(test_audio_looped);
     // todo: keyboard checks:
 
     // some reading up: https://hacks.mozilla.org/2017/03/internationalize-your-keyboard-controls/
     
     timeline.push(select_keyboard_one);
-
+    timeline.push(select_keyboard_two);
 
 
     timeline.push(instruction_screen_practice);
