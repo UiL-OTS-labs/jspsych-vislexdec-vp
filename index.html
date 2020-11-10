@@ -135,12 +135,12 @@
         pages: [
             "<h1>Keyboard layout</h1><BR>" +
             "<p>Let's figure out what keyboard you use. A couple of well known layouts will be shown with a caption</p>" +
-            "<p>Please have a look at the following layouts and remember the one that look most like the keyboard you're using.</p>" + "Click 'next' to proceed and 'back' to review layouts",
-            'QWERTY:<BR><BR><img src="./images/QWERTY.png"></img>',
-            'AZERTY:<BR><BR><img src="./images/AZERTY.png"></img>',
-            'DVORAK:<BR><BR><img src="./images/DVORAK.png"></img>',
-            'QWERTZ:<BR><BR><img src="./images/QWERTZ.png"></img>',
-            'OTHER:<BR><BR><img src="./images/CUSTOM.png"></img><BR><BR>If you have your own, custom (mechanical) keyboard...'
+            "<p>Please have a look at the following layouts and remember the one that look most like the keyboard you're using.</p>" + "Click 'next' to proceed and 'back' to review layouts. You don't have to select them here, just look at them...",
+            '1/5 <b>QWERTY</b>:<BR><BR><img src="./images/QWERTY.png"></img>',
+            '2/5 <b>AZERTY</b>:<BR><BR><img src="./images/AZERTY.png"></img>',
+            '3/5 <b>DVORAK</b>:<BR><BR><img src="./images/DVORAK.png"></img>',
+            '3/5 <b>QWERTZ</b>:<BR><BR><img src="./images/QWERTZ.png"></img>',
+            '5/5 <b>OTHER</b>:<BR><BR><img src="./images/CUSTOM.png"></img>',
             ],
         show_clickable_nav: true
     };
@@ -152,8 +152,19 @@
         prompt: "Depending on your screen resolution, you may need to scroll a bit...",
         button_html: '<button class="img-btn"><img src=./images/%choice%.png></button>',
         on_finish: function(data) {
+
+            var my_choices = ['QWERTY','AZERTY','DVORAK','QWERTZ','CUSTOM'];//argh
+
+            console.log(my_choices);
+
             var button_id = data.button_pressed;
-            var keyboard_chosen = jsPsych.timelineVariable('choices')[button_id];
+            var button_number = parseInt(button_id, 10);
+            var keyboard_chosen = my_choices[button_number];
+            
+            console.log(button_id);
+            console.log(button_number);
+            console.log(keyboard_chosen);
+
             data.keyboard = keyboard_chosen;
         }
     };
@@ -291,12 +302,12 @@
     timeline.push(test_audio_start);
     
     //timeline.push(test_audio_single);
-    timeline.push(test_audio_looped);
+    //timeline.push(test_audio_looped);
     // todo: keyboard checks:
 
     // some reading up: https://hacks.mozilla.org/2017/03/internationalize-your-keyboard-controls/
     
-    timeline.push(select_keyboard_one);
+    //timeline.push(select_keyboard_one);
     timeline.push(select_keyboard_two);
 
 
