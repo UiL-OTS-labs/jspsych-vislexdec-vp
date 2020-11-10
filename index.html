@@ -86,13 +86,43 @@
         data: { useful_data_flag: false }
     };
 
-    var test_audio_test = {
+    var test_audio_single = {
         type: 'audio-button-response',
-        stimulus: 'boat.wav',
-        choices: ['boat.png', 'key.png'],
-        prompt: "<p>Which image fits best to the sound you hear?</p>",
-        button_html: '<img src="%choice%" />'
+        stimulus: './sounds/boat.mp3',
+        choices: ['I hear a sound','I hear no sound'],
+        prompt: "<p>Make a choice</p>",
+        data: {
+            trial_phase: 'test_audio_single',
+            useful_data_flag: false,
+        },
+        on_finish: function(data){
+            if (data.button_pressed == 0){
+                var audio_correct = true; 
+            } else {
+                var audio_correct = false;
+            }
+            data.audio_works = audio_correct;
+        }
     };
+
+    var test_audio_looped = {
+        timeline: 
+        [
+            {
+                type: 'audio-button-response',
+                stimulus: './sounds/boat.mp3',
+                choices: ['Play Again', 'Continue'],
+                prompt: "<BR><BR>Please make sure your audio is audible, you can play the sound again to adjust your device volume. Once you're happy with the levels, click 'Continue'."
+            }
+        ],
+        loop_function: function(data){
+            if(data.values()[0].button_pressed == 0){
+                return true; // loop again!
+            } else {
+                return false; // continue
+            }
+        }
+    }
     
     var well_done_screen = {
         type: 'html-button-response',
@@ -214,7 +244,9 @@
     // best practice to have user I/O first
     timeline.push(start_screen);
     timeline.push(test_audio_start);
-    timeline.push(test_audio_test);
+    
+    //timeline.push(test_audio_single);
+    timeline.push(test_audio_looped);
     // then push the rest
     timeline.push(practice_procedure);
     timeline.push(well_done_screen);
