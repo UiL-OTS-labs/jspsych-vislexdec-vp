@@ -169,6 +169,62 @@
         }
     };
 
+
+    // var after_response = function(info){
+    //     alert('You pressed key '+info.key+' after '+info.rt+'ms');
+    //     if (info.key == 81){ // the key code for 'Q' is 81.
+    //         jsPsych.pluginAPI.cancelKeyboardResponse(listener);
+    // };
+
+    // var keyboard_listener = jsPsych.pluginAPI.getKeyboardResponse({
+    //     callback_function:after_response,
+    //     valid_responses: jsPsych.ALL_KEYS,
+    //     rt_method: 'performance',
+    //     persist: true
+    // });
+
+    var test_keyboard_left_default = {
+        type: 'html-keyboard-response',
+        stimulus: function(){ 
+            return "<class='stimulus' >" + 
+            '<p>Press your <kbd>' + KEYBOARD_LEFT_KEY + '</kbd></p>'
+        },
+        choices: jsPsych.ALL_KEYS,
+        response_ends_trial: true,
+        stimulus_duration: 10000,
+        trial_duration: 10000,
+        prompt: "left dominance",
+        data: {
+            useful_data_flag: true
+        },
+        on_finish: function(data) {
+            var check_key = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_LEFT_KEY);
+            //
+            console.log(check_key);   
+        }
+    };
+
+    var test_keyboard_right_default = {
+        type: 'html-keyboard-response',
+        stimulus: function(){ 
+            return "<class='stimulus' >" + 
+            '<p>Press your <kbd>' + KEYBOARD_RIGHT_KEY + '</kbd></p>'
+        },
+        choices: jsPsych.ALL_KEYS,
+        response_ends_trial: true,
+        stimulus_duration: 10000,
+        trial_duration: 10000,
+        prompt: "right dominance!",
+        data: {
+            useful_data_flag: true
+        },
+        on_finish: function(data) {
+            var check_key = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_RIGHT_KEY);
+            //
+            console.log(check_key);   
+        }
+    };    
+
     var ask_hand_simple = {
         type: 'html-button-response',
         stimulus: function(){ 
@@ -317,10 +373,10 @@
     
     // best practice to have user I/O first
     timeline.push(start_screen);
-    timeline.push(test_audio_start);
+    //timeline.push(test_audio_start);
     
     //timeline.push(test_audio_single);
-    timeline.push(test_audio_looped);
+    //timeline.push(test_audio_looped);
     // todo: keyboard checks:
 
             // first a non-survey item tot test
@@ -330,12 +386,19 @@
     
     timeline.push(select_keyboard_one);
     timeline.push(select_keyboard_two);
-    
+    timeline.push(test_keyboard_left_default);
+    timeline.push(test_keyboard_right_default);
 
 
     //now for finding out the real bits..
-
-    
+    // simple sheme
+    // Type     |   Left  |   Right
+    // ---------|---------|---------- 
+    // QWERTY   |   A     |  L
+    // AZERTY   |   Q     |  M
+    // DVORAK   |   A     |  S (or N?)
+    // QWERTZ   |   A     |  L
+    // OTHER    |   A     |  L (wild guess)
 
     timeline.push(instruction_screen_practice);
 

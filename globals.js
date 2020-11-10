@@ -25,5 +25,10 @@ const AUDIO_CHECK_PROMPT_TEXT_LOOP = "Please make sure your audio is audible, yo
 
 const KEYBOARD_CHOICES = ['QWERTY','AZERTY','DVORAK','QWERTZ','CUSTOM'];
 
-const HAND_QUESTION = "If forced to choose, I consider myself to be:";
+console.log(jsPsych.ALL_KEYS);
+
+const KEYBOARD_LEFT_KEY = 'A';
+const KEYBOARD_RIGHT_KEY = 'L';
+
+const HAND_QUESTION = "If forced to choose, I consider myself to be: ";
 const HAND_CHOICES = ['Left handed', 'Right handed'];
