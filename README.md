@@ -16,7 +16,7 @@ The naming conventions for this pair can be slightly confusing. The general conv
 
 The idea behind this _primed_ variant is that there may be semantic (or visual or grammatical) associations that influence reaction time in the last decision stage. For instance, after presenting the word 'snow' as a _prime_, there might be a speedup in the reaction time (RT) to the test stimulus if it were 'white', as opposed to --for instance-- 'potato', due to <i>semantic association</i>.
 
-It is up to the researcher to balance the stimulus design according to the categorial speedup or slowdown effects that are hypothesised, amongst others. So called _Latin Square Designs_ and things like _Pseudo-Randomisation_ are often needed, at least by tradition have been solutions to certain problems, like for instance: miximizing statistical power, keeping participants unbiased and naive, experiment look and feel, task elicited enticingness versus boredom, data management considerations, categorial data-reduction heuristics, etc.  
+It is up to the researcher to balance the stimulus design according to the categorial speedup or slowdown effects that are hypothesised, amongst others. So called _Latin Square Designs_ and things like _Pseudo-Randomisation_ are often needed, or have at least by tradition been used as solutions to certain problems. Think of: maximizing statistical power, keeping participants unbiased and naive with regards to the purpose of the experiment, general experiment look and feel, task elicited enticingness versus boredom, data management considerations, categorial data-reduction heuristics, etc...  
 
 The essential sub trial phases for _one_ trial for this boilerplate experiment are:
 
