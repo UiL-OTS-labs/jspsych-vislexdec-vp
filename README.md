@@ -1,33 +1,32 @@
 # jspsych-vislexdec-vp
-Template [visual lexical decision](https://en.wikipedia.org/wiki/Lexical_decision_task) experiment with visual prime. 
+Template [visual lexical decision](https://en.wikipedia.org/wiki/Lexical_decision_task) experiment with <i>visual prime</i>. 
 
 # Task Description
 
 ## Short description
-The participant first sees a fixation cross, then a prime is presented, followed by the test stimulus. Particpants are instructed to respond as quickly as possible to make the decision if both strings in a pair are words, or not, using the keyboard.
+The participant first sees a fixation cross, then a prime is presented, followed by the test stimulus. Particpants are instructed to respond as quickly as possible to make the decision if both strings in the pair are words --or not-- using the keyboard.
 
 - The _prime_ is a string of letters and can be a real word or a nonword.
-- The _test stimulus_ is a string of letters and can also be a real word or a nonword.
+- The _'test stimulus'_ is a string of letters and can also be a real word or a nonword.
 
 ## Longer description
 There are many (slightly) different variations of a lexical decision task. In this version, a trial consists of subsequently presenting _two_ words or nonwords. The participant needs to make a swift decision whether the _pair_ of presented sets of letters - the test stimuli - are _both_ acutal words or not. 
 
 The naming conventions for this pair can be slightly confusing. The general convention will be to differentiate between a 'prime' and the 'test stimulus', even though in a way, the _pair_ _is_ the test stimulus, both in what defines a single trial, and in the way to prepare the stimuli.js structure (the code).
 
-The idea behind this _primed_ variant is that there may be semantic (or visual or grammatical) associations that influence reaction time in the last decision stage. For instance, after presenting the word 'snow' as a prime, there might be a speedup in the reaction time to the test stimulus if it were 'white', as opposed to, say 'potato', due to semantic association.
+The idea behind this _primed_ variant is that there may be semantic (or visual or grammatical) associations that influence reaction time in the last decision stage. For instance, after presenting the word 'snow' as a _prime_, there might be a speedup in the reaction time (RT) to the test stimulus if it were 'white', as opposed to --for instance-- 'potato', due to <i>semantic association</i>.
 
-It is up to the researcher to balance the stimulus design according to the categorial speedup or slowdown effects that are hypothesised, amongst others. 
+It is up to the researcher to balance the stimulus design according to the categorial speedup or slowdown effects that are hypothesised, amongst others. So called _Latin Square Designs_ and things like _Pseudo-Randomisation_ are often needed, at least by tradition have been solutions to certain problems, like for instance: miximizing statistical power, keeping participants unbiased and naive, experiment look and feel, task elicited enticingness versus boredom, data management considerations, categorial data-reduction heuristics, etc.  
 
 The essential sub trial phases for _one_ trial for this boilerplate experiment are:
 
 1. Fixation cross presentation (fixed time, no responses are recorded) 
 2. Prime presentation (fixed time, no responses are recorded)
-3. Test stimulus presentation (the last string of letters of the presented pair). 
+3. Test stimulus presentation (the last string of letters of the presented pair, lexcical decision phase). 
 
 Only in this _last phase_, as soon as the "test item" is being presented, the participant can respond with the keyboard.
 
 The reaction time, response and correctness of the response are usually the important variables for analysis. By default, the data of all sub trial phases are logged in the data, but the output data can quite easily be filtered after data collection.
-
 
 # Getting started (the easy way, working internet connection required)
 For now, the easiest way to test these templates, is:
@@ -129,7 +128,7 @@ How some concepts relate to each other:
 
 ## CSS
 - CSS deals with mainly styling, like layouts, fonts, colors, backgrounds.
-- CSS evolved from being just a place to put styling parts in a separate file than the html fuile, but is becoming more like a programming language, in a way.
+- CSS evolved from being just a place to put styling parts in a separate file than the html file, but is becoming more like a programming language, in a way.
 
 ## jsPsych
 - jspsych _uses_ Javascript code for a specific experimental purpose and the functions from this library need to be imported in the top op your html file before you can use them.
