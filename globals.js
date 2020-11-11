@@ -42,13 +42,19 @@ const KEYBOARD_RIGHT_KEY = 'L';
         // var hand_options = ["Left handed", "Right handed"];
 
 //survey (simple, no input validation from within multi-question)
-const PREPARE_FOR_BINARY_SURVEY = "It is important for this experiment that we ask you to answer some questions in a quick survey. This is a quick screening we need, before we (think we) can use your data for this particular experiment<BR><BR>";
+const PREPARE_FOR_BINARY_SURVEY = "We will ask you to answer some questions in a quick survey. This is a quick screening we need, before we (think we) can use your data for this particular experiment. Please know that we know how limited this is at many levels...<BR><BR>";//placeholder
 
+//survey html plugin
+const NATIVE_LANGUAGE_QUESTION = 'What is your native language? (todo, pattern now at: "[a-zA-Z]+")'
+const YEAR_BORN_QUESTION = 'In what <i>year</i> were you born? (valid input: 1919 - 2019)';
+const MONTH_BORN_QUESTION = 'In what <i>month</i> were you born? (valid input: 1 - 12)';
+
+// block
 const BILINGUAL_QUESTION = "Were you raised to understand and speak more than one language, from when you were an infant and onwards?"
 const BILINGUAL_OPTIONS = ["No","Yes"];
 
-const DYSLEX_QUESTION = "Are you dyslexic?";
-const DYSLEX_OPTIONS = ["No", "Yes"];
+const DYSLEXIC_QUESTION = "Are you dyslexic?";
+const DYSLEXIC_OPTIONS = ["No", "Yes"];
 
 const GENDER_QUESTION = "What is your gender?";
 const GENDER_OPTIONS = ["Female", "Male"];

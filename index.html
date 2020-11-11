@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <meta charset="UTF-8">
+    
     <title>Primed Lexical Decision Experiment</title>
 
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/jspsych.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-button-response.js"></script>
 
-    <!-- Generic check libraries -->
+    <!-- Generic check/ask libraries -->
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-audio-button-response.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-instructions.js"></script>
-
+    <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-survey-html-form.js"></script>
+    <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-survey-multi-choice.js"></script>
     <!-- Generic jspsych style sheets -->
     <link href="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"/>
 
@@ -38,6 +41,23 @@
         border-radius: 2px;
         padding: 2px;
         border: 1px solid black;
+    }
+    
+    input,
+    label {
+        margin: .4rem 0;
+    }
+
+    span::after {
+        padding-left: 5px;
+    }
+
+    input:invalid + span::after {
+        content: '✖';
+    }
+
+    input:valid+span::after {
+          content: '✓';
     }
 
     </style>
@@ -79,6 +99,74 @@
         },
         data: { useful_data_flag: false }
     };
+
+    ////////////// survey-related 
+
+    var survey_valid_year_html_number = {
+        type: 'survey-html-form',
+        preamble: '<p>' + YEAR_BORN_QUESTION + '</p>',
+        html: '<input type="number" id="birth_year" name="birth_year" placeholder=1999 min=1919 max=2019 required>' + 
+              '<span class="validity"></span><BR>'
+    };
+    
+    var survey_valid_month_html_number = {
+        type: 'survey-html-form',
+        preamble: '<p>' + MONTH_BORN_QUESTION + '</p>',
+        html: '<input type="number" id="birth_month" name="birth_year" placeholder=7 min=1 max=12 required>' + 
+              '<span class="validity"></span><BR>'
+    };
+
+    var survey_valid_language_html_text = {
+        type: 'survey-html-form',
+        preamble: '<p>' + NATIVE_LANGUAGE_QUESTION + '</p>',
+        html: '<input type="text" id="language" name="native_language" pattern="[a-zA-Z]+" placeholder="Dutch" required>' +
+              '<span class="validity"></span><BR>'
+    };
+
+    // // default options for the multi=block
+    // var bilingual_options = ["No","Yes"];
+    // var dyslex_options = ["No", "Yes", "Unsure (not diagnosed)"];
+    // var gender_options = ["Female", "Male"];
+    // var hand_options = ["Left handed", "Right handed"];
+
+    // this multi-choice is a usable plugin, since it has built-in 
+    // validation
+    var survey_multi_choice_block = {
+        type: 'survey-multi-choice',
+        questions: [
+            {
+                prompt: BILINGUAL_QUESTION,
+                name: 'Multilingual', 
+                options: BILINGUAL_OPTIONS, 
+                required:true, 
+                horizontal: true
+            }, 
+            {
+                prompt: DYSLEXIC_QUESTION, 
+                name: 'Dyslexic',
+                options: DYSLEXIC_OPTIONS,
+                required: true,
+                horizontal: true
+            },
+            {
+                prompt: GENDER_QUESTION,
+                name:'Gender',
+                options: GENDER_OPTIONS,
+                required: true,
+                horizontal: true
+            },
+            {
+                prompt: HAND_QUESTION, 
+                name:'HandPreference', 
+                options: HAND_OPTIONS, 
+                required: true, 
+                horizontal: true
+            }
+        ],
+    };
+
+
+
 
     var test_audio_start = {
         type: 'html-button-response',
@@ -169,25 +257,11 @@
         }
     };
 
-
-    // var after_response = function(info){
-    //     alert('You pressed key '+info.key+' after '+info.rt+'ms');
-    //     if (info.key == 81){ // the key code for 'Q' is 81.
-    //         jsPsych.pluginAPI.cancelKeyboardResponse(listener);
-    // };
-
-    // var keyboard_listener = jsPsych.pluginAPI.getKeyboardResponse({
-    //     callback_function:after_response,
-    //     valid_responses: jsPsych.ALL_KEYS,
-    //     rt_method: 'performance',
-    //     persist: true
-    // });
-
     var test_keyboard_left_default = {
         type: 'html-keyboard-response',
         stimulus: function(){ 
             return "<class='stimulus' >" + 
-            '<p>Press your <kbd>' + KEYBOARD_LEFT_KEY + '</kbd></p>'
+            '<p>Press the <kbd>' + KEYBOARD_LEFT_KEY + '</kbd> on your keyboard.</p>'
         },
         choices: jsPsych.ALL_KEYS,
         response_ends_trial: true,
@@ -208,7 +282,7 @@
         type: 'html-keyboard-response',
         stimulus: function(){ 
             return "<class='stimulus' >" + 
-            '<p>Press your <kbd>' + KEYBOARD_RIGHT_KEY + '</kbd></p>'
+            '<p>Press the <kbd>' + KEYBOARD_RIGHT_KEY + '</kbd> on your keyboard.</p>'
         },
         choices: jsPsych.ALL_KEYS,
         response_ends_trial: true,
@@ -225,23 +299,23 @@
         }
     };    
 
-    var ask_hand_simple = {
-        type: 'html-button-response',
-        stimulus: function(){ 
-            return "<div class='instruction' >" + 
-            '<p>' + HAND_QUESTION + '</p></div>'
-        },
-        choices: HAND_CHOICES,
-        prompt: "Just trust your impulses...",
-        on_finish: function(data) {
-            var button_id = data.button_pressed;
-            var button_number = parseInt(button_id, 10);
-            var hand_chosen = HAND_CHOICES[button_number]; 
-            data.handedness = hand_chosen;
-            //db
-            console.log(data.handedness);
-        }
-    };
+    // var ask_hand_simple = {
+    //     type: 'html-button-response',
+    //     stimulus: function(){ 
+    //         return "<div class='instruction' >" + 
+    //         '<p>' + HAND_QUESTION + '</p></div>'
+    //     },
+    //     choices: HAND_CHOICES,
+    //     prompt: "Just trust your impulses...",
+    //     on_finish: function(data) {
+    //         var button_id = data.button_pressed;
+    //         var button_number = parseInt(button_id, 10);
+    //         var hand_chosen = HAND_CHOICES[button_number]; 
+    //         data.handedness = hand_chosen;
+    //         //db
+    //         console.log(data.handedness);
+    //     }
+    // };
 
     var instruction_screen_practice = {
         type: 'html-button-response',
@@ -373,14 +447,23 @@
     
     // best practice to have user I/O first
     timeline.push(start_screen);
+    
+    // survey
+    timeline.push(survey_valid_year_html_number);
+    timeline.push(survey_valid_month_html_number);
+    timeline.push(survey_valid_language_html_text);
+    timeline.push(survey_multi_choice_block);
+
+
     timeline.push(test_audio_start);
     
     //timeline.push(test_audio_single);
     timeline.push(test_audio_looped);
     // todo: keyboard checks:
 
-            // first a non-survey item tot test
-    timeline.push(ask_hand_simple);
+            
+    // first a non-survey item tot test
+    //timeline.push(ask_hand_simple);
 
     // some reading up: https://hacks.mozilla.org/2017/03/internationalize-your-keyboard-controls/
     
