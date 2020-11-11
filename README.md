@@ -4,7 +4,7 @@ Template [visual lexical decision](https://en.wikipedia.org/wiki/Lexical_decisio
 # Task Description
 
 ## Short description
-The participant first sees a fixation cross, then a prime is presented, followed by the test stimulus. Particpants are instructed to respond as quickly as possible to make the decision if both strings in the pair are words --or not--,using the keyboard.
+The participant first sees a fixation cross, then a prime is presented, followed by the test stimulus. Particpants are instructed to respond as quickly as possible to make the decision if both strings in the pair are words --or not--, using the keyboard.
 
 - The _prime_ is a string of letters and can be a real word or a nonword.
 - The _'test stimulus'_ is a string of letters and can also be a real word or a nonword.
