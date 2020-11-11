@@ -22,7 +22,7 @@ The essential sub trial phases for _one_ trial for this boilerplate experiment a
 
 1. Fixation cross presentation (fixed time, no responses are recorded) 
 2. Prime presentation (fixed time, no responses are recorded)
-3. Test stimulus presentation (the last string of letters of the presented pair, lexcical decision phase). 
+3. Test stimulus presentation (the last string of letters of the presented pair, lexical decision phase). 
 
 Only in this _last phase_, as soon as the "test item" is being presented, the participant can respond with the keyboard.
 
