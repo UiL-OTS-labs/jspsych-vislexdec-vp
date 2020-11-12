@@ -68,7 +68,7 @@
     // contents of this method
     window.addEventListener('load', function() {
         var stimuli = pickRandomGroup();
-        stimuli.table = uil.randomization.randomizeStimuli(stimuli.table, MAX_SUCCEEDING_ITEMS_OF_TYPE, 'item_type')
+        //stimuli.table = 
 
         // data one would like to add to __all__ trials, according to:
         // https://www.jspsych.org/overview/data/
@@ -439,8 +439,8 @@
                 present_prime,
                 present_word,
             ],
-            timeline_variables: stimuli.table,
-            randomize_order:true
+            timeline_variables: uil.randomization.randomizeStimuli(stimuli.table, MAX_SUCCEEDING_ITEMS_OF_TYPE, 'item_type'),
+            randomize_order: false
         };
 
         ///////////////////////////////////////////////////////////
