@@ -6,6 +6,9 @@ const RESPONSE_TIMEOUT_DURATION = 2000;
 const FEEDBACK_DURATION = 1000;
 const CROSS_GAP_DURATION = 0;
 
+// How many items of the same type may appear in series
+const MAX_SUCCEEDING_ITEMS_OF_TYPE = 2
+
 // Duration of the interval between prime and target.
 const PRIME_GAP_DURATION = 300;
 
