@@ -64,9 +64,11 @@
     </head>
     <body></body>
     <script>
+    
     // Wait till the browser has loaded all files, then execute the
     // contents of this method
-    window.addEventListener('load', function() {
+    
+    //window.addEventListener('load', function() {
         var stimuli = pickRandomGroup();
         //stimuli.table = 
 
@@ -79,8 +81,11 @@
             {
                 subject: subject_id,
                 group: group_name,
+                keyboard: undefined,
+                left_key_for_layout: undefined,
+                right_key_for_layout: undefined,
             });
-
+        
         //////////////// test page flows ///////////////////////////////
 
         var start_screen = {
@@ -100,7 +105,9 @@
                     console.log("This device might be alright to proceed!");
                 }
             },
-            data: { useful_data_flag: false }
+            data: {
+                useful_data_flag: false
+            }
         };
 
         ////////////// survey-related
@@ -109,31 +116,54 @@
             type: 'survey-html-form',
             preamble: '<p>' + YEAR_BORN_QUESTION + '</p>',
             html: '<input type="number" id="birth_year" name="birth_year" placeholder=1999 min=1919 max=2019 required>' +
-                '<span class="validity"></span><BR>'
+                '<span class="validity"></span><BR>',
+            data: {
+                useful_data_flag: false,
+                survey_data_flag: true
+            },
+            on_finish: function(data){
+                var year_born = birth_year;
+                data.birth_year = year_born;
+                console.log(data.birth_month);
+            }
         };
+
 
         var survey_valid_month_html_number = {
             type: 'survey-html-form',
             preamble: '<p>' + MONTH_BORN_QUESTION + '</p>',
-            html: '<input type="number" id="birth_month" name="birth_year" placeholder=7 min=1 max=12 required>' +
-                '<span class="validity"></span><BR>'
+            html: '<input type="number" id="birth_month" name="birth_month" placeholder=7 min=1 max=12 required>' +
+                '<span class="validity"></span><BR>',
+            data: {
+                useful_data_flag: false,
+                survey_data_flag: true
+            },
+            on_finish: function(data){
+                var month_born = birth_month;
+                data.birth_month = month_born;
+                console.log(data.birth_month);
+            }
         };
 
         var survey_valid_language_html_text = {
             type: 'survey-html-form',
             preamble: '<p>' + NATIVE_LANGUAGE_QUESTION + '</p>',
-            html: '<input type="text" id="language" name="native_language" pattern="[a-zA-Z]+" placeholder="Dutch" required>' +
-                '<span class="validity"></span><BR>'
+            html: '<input type="text" id="native_language" name="native_language" pattern="[a-zA-Z]+" placeholder="Dutch" required>' +
+                '<span class="validity"></span><BR>',
+            data: {
+                useful_data_flag: false,
+                survey_data_flag: true
+            },
+            on_finish: function(data){
+                var mother_tongue = native_language;
+                data.native_language = mother_tongue;
+                console.log(data.native_language);
+            }
         };
 
-        // // default options for the multi=block
-        // var bilingual_options = ["No","Yes"];
-        // var dyslex_options = ["No", "Yes", "Unsure (not diagnosed)"];
-        // var gender_options = ["Female", "Male"];
-        // var hand_options = ["Left handed", "Right handed"];
+        // this multi-choice is a very usable plugin, since it has built-in
+        // validation..
 
-        // this multi-choice is a usable plugin, since it has built-in
-        // validation
         var survey_multi_choice_block = {
             type: 'survey-multi-choice',
             questions: [
@@ -166,20 +196,28 @@
                     horizontal: true
                 }
             ],
+            on_finish: function(data){
+                var survey_multi = data.responses;
+                data.survey_multi = survey_multi;
+
+                //console.log(data.survey_multi); 
+
+                jsPsych.data.get().addToAll({'survey': data.responses});
+            }
         };
 
-
-
-
+        // generic tests 
         var test_audio_start = {
             type: 'html-button-response',
             stimulus: function(){
                 return "<div class='instruction' >" +
                     '<p>' + AUDIO_CHECK_ONE + '</p></div>';
             },
-            choices: ["OK"],
+            choices: [OK_BUTTON_TEXT],
             response_ends_trial: true,
-            data: { useful_data_flag: false }
+            data: {
+                useful_data_flag: false
+            }
         };
 
         // unused now
@@ -231,7 +269,7 @@
             }
         };
 
-        var select_keyboard_one = {
+        var select_keyboard_nav = {
             type: 'instructions',
             pages: [
                 "<h1>Keyboard layout</h1><BR>" +
@@ -246,79 +284,168 @@
             show_clickable_nav: true
         };
 
-        var select_keyboard_two = {
+        var select_keyboard_layout = {
             type: 'html-button-response',
             stimulus: '<h2>Choose your keyboard layout</h2>',
             choices: KEYBOARD_CHOICES,
             prompt: "Depending on your screen resolution, you may need to scroll a bit...",
             button_html: '<button class="img-btn"><img src=./images/%choice%.png></button>',
+            data: {
+                useful_data_flag: false
+            },
             on_finish: function(data) {
                 var button_id = data.button_pressed;
                 var button_number = parseInt(button_id, 10);
                 var keyboard_chosen = KEYBOARD_CHOICES[button_number];
                 data.keyboard = keyboard_chosen;
+                var keyboard_timeline = KEYBOARD_DEFAULTS[keyboard_chosen];
+                data.keyboard_timeline = keyboard_timeline;
+
+                // console.log(data.keyboard);
+                // console.log(data.keyboard_timeline);
             }
         };
 
-        var test_keyboard_left_default = {
+        var if_node_chosen_layout = {
+            timeline: [select_keyboard_layout],
+            type: 'html-button-response',
+            stimulus: function(data){
+                "<p>this is the if node speaking</p>"
+            },
+            choices: [OK_BUTTON_TEXT],
+            conditional_function(data) {
+                var kb_layout = jsPsych.data.getLastTrialData().values()[0].keyboard;
+                var left_key = jsPsych.data.getLastTrialData().values()[0].keyboard_timeline['left_key'];
+                var right_key = jsPsych.data.getLastTrialData().values()[0].keyboard_timeline['right_key'];
+                var tries = jsPsych.data.getLastTrialData().values()[0].keyboard_timeline['max_tries'];
+                //var dominant_hand = jsPsych.data.getLastTrialData().values()[0]["survey"]['HandPreference'];
+
+                var survey_data = jsPsych.data.get().filter({trial_type: 'survey-multi-choice'});
+
+                console.log('survey_data_from if_node');
+                console.log(survey_data)
+                console.log(survey_data['HandPreference'])
+                //var dominant_hand = jsPsych.data.get().filter({trial_type: 'survey-multi-choice'}.responses['HandPreference']);
+                // survey_multi_choice_block
+
+                console.log('kb layout:'); 
+                console.log(kb_layout);
+
+                console.log(left_key);
+                console.log(right_key);
+
+                console.log('max_tries')
+                console.log(tries);
+                //
+                console.log('survey_data');
+                console.log(survey_data);
+
+                data.left_key_for_layout = left_key;
+                data.right_key_for_layout = right_key;
+                data.max_tries = tries;
+                data.hand = dominant_hand
+            }
+        };
+
+        var test_keyboard_key_left = {
             type: 'html-keyboard-response',
             stimulus: function(){
                 return "<class='stimulus' >" +
-                    '<p>Press the <kbd>' + KEYBOARD_LEFT_KEY + '</kbd> on your keyboard.</p>'
+                    '<p>Press the <kbd>' + jsPsych.timelineVariable('left_key', true) + '</kbd> key on your keyboard.</p>'
             },
             choices: jsPsych.ALL_KEYS,
             response_ends_trial: true,
             stimulus_duration: 10000,
             trial_duration: 10000,
-            prompt: "left dominance",
+            prompt: "push it!",
             data: {
-                useful_data_flag: true
+                trial_phase: 'test_keyboard_key_left',
+                useful_data_flag: true,
+            },
+            on_load: function(data) {
+                var left_key_cofig = jsPsych.timelineVariable('left_key');
+
             },
             on_finish: function(data) {
-                var check_key = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_LEFT_KEY);
-                //
-                console.log(check_key);
+                // this would be the best  situation
+                var keys_match = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(left_key_cofig);
+                console.log(left_keys_match);
+
+                //but people make mistakes
+                var key_struck = data.key_press;
+                console.log(key_struck)
+
+                data.left_key_struck = key_struck;
             }
         };
 
-        var test_keyboard_right_default = {
+        var test_keyboard_key_right = {
             type: 'html-keyboard-response',
             stimulus: function(){
                 return "<class='stimulus' >" +
-                    '<p>Press the <kbd>' + KEYBOARD_RIGHT_KEY + '</kbd> on your keyboard.</p>'
+                    '<p>Press the <kbd>' + jsPsych.timelineVariable('right_key', true) + '</kbd> key on your keyboard.</p>'
             },
             choices: jsPsych.ALL_KEYS,
             response_ends_trial: true,
             stimulus_duration: 10000,
             trial_duration: 10000,
-            prompt: "right dominance!",
+            prompt: "push it!",
             data: {
+                trial_phase: 'test_keyboard_key_right',
                 useful_data_flag: true
             },
+            on_load: function(data) {
+                var right_key_cofig = jsPsych.timelineVariable('right_key');
+
+            },
             on_finish: function(data) {
-                var check_key = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_RIGHT_KEY);
-                //
-                console.log(check_key);
+                // this would be the best  situation
+                var keys_match = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(right_key_cofig);
+                console.log(left_keys_match);
+
+                //but people make mistakes
+                var key_struck = data.key_press;
+                console.log(key_struck)
+
+                data.right_key_struck = key_struck;
             }
         };
 
-        // var ask_hand_simple = {
-        //     type: 'html-button-response',
-        //     stimulus: function(){
-        //         return "<div class='instruction' >" +
-        //         '<p>' + HAND_QUESTION + '</p></div>'
-        //     },
-        //     choices: HAND_CHOICES,
-        //     prompt: "Just trust your impulses...",
-        //     on_finish: function(data) {
-        //         var button_id = data.button_pressed;
-        //         var button_number = parseInt(button_id, 10);
-        //         var hand_chosen = HAND_CHOICES[button_number];
-        //         data.handedness = hand_chosen;
-        //         //db
-        //         console.log(data.handedness);
+        // var pre_if_trial = {
+        //     type: 'html-keyboard-response',
+        //     stimulus: 'The next trial is in a conditional statement. Press S to skip it, or V to view it.'
+        // }
+
+        // var if_trial = {
+        //     type: 'html-keyboard-response',
+        //     stimulus: 'You chose to view the trial. Press any key to continue.'
+        // }
+
+        // var if_node = {
+        //     timeline: [if_trial],
+        //     conditional_function: function(){
+        //         // get the data from the previous trial,
+        //         // and check which key was pressed
+        //         var data = jsPsych.data.get().last(1).values()[0];
+        //         if(data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('s')){
+        //             return false;
+        //         } else {
+        //             return true;
+        //         }
         //     }
-        // };
+        // }
+
+        // var after_if_trial = {
+        //     type: 'html-keyboard-response',
+        //     stimulus: 'This is the trial after the conditional.'
+        // }
+
+        // jsPsych.init({
+        //     timeline: [pre_if_trial, if_node, after_if_trial],
+        //     on_finish: function(){jsPsych.data.displayData(); }
+        // });
+
+
 
         var instruction_screen_practice = {
             type: 'html-button-response',
@@ -390,7 +517,7 @@
                 condition: jsPsych.timelineVariable('item_type'),
                 word: jsPsych.timelineVariable('word'),
                 prime: jsPsych.timelineVariable('prime'),
-                id:jsPsych.timelineVariable('id'),
+                id: jsPsych.timelineVariable('id'),
                 trial_phase: 'present_word',
                 useful_data_flag: true
             },
@@ -439,7 +566,19 @@
                 present_prime,
                 present_word,
             ],
-            timeline_variables: uil.randomization.randomizeStimuli(stimuli.table, MAX_SUCCEEDING_ITEMS_OF_TYPE, 'item_type'),
+            timeline_variables: stimuli.table,//uil.randomization.randomizeStimuli(stimuli.table, MAX_SUCCEEDING_ITEMS_OF_TYPE, 'item_type'),
+            randomize_order: false
+        };
+
+        // procedures
+        var keyboard_select_key_procedure = {
+            timeline:[
+                select_keyboard_layout,
+                if_node_chosen_layout,
+                test_keyboard_key_left,
+                test_keyboard_key_right
+            ],
+            timeline_variables: [],
             randomize_order: false
         };
 
@@ -452,16 +591,16 @@
         timeline.push(start_screen);
 
         // survey
-        timeline.push(survey_valid_year_html_number);
-        timeline.push(survey_valid_month_html_number);
-        timeline.push(survey_valid_language_html_text);
+        //timeline.push(survey_valid_year_html_number);
+        //timeline.push(survey_valid_month_html_number);
+        //timeline.push(survey_valid_language_html_text);
         timeline.push(survey_multi_choice_block);
 
 
-        timeline.push(test_audio_start);
+        //timeline.push(test_audio_start);
 
         //timeline.push(test_audio_single);
-        timeline.push(test_audio_looped);
+        //timeline.push(test_audio_looped);
         // todo: keyboard checks:
 
 
@@ -470,21 +609,21 @@
 
         // some reading up: https://hacks.mozilla.org/2017/03/internationalize-your-keyboard-controls/
 
-        timeline.push(select_keyboard_one);
-        timeline.push(select_keyboard_two);
-        timeline.push(test_keyboard_left_default);
-        timeline.push(test_keyboard_right_default);
+        //timeline.push(select_keyboard_nav);
+        
+        timeline.push(select_keyboard_layout);
+        timeline.push(if_node_chosen_layout);
+
+        // subtimeline = [
+        //     select_keyboard_layout,
+        //     chosen_keyboard_layout
+        // ];
+
+        // timeline.push(subtimeline);
+
+        //timeline.push(test_keyboard_key);
 
 
-        //now for finding out the real bits..
-        // simple sheme
-        // Type     |   Left  |   Right
-        // ---------|---------|----------
-        // QWERTY   |   A     |  L
-        // AZERTY   |   Q     |  M
-        // DVORAK   |   A     |  S (or N?)
-        // QWERTZ   |   A     |  L
-        // OTHER    |   A     |  L (wild guess)
 
         timeline.push(instruction_screen_practice);
 
@@ -521,7 +660,7 @@
             }
         })
 
-    })
+    //})
     </script>
 </html>
 
