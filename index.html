@@ -221,7 +221,7 @@
                 console.log(survey_multi); 
                 return "<p>You've filled out the following data:<BR><BR></p>" +
 
-                    '<div>' + JSON.parse(survey_html) + '</div>' +
+                    '<div>' + survey_html + '</div>' +
                     '<div>' + survey_multi + '</div>' + 
                     // "<div>" + YEAR_BORN_QUESTION + ": " +  survey_html["birth_year"] + "</div>" +
                     // "<div>" + MONTH_BORN_QUESTION + ": " +  survey_html.birth_month + "</div>" +
@@ -232,7 +232,7 @@
                     // "<div>" + GENDER_QUESTION + ": " + survey_multi["Gender"] + "</div>" + 
                     // "<div>" + HAND_QUESTION + ": " + survey_multi["HandPreference"] + "</div>" +
                     "<BR><BR>+<p>Is this information right? If not, you can click NO and you will " +
-                    "be asked to fill out the questions again...</p>." 
+                    "be asked to fill out the questions again...JSON tenplates too:</p>." 
             },
             choices: YES_OR_NO_BUTTON_TEXT,
             response_ends_trial: true,
