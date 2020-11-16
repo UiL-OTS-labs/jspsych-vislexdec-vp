@@ -208,29 +208,32 @@
             //stimulus: "We hope you filled out things correctly?", 
             stimulus: function(data){
 
-                var survey_html = jsPsych.data.get().last(2).values()[0].survey_html_responses;
-                var survey_multi = jsPsych.data.get().last(1).values()[0].survey_multi_choice_responses;
+                var survey_html = jsPsych.data.get().last(2).values()[0].survey_html_responses; //former former data (2)
+                var survey_multi = jsPsych.data.get().last(1).values()[0].survey_multi_choice_responses; //former (1)
 
-                console.log('survey a');
+                console.log('survey part one');
                 console.log(survey_html);
+                // console.log('-----------------------------------');
+                // var get_html = jsPsych.data.get().json();
+                // console.log(get_html);
 
                 console.log('survey_multi_choice');
-                console.log(survey_multi);
+                console.log(survey_multi); 
+                return "<p>You've filled out the following data:<BR><BR></p>" +
 
-                "<p>You've filled out the following data:<BR><BR></p>"
+                    '<div>' + JSON.parse(survey_html) + '</div>' +
+                    '<div>' + survey_multi + '</div>' + 
+                    // "<div>" + YEAR_BORN_QUESTION + ": " +  survey_html["birth_year"] + "</div>" +
+                    // "<div>" + MONTH_BORN_QUESTION + ": " +  survey_html.birth_month + "</div>" +
+                    // "<div>" + NATIVE_LANGUAGE_QUESTION + ": " + survey_html.native_language + "</div>" +
+                    // '<BR><BR>' +    
+                    // "<div>" + BILINGUAL_QUESTION + ": " + survey_multi["Multilingual"] + "</div>" + 
+                    // "<div>" + DYSLEXIC_QUESTION + ": " + survey_multi["Dyslexic"] + "</div>" +
+                    // "<div>" + GENDER_QUESTION + ": " + survey_multi["Gender"] + "</div>" + 
+                    // "<div>" + HAND_QUESTION + ": " + survey_multi["HandPreference"] + "</div>" +
+                    "<BR><BR>+<p>Is this information right? If not, you can click NO and you will " +
+                    "be asked to fill out the questions again...</p>." 
             },
-
-            //     "<p>You've filled out the following data:<BR><BR></p>" +
-            //         "<div>" + YEAR_BORN_QUESTION + ": " +  survey_html['birth_year']  + "</div>" +
-            //         "<div>" + MONTH_BORN_QUESTION + ": " +  survey_html['birth_month'] + "</div>" +
-            //         "<div>" + NATIVE_LANGUAGE_QUESTION + ": " + survey_html['native_language'] + "</div>" +
-            //         '<BR><BR>' +    
-            //         "<div>" + BILINGUAL_QUESTION + ": " + survey_multi["Multilingual"] + "</div>" + 
-            //         "<div>" + DYSLEXIC_QUESTION + ": " + survey_multi["Dyslexic"] + "</div>" +
-            //         "<div>" + GENDER_QUESTION + ": " + survey_multi["Gender"] + "</div>" + 
-            //         "<div>" + HAND_QUESTION + ": " + survey_multi["HandPreference"] + "</div>" +
-            //         "<BR><BR><p>Is this information right? If not, you can click NO and you will bes asekd to fill out the questions again...</p>." 
-            // },
             choices: YES_OR_NO_BUTTON_TEXT,
             response_ends_trial: true,
             data: {
@@ -634,6 +637,8 @@
                 survey_multi_choice_block,
                 survey_review_survey_data
             ],
+            timeline_vairables:[],
+            randomize_order: false
         }
 
         ///////////////////////////////////////////////////////////
