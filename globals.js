@@ -16,6 +16,8 @@ const WORD_GAP_DURATION = 0;
 const TRIAL_GAP_DURATION = 1000;
 const OK_BUTTON_TEXT = "OK";
 
+const YES_OR_NO_BUTTON_TEXT = ["Yes", "No"];
+
 const ACCESS_KEY = '382b7538-e7bf-4197-a1a4-73b1351f9198';
 
 // TESTING THINGS 
@@ -101,12 +103,21 @@ const KEYBOARD_DEFAULTS = {
 		right_key: 'L', 
 		max_tries: 5
 	}
-};		
+};	
+
+const QWERTY = { kb_type: 'QUERTY', left_key: "A", right_key: "L", max_tries: 2 };
+const AZERTY = { kb_type: 'AZERTY', left_key: "Q", right_key: "M", max_tries: 2 };
+const DVORAK = { kb_type: 'DVORAK', left_key: "A", right_key: "S", max_tries: 2 };
+const QWERTZ = { kb_type: 'QWERTZ', left_key: "A", right_key: "L", max_tries: 2 };
+const CUSTOM = { kb_type: 'CUSTOM', left_key: "A", right_key: "L", max_tries: 2 };
+
+const HAND_PREFERENCE = undefined;
 
 
-console.log(KEYBOARD_DEFAULTS["AZERTY"].left_key);
+// console.log(KEYBOARD_DEFAULTS["AZERTY"].left_key);
 
-console.log(Object.keys(KEYBOARD_DEFAULTS));
+// console.log(Object.keys(KEYBOARD_DEFAULTS));
+
 console.log(Object.keys(KEYBOARD_DEFAULTS));
 console.log(Object.keys(KEYBOARD_DEFAULTS["QWERTY"]));
 

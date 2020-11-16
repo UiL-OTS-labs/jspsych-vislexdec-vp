@@ -82,10 +82,13 @@
                 subject: subject_id,
                 group: group_name,
                 keyboard: undefined,
+                hand_preference: undefined,
                 left_key_for_layout: undefined,
                 right_key_for_layout: undefined,
+                are_real_words_key: undefined,
+                are_not_real_words_key: undefined
             });
-        
+
         //////////////// test page flows ///////////////////////////////
 
         var start_screen = {
@@ -112,54 +115,35 @@
 
         ////////////// survey-related
 
-        var survey_valid_year_html_number = {
+        var survey_multi_html_block = {
             type: 'survey-html-form',
-            preamble: '<p>' + YEAR_BORN_QUESTION + '</p>',
-            html: '<input type="number" id="birth_year" name="birth_year" placeholder=1999 min=1919 max=2019 required>' +
+            preamble: '<h2>' + "Some stuff we'd like to ask you first..." + '</h2><BR><BR>',
+            html: '<label for="birth_year">In what year were you born?:</label>' +
+                  '<input type="number" id="birth_year" name="birth_year" placeholder=1999 min=1919 max=2019 required>' +
+                '<span class="validity"></span><BR>' + 
+                '<label for="birth_month">In what month were you born?:</label>' +
+                '<input type="number" id="birth_month" name="birth_month" placeholder=7 min=1 max=12 required>' +
+                '<span class="validity"></span><BR>' + 
+                '<label for="native_language">What is your native language?:</label>' +
+                '<input type="text" id="native_language" name="native_language" pattern="[a-zA-Z]+" placeholder="Dutch" required>' + 
                 '<span class="validity"></span><BR>',
             data: {
                 useful_data_flag: false,
                 survey_data_flag: true
             },
             on_finish: function(data){
-                var year_born = birth_year;
-                data.birth_year = year_born;
-                console.log(data.birth_month);
+
+                var survey_html_responses = data.responses;
+                //
+                data.survey_html_responses = survey_html_responses;
+                
+                console.log(data.survey_html_responses);
+                //
+                //jsPsych.data.get().addToAll({'survey_html_responses': data.survey_html_responses});
+
             }
         };
 
-
-        var survey_valid_month_html_number = {
-            type: 'survey-html-form',
-            preamble: '<p>' + MONTH_BORN_QUESTION + '</p>',
-            html: '<input type="number" id="birth_month" name="birth_month" placeholder=7 min=1 max=12 required>' +
-                '<span class="validity"></span><BR>',
-            data: {
-                useful_data_flag: false,
-                survey_data_flag: true
-            },
-            on_finish: function(data){
-                var month_born = birth_month;
-                data.birth_month = month_born;
-                console.log(data.birth_month);
-            }
-        };
-
-        var survey_valid_language_html_text = {
-            type: 'survey-html-form',
-            preamble: '<p>' + NATIVE_LANGUAGE_QUESTION + '</p>',
-            html: '<input type="text" id="native_language" name="native_language" pattern="[a-zA-Z]+" placeholder="Dutch" required>' +
-                '<span class="validity"></span><BR>',
-            data: {
-                useful_data_flag: false,
-                survey_data_flag: true
-            },
-            on_finish: function(data){
-                var mother_tongue = native_language;
-                data.native_language = mother_tongue;
-                console.log(data.native_language);
-            }
-        };
 
         // this multi-choice is a very usable plugin, since it has built-in
         // validation..
@@ -196,15 +180,78 @@
                     horizontal: true
                 }
             ],
+            // on_start: function(data){
+                
+            //     var data.survey_html = jsPsych.data.get().last(1).values()[0].survey_html_responses;
+
+            //     console.log(data.survey_html);
+            // },
             on_finish: function(data){
-                var survey_multi = data.responses;
-                data.survey_multi = survey_multi;
+                  
+                //from before
+                var survey_html_responses = data.survey_html;
+                
+                //from here
+                var survey_multi_choice = data.responses;
+                
+                //setting old data from here
+                data.survey_multi_choice_responses = survey_multi_choice;
 
-                //console.log(data.survey_multi); 
+                console.log(data.survey_multi_choice_responses); 
 
-                jsPsych.data.get().addToAll({'survey': data.responses});
+                //jsPsych.data.get().addToAll({'survey_multi_choice_responses': data.responses});
             }
         };
+
+        var survey_review_survey_data = {
+            type: "html-button-response",
+            //stimulus: "We hope you filled out things correctly?", 
+            stimulus: function(data){
+
+                var survey_html = jsPsych.data.get().last(2).values()[0].survey_html_responses;
+                var survey_multi = jsPsych.data.get().last(1).values()[0].survey_multi_choice_responses;
+
+                console.log('survey a');
+                console.log(survey_html);
+
+                console.log('survey_multi_choice');
+                console.log(survey_multi);
+
+                "<p>You've filled out the following data:<BR><BR></p>"
+            },
+
+            //     "<p>You've filled out the following data:<BR><BR></p>" +
+            //         "<div>" + YEAR_BORN_QUESTION + ": " +  survey_html['birth_year']  + "</div>" +
+            //         "<div>" + MONTH_BORN_QUESTION + ": " +  survey_html['birth_month'] + "</div>" +
+            //         "<div>" + NATIVE_LANGUAGE_QUESTION + ": " + survey_html['native_language'] + "</div>" +
+            //         '<BR><BR>' +    
+            //         "<div>" + BILINGUAL_QUESTION + ": " + survey_multi["Multilingual"] + "</div>" + 
+            //         "<div>" + DYSLEXIC_QUESTION + ": " + survey_multi["Dyslexic"] + "</div>" +
+            //         "<div>" + GENDER_QUESTION + ": " + survey_multi["Gender"] + "</div>" + 
+            //         "<div>" + HAND_QUESTION + ": " + survey_multi["HandPreference"] + "</div>" +
+            //         "<BR><BR><p>Is this information right? If not, you can click NO and you will bes asekd to fill out the questions again...</p>." 
+            // },
+            choices: YES_OR_NO_BUTTON_TEXT,
+            response_ends_trial: true,
+            data: {
+                useful_data_flag: false,
+                survey_data_flag: true
+            },
+            // on_load: function(data){
+            //     var survey_a_data = jsPsych.data.getLastTrialData().values()[0]['survey_multi_choice_responses'];
+            //     console.log('survey data html');
+            //     console.log(survey_a_data);
+            // },
+            on_finish: function(data){
+                if (data.button_pressed == 0){
+                    var survey_info_correct = true;
+                } else {
+                    var survey_info_correct = false;
+                }
+                data.survey_info_correct = survey_info_correct;
+            }
+        };
+
 
         // generic tests 
         var test_audio_start = {
@@ -324,7 +371,7 @@
 
                 console.log('survey_data_from if_node');
                 console.log(survey_data)
-                console.log(survey_data['HandPreference'])
+                //console.log(survey_data['HandPreference'])
                 //var dominant_hand = jsPsych.data.get().filter({trial_type: 'survey-multi-choice'}.responses['HandPreference']);
                 // survey_multi_choice_block
 
@@ -343,7 +390,6 @@
                 data.left_key_for_layout = left_key;
                 data.right_key_for_layout = right_key;
                 data.max_tries = tries;
-                data.hand = dominant_hand
             }
         };
 
@@ -582,6 +628,14 @@
             randomize_order: false
         };
 
+        var survey_procedure = {
+            timeline: [
+                survey_multi_html_block,
+                survey_multi_choice_block,
+                survey_review_survey_data
+            ],
+        }
+
         ///////////////////////////////////////////////////////////
 
         //////////////// timeline /////////////////////////////////
@@ -594,7 +648,7 @@
         //timeline.push(survey_valid_year_html_number);
         //timeline.push(survey_valid_month_html_number);
         //timeline.push(survey_valid_language_html_text);
-        timeline.push(survey_multi_choice_block);
+        timeline.push(survey_procedure);
 
 
         //timeline.push(test_audio_start);
@@ -611,8 +665,8 @@
 
         //timeline.push(select_keyboard_nav);
         
-        timeline.push(select_keyboard_layout);
-        timeline.push(if_node_chosen_layout);
+        //timeline.push(select_keyboard_layout);
+        //timeline.push(if_node_chosen_layout);
 
         // subtimeline = [
         //     select_keyboard_layout,
