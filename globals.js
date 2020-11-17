@@ -121,10 +121,40 @@ const HAND_PREFERENCE = undefined;
 console.log(Object.keys(KEYBOARD_DEFAULTS));
 console.log(Object.keys(KEYBOARD_DEFAULTS["QWERTY"]));
 
+function zipTwo(array_a, array_b) {
+	var a = array_a
+	var b = array_b
+	var c = a.map(function (e, i) {
+		return [a[i], b[i]];
+	});
+	// document.body.innerText = c;
+}
+
+// function zipTwoEqualLengthArrays(array1, array2) {
+//     var zipped = [];
+//     for (var i = 0; i < array1.length; i++) {
+//         zipped.push([array1[i], array2[i]]);
+//     return zipped
+// }
+
+// function yearsAge(birthYear) {
+// 	let calculatedYearAge = new Date().getFullYear() - birthYear;
+// 	if (calculatedAge == 1) {
+// 		return "1 year old";
+// 	} else {
+// 		return `${calculatedAge} years old`;
+// 	}
+// }
 
 
-
-
-
-
+// function age(birthYear) {
+//   let calculatedAge = new Date().getFullYear() - birthYear;
+//   if (calculatedAge == 1) {
+//     return "1 year old";
+//   } else if (calculatedAge == 0) {
+//     return "Baby";
+//   } else {
+//     return `${calculatedAge} years old`;
+//   }
+// }
 

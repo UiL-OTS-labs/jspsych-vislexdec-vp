@@ -70,3 +70,10 @@ function pickRandomGroup() {
     var retgroup = TEST_ITEMS[shuffled_range[0]];
     return retgroup
 }
+
+// function zipTwoEqualLengthArrays(array1, array2) {
+//     var zipped = [];
+//     for (var i = 0; i < array1.length; i++) {
+//         zipped.push([array1[i], array2[i]]);
+//     return zipped
+// }

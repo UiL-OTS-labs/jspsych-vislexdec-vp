@@ -37,6 +37,12 @@
         margin: 5% 10% 5% 10%;
     }
 
+    .template {
+        padding: 5%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+}
+
     kbd {
         border-radius: 2px;
         padding: 2px;
@@ -213,26 +219,40 @@
 
                 console.log('survey part one');
                 console.log(survey_html);
-                // console.log('-----------------------------------');
-                // var get_html = jsPsych.data.get().json();
-                // console.log(get_html);
 
                 console.log('survey_multi_choice');
                 console.log(survey_multi); 
-                return "<p>You've filled out the following data:<BR><BR></p>" +
 
-                    '<div>' + survey_html + '</div>' +
-                    '<div>' + survey_multi + '</div>' + 
-                    // "<div>" + YEAR_BORN_QUESTION + ": " +  survey_html["birth_year"] + "</div>" +
-                    // "<div>" + MONTH_BORN_QUESTION + ": " +  survey_html.birth_month + "</div>" +
-                    // "<div>" + NATIVE_LANGUAGE_QUESTION + ": " + survey_html.native_language + "</div>" +
-                    // '<BR><BR>' +    
-                    // "<div>" + BILINGUAL_QUESTION + ": " + survey_multi["Multilingual"] + "</div>" + 
-                    // "<div>" + DYSLEXIC_QUESTION + ": " + survey_multi["Dyslexic"] + "</div>" +
-                    // "<div>" + GENDER_QUESTION + ": " + survey_multi["Gender"] + "</div>" + 
-                    // "<div>" + HAND_QUESTION + ": " + survey_multi["HandPreference"] + "</div>" +
-                    "<BR><BR>+<p>Is this information right? If not, you can click NO and you will " +
-                    "be asked to fill out the questions again...JSON tenplates too:</p>." 
+                //----------------------------
+
+                var jsHTML = JSON.parse(survey_html);
+
+                var b_year = jsHTML.birth_year;
+                var b_month = jsHTML.birth_month;
+                var n_lang = jsHTML.native_language;
+
+                //----------------------------
+
+                var jsMulti = JSON.parse(survey_multi);
+
+                var bilingual = jsMulti.Multilingual;
+                var dyslexic = jsMulti.Dyslexic;
+                var gender = jsMulti.Gender;
+                var hand_pref = jsMulti.HandPreference;
+
+                return `
+                    <p>You've filled out the following data:<BR><BR></p>
+                    <div>Birth year: ${b_year} </div>
+                    <div>Birth month: ${b_month} </div>
+                    <div>Native languag: ${n_lang} </div>
+        
+                    <div>Multilingual: ${bilingual} </div>
+                    <div>Dyslexic: ${dyslexic} </div>
+                    <div>Gender: ${gender} </div>
+                    <div>Hand Preference: ${hand_pref} </div>
+   
+                    <p>Is this information right? 
+                    If not, you can click NO and you will be asked to fill out the questions again</p>.` 
             },
             choices: YES_OR_NO_BUTTON_TEXT,
             response_ends_trial: true,
