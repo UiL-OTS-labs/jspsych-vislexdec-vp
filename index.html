@@ -78,8 +78,33 @@
 
         var stimuli = pickRandomGroup();
 
+        // Experiment logic variables
+
+        // Used by survey
         var repeat_survey = false;
 
+        var chosen_keyboard = undefined;
+
+        function getLeftOrRightHanded()
+        {
+            let data = jsPsych.data.get().select('survey_multi_choice_responses');
+            data = JSON.parse(data.values[0])
+            return data.HandPreference;
+        }
+
+        function getCorrectKey()
+        {
+            let handed = getLeftOrRightHanded().toLowerCase();
+            return KEYBOARD_DEFAULTS[chosen_keyboard][handed + '_key']
+        }
+
+        function getIncorrectKey()
+        {
+            let handed = getLeftOrRightHanded().toLowerCase();
+            // If left handed, use right. Otherwise, use left.
+            let incorrect_key = (handed == 'left' ? 'right' : 'left') + '_key'
+            return KEYBOARD_DEFAULTS[chosen_keyboard][incorrect_key]
+        }
 
         //stimuli.table = 
 
@@ -327,7 +352,7 @@
 
         var select_keyboard_layout = {
             type: 'html-button-response',
-            stimulus: '<h2>Choose the keybaordlayout that looks most like yours...</h2>',
+            stimulus: '<h2>Choose the keyboardlayout that looks most like yours...</h2>',
             choices: KEYBOARD_CHOICES,
             prompt: "Depending on your screen resolution, you may need to scroll a bit...",
             button_html: '<button class="img-btn"><img src=./images/%choice%.png></button>',
@@ -339,48 +364,11 @@
                 var button_number = parseInt(button_id, 10);
                 var keyboard_chosen = KEYBOARD_CHOICES[button_number];
                 data.keyboard = keyboard_chosen;
+                chosen_keyboard = keyboard_chosen;
                 var keyboard_timeline = KEYBOARD_DEFAULTS[keyboard_chosen];
                 data.keyboard_timeline = keyboard_timeline;
-            }
-        };
-
-        var if_node_chosen_layout = {
-            timeline: [select_keyboard_layout],
-            type: 'html-button-response',
-            stimulus: function(data){
-                "<p>this is the if node speaking</p>"
-            },
-            choices: [OK_BUTTON_TEXT],
-            conditional_function(data) {
-                var kb_layout = jsPsych.data.getLastTrialData().values()[0].keyboard;
-                var left_key = jsPsych.data.getLastTrialData().values()[0].keyboard_timeline['left_key'];
-                var right_key = jsPsych.data.getLastTrialData().values()[0].keyboard_timeline['right_key'];
-                var tries = jsPsych.data.getLastTrialData().values()[0].keyboard_timeline['max_tries'];
-                //var dominant_hand = jsPsych.data.getLastTrialData().values()[0]["survey"]['HandPreference'];
-
-                var survey_data = jsPsych.data.get().filter({trial_type: 'survey-multi-choice'});
-
-                console.log('survey_data_from if_node');
-                console.log(survey_data)
-                //console.log(survey_data['HandPreference'])
-                //var dominant_hand = jsPsych.data.get().filter({trial_type: 'survey-multi-choice'}.responses['HandPreference']);
-                // survey_multi_choice_block
-
-                console.log('kb layout:'); 
-                console.log(kb_layout);
-
-                console.log(left_key);
-                console.log(right_key);
-
-                console.log('max_tries')
-                console.log(tries);
-                //
-                console.log('survey_data');
-                console.log(survey_data);
-
-                data.left_key_for_layout = left_key;
-                data.right_key_for_layout = right_key;
-                data.max_tries = tries;
+                console.log('keyboard', data.keyboard)
+                console.log('keyboard_timeline', data.keyboard_timeline)
             }
         };
 
@@ -388,7 +376,7 @@
             type: 'html-keyboard-response',
             stimulus: function(){
                 return "<class='stimulus' >" +
-                    '<p>Press the <kbd>' + jsPsych.timelineVariable('left_key', true) + '</kbd> key on your keyboard.</p>'
+                    '<p>Press the <kbd>' + KEYBOARD_DEFAULTS[chosen_keyboard]['left_key'] + '</kbd> key on your keyboard.</p>'
             },
             choices: jsPsych.ALL_KEYS,
             response_ends_trial: true,
@@ -399,20 +387,10 @@
                 trial_phase: 'test_keyboard_key_left',
                 useful_data_flag: true,
             },
-            on_load: function(data) {
-                var left_key_cofig = jsPsych.timelineVariable('left_key');
-
-            },
             on_finish: function(data) {
                 // this would be the best  situation
-                var keys_match = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(left_key_cofig);
-                console.log(left_keys_match);
-
-                //but people make mistakes
-                var key_struck = data.key_press;
-                console.log(key_struck)
-
-                data.left_key_struck = key_struck;
+                var expected_key_press = jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_DEFAULTS[chosen_keyboard]['left_key']);
+                data.correct = data.key_press == expected_key_press;
             }
         };
 
@@ -420,7 +398,7 @@
             type: 'html-keyboard-response',
             stimulus: function(){
                 return "<class='stimulus' >" +
-                    '<p>Press the <kbd>' + jsPsych.timelineVariable('right_key', true) + '</kbd> key on your keyboard.</p>'
+                    '<p>Press the <kbd>' + KEYBOARD_DEFAULTS[chosen_keyboard]['right_key'] + '</kbd> key on your keyboard.</p>'
             },
             choices: jsPsych.ALL_KEYS,
             response_ends_trial: true,
@@ -431,20 +409,10 @@
                 trial_phase: 'test_keyboard_key_right',
                 useful_data_flag: true
             },
-            on_load: function(data) {
-                var right_key_cofig = jsPsych.timelineVariable('right_key');
-
-            },
             on_finish: function(data) {
                 // this would be the best  situation
-                var keys_match = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(right_key_cofig);
-                console.log(left_keys_match);
-
-                //but people make mistakes
-                var key_struck = data.key_press;
-                console.log(key_struck)
-
-                data.right_key_struck = key_struck;
+                var expected_key_press = jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_DEFAULTS[chosen_keyboard]['right_key']);
+                data.correct = data.key_press == expected_key_press;
             }
         };
 
@@ -452,8 +420,11 @@
         var instruction_screen_practice = {
             type: 'html-button-response',
             stimulus: function(){
+                let text = PRE_PRACTICE_INSTRUCTION;
+                text = text.replace('%correct_key%', getCorrectKey());
+                text = text.replace('%incorrect_key%', getIncorrectKey());
                 return "<div class='instruction' >" +
-                    '<p>' + PRE_PRACTICE_INSTRUCTION + '</p></div>';
+                    '<p>' + text + '</p></div>';
             },
             choices: [OK_BUTTON_TEXT],
             response_ends_trial: true,
@@ -505,12 +476,41 @@
             data: { useful_data_flag: false }
         };
 
+        // So this is a hack (or a clever use of Duck Typing)
+        // We don't actually know the right keys when defining present_word,
+        // but we need to give an array of choices anyway. This object mimics
+        // an array just enough to fool JSPsych into accepting it.
+        // It works by defining the 0 and 1 'indexes' as getter functions. As
+        // JSPsych only uses the array when we already know the keys, the
+        // values are only computed once we know them.
+        var present_word_choices = {
+            _0: undefined,
+            _1: undefined,
+            get 0() {
+                // This is a caching strategy, to ensure we only have to do
+                // expensive stuff once
+                if (typeof this._0 === 'undefined')
+                    this._0 = getCorrectKey();
+
+                return this._0;
+            },
+            get 1() {
+                // This is a caching strategy, to ensure we only have to do
+                // expensive stuff once
+                if (typeof this._1 === 'undefined')
+                    this._1 = getIncorrectKey();
+
+                return this._1;
+            },
+            length: 2,
+        }
+
         var present_word = {
             type: 'html-keyboard-response',
             stimulus: function(){
                 return "<p class='stimulus'>" + jsPsych.timelineVariable('word', true)+"</p>";
             },
-            choices: ['z','m'],
+            choices: present_word_choices,
             response_ends_trial: true,
             stimulus_duration: WORD_DURATION,
             trial_duration: RESPONSE_TIMEOUT_DURATION,
@@ -524,12 +524,15 @@
                 useful_data_flag: true
             },
             on_finish: function(data){
+                console.log('doing')
+                var correct_key = getCorrectKey()
+                var incorrect_key = getIncorrectKey();
                 if(data.condition == 'RELATED'){
-                    var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
+                    var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(correct_key);
                 } else if (data.condition == 'UNRELATED'){
-                    var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('z');
+                    var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(correct_key);
                 } else {
-                    var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('m');
+                    var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(incorrect_key);
                 }
                 data.correct = correct;
             }
@@ -601,17 +604,15 @@
             randomize_order: false
         };
 
-        // procedures
-        // var keyboard_select_key_procedure = {
-        //     timeline:[
-        //         select_keyboard_layout,
-        //         if_node_chosen_layout,
-        //         test_keyboard_key_left,
-        //         test_keyboard_key_right
-        //     ],
-        //     timeline_variables: [],
-        //     randomize_order: false
-        // };
+        var keyboard_select_key_procedure = {
+            timeline:[
+                select_keyboard_layout,
+                test_keyboard_key_left,
+                test_keyboard_key_right
+            ],
+            timeline_variables: [],
+            randomize_order: false
+        };
 
 
 
@@ -626,41 +627,18 @@
         timeline.push(start_screen);
 
         // survey
-        //timeline.push(survey_valid_year_html_number);
-        //timeline.push(survey_valid_month_html_number);
-        //timeline.push(survey_valid_language_html_text);
-
         timeline.push(survey_procedure);
 
         //timeline.push(test_audio_start);
 
         //timeline.push(test_audio_single);
         //timeline.push(test_audio_looped);
-        // todo: keyboard checks:
 
-
-        // first a non-survey item tot test
-        //timeline.push(ask_hand_simple);
-
-        // some reading up: https://hacks.mozilla.org/2017/03/internationalize-your-keyboard-controls/
-
-        //timeline.push(select_keyboard_nav);
-        
-        //timeline.push(select_keyboard_layout);
-        //timeline.push(if_node_chosen_layout);
-
-        // subtimeline = [
-        //     select_keyboard_layout,
-        //     chosen_keyboard_layout
-        // ];
-
-        // timeline.push(subtimeline);
-
-        //timeline.push(test_keyboard_key);
+        timeline.push(keyboard_select_key_procedure);
 
 
 
-        //timeline.push(instruction_screen_practice);
+        timeline.push(instruction_screen_practice);
 
         // then push the rest
         timeline.push(practice_procedure);

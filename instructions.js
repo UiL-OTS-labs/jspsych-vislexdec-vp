@@ -22,10 +22,10 @@ const PRE_PRACTICE_INSTRUCTION =
     " as possible whether you think "                   +
     "<i>both words are real words or not</i>."          +
     " Try to make no mistakes.<BR><BR>"                 +
-    "To respond, hit the <kbd>Z</kbd> key for "         +
-    "<i>Yes</i> and the "                               +
-    "<kbd>M</kbd> key for <i>No</i><BR><BR>"            +
-    "First, you can practice.<BR><BR>"                  +
+    "To respond, hit the <kbd>%correct_key%</kbd> "     +
+    "key for <i>Yes</i> and the "                       +
+    "<kbd>%incorrect_key%</kbd> key for <i>No</i>"      +
+    "<BR><BR>First, you can practice.<BR><BR>"          +
     "<i>Click OK to start practicing</i>"
     ;
 

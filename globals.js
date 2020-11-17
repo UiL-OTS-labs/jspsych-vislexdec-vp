@@ -77,45 +77,21 @@ const ASSUMED_DOMINANT_FALSE = 'right_key';
         // QWERTZ   |   A     |  L
         // OTHER    |   A     |  L (fallback, more tries?)
 
-const KEYBOARD_DEFAULTS = {
-	'QWERTY': {
-		left_key:'A',
-		right_key: 'L',
-		max_tries: 1
-	},
-	'AZERTY':{
-		left_key:'Q',
-		right_key: 'M',
-		max_tries: 2
-	},
-	'DVORAK':{
-		left_key:'A',
-		right_key: 'S',
-		max_tries: 3
-	},
-	'QWERTZ':{
-		left_key:'A',
-		right_key: 'L',
-		max_tries: 4
-	},
-	'CUSTOM':{
-		left_key:'A',
-		right_key: 'L', 
-		max_tries: 5
-	}
-};	
-
 const QWERTY = { kb_type: 'QUERTY', left_key: "A", right_key: "L", max_tries: 2 };
 const AZERTY = { kb_type: 'AZERTY', left_key: "Q", right_key: "M", max_tries: 2 };
 const DVORAK = { kb_type: 'DVORAK', left_key: "A", right_key: "S", max_tries: 2 };
 const QWERTZ = { kb_type: 'QWERTZ', left_key: "A", right_key: "L", max_tries: 2 };
 const CUSTOM = { kb_type: 'CUSTOM', left_key: "A", right_key: "L", max_tries: 2 };
 
-const HAND_PREFERENCE = undefined;
+// Quick lookup table
+const KEYBOARD_DEFAULTS = {
+	'QWERTY': QWERTY,
+	'AZERTY': AZERTY,
+	'DVORAK': DVORAK,
+	'QWERTZ': QWERTZ,
+	'CUSTOM': CUSTOM,
+};
 
-
-console.log(Object.keys(KEYBOARD_DEFAULTS));
-console.log(Object.keys(KEYBOARD_DEFAULTS["QWERTY"]));
 
 
 
