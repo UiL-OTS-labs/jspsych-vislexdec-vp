@@ -75,7 +75,12 @@
     // contents of this method
     
     //window.addEventListener('load', function() {
+
         var stimuli = pickRandomGroup();
+
+        var repeat_survey = false;
+
+
         //stimuli.table = 
 
         // data one would like to add to __all__ trials, according to:
@@ -150,7 +155,6 @@
             }
         };
 
-
         // this multi-choice is a very usable plugin, since it has built-in
         // validation..
 
@@ -186,28 +190,52 @@
                     horizontal: true
                 }
             ],
-            // on_start: function(data){
-                
-            //     var data.survey_html = jsPsych.data.get().last(1).values()[0].survey_html_responses;
-
-            //     console.log(data.survey_html);
-            // },
             on_finish: function(data){
-                  
                 //from before
                 var survey_html_responses = data.survey_html;
-                
                 //from here
-                var survey_multi_choice = data.responses;
-                
+                var survey_multi_choice = data.responses;   
                 //setting old data from here
                 data.survey_multi_choice_responses = survey_multi_choice;
-
-                console.log(data.survey_multi_choice_responses); 
-
                 //jsPsych.data.get().addToAll({'survey_multi_choice_responses': data.responses});
             }
         };
+
+        var redo_survey_message = {
+            type: 'html-button-response',
+            stimulus: 'You were not happy with your data, or so it seems. Please fill out the survey once again',
+            choices: [OK_BUTTON_TEXT]
+        }
+
+        var redo_survey_conditional = {
+            timeline: [redo_survey_message],
+            conditional_function: function(){
+
+                var last_trial_response = jsPsych.data.get().last(1).values()[0].survey_info_correct;
+                console.log(last_trial_response);
+                if ( last_trial_response == true ){
+                    repeat_survey = false;
+                    return false // 
+                } else {
+                    repeat_survey = true;
+                    return true //
+                }
+            }
+        };
+
+        var survey_loop = {
+            timeline: [
+                survey_procedure, 
+                redo_survey_conditional
+            ],
+            loop_function: function(){
+                if (repeat_survey == true){
+                    return true
+                } else {
+                    return false
+                }
+            }
+        }
 
         var survey_review_survey_data = {
             type: "html-button-response",
@@ -216,12 +244,6 @@
 
                 var survey_html = jsPsych.data.get().last(2).values()[0].survey_html_responses; //former former data (2)
                 var survey_multi = jsPsych.data.get().last(1).values()[0].survey_multi_choice_responses; //former (1)
-
-                console.log('survey part one');
-                console.log(survey_html);
-
-                console.log('survey_multi_choice');
-                console.log(survey_multi); 
 
                 //----------------------------
 
@@ -241,18 +263,19 @@
                 var hand_pref = jsMulti.HandPreference;
 
                 return `
-                    <p>You've filled out the following data:<BR><BR></p>
+                    <p>You've filled out the following data: </p>
                     <div>Birth year: ${b_year} </div>
                     <div>Birth month: ${b_month} </div>
-                    <div>Native languag: ${n_lang} </div>
+                    <div>Native language: ${n_lang} </div>
         
                     <div>Multilingual: ${bilingual} </div>
                     <div>Dyslexic: ${dyslexic} </div>
-                    <div>Gender: ${gender} </div>
-                    <div>Hand Preference: ${hand_pref} </div>
+                    <div>Your gender: ${gender} </div>
+                    <div>Hand preference: ${hand_pref} </div>
    
                     <p>Is this information right? 
-                    If not, you can click NO and you will be asked to fill out the questions again</p>.` 
+                    If not, you can click NO. 
+                    You will then be asked to fill out <b>all those</b> questions again</p>.` 
             },
             choices: YES_OR_NO_BUTTON_TEXT,
             response_ends_trial: true,
@@ -268,8 +291,10 @@
             on_finish: function(data){
                 if (data.button_pressed == 0){
                     var survey_info_correct = true;
+                    //return true
                 } else {
                     var survey_info_correct = false;
+                    //return false
                 }
                 data.survey_info_correct = survey_info_correct;
             }
@@ -339,24 +364,24 @@
             }
         };
 
-        var select_keyboard_nav = {
-            type: 'instructions',
-            pages: [
-                "<h1>Keyboard layout</h1><BR>" +
-                "<p>Let's figure out what keyboard you use. A couple of well known layouts will be shown with a caption</p>" +
-                "<p>Please have a look at the following layouts and remember the one that looks most like the keyboard you're using.</p>" + "Click 'next' to proceed and 'back' to review layouts. You don't have to select them here, just look at them...",
-                '1/5 <b>QWERTY</b>:<BR><BR><img src="./images/QWERTY.png"></img>',
-                '2/5 <b>AZERTY</b>:<BR><BR><img src="./images/AZERTY.png"></img>',
-                '3/5 <b>DVORAK</b>:<BR><BR><img src="./images/DVORAK.png"></img>',
-                '3/5 <b>QWERTZ</b>:<BR><BR><img src="./images/QWERTZ.png"></img>',
-                '5/5 <b>OTHER</b>:<BR><BR><img src="./images/CUSTOM.png"></img>',
-            ],
-            show_clickable_nav: true
-        };
+        // var select_keyboard_nav = {
+        //     type: 'instructions',
+        //     pages: [
+        //         "<h1>Keyboard layout</h1><BR>" +
+        //         "<p>Let's figure out what keyboard you use. A couple of well known layouts will be shown with a caption</p>" +
+        //         "<p>Please have a look at the following layouts and remember the one that looks most like the keyboard you're using.</p>" + "Click 'next' to proceed and 'back' to review layouts. You don't have to select them here, just look at them...",
+        //         '1/5 <b>QWERTY</b>:<BR><BR><img src="./images/QWERTY.png"></img>',
+        //         '2/5 <b>AZERTY</b>:<BR><BR><img src="./images/AZERTY.png"></img>',
+        //         '3/5 <b>DVORAK</b>:<BR><BR><img src="./images/DVORAK.png"></img>',
+        //         '3/5 <b>QWERTZ</b>:<BR><BR><img src="./images/QWERTZ.png"></img>',
+        //         '5/5 <b>OTHER</b>:<BR><BR><img src="./images/CUSTOM.png"></img>',
+        //     ],
+        //     show_clickable_nav: true
+        // };
 
         var select_keyboard_layout = {
             type: 'html-button-response',
-            stimulus: '<h2>Choose your keyboard layout</h2>',
+            stimulus: '<h2>Choose the keybaordlayout that looks most like yours...</h2>',
             choices: KEYBOARD_CHOICES,
             prompt: "Depending on your screen resolution, you may need to scroll a bit...",
             button_html: '<button class="img-btn"><img src=./images/%choice%.png></button>',
@@ -370,9 +395,6 @@
                 data.keyboard = keyboard_chosen;
                 var keyboard_timeline = KEYBOARD_DEFAULTS[keyboard_chosen];
                 data.keyboard_timeline = keyboard_timeline;
-
-                // console.log(data.keyboard);
-                // console.log(data.keyboard_timeline);
             }
         };
 
@@ -480,41 +502,6 @@
             }
         };
 
-        // var pre_if_trial = {
-        //     type: 'html-keyboard-response',
-        //     stimulus: 'The next trial is in a conditional statement. Press S to skip it, or V to view it.'
-        // }
-
-        // var if_trial = {
-        //     type: 'html-keyboard-response',
-        //     stimulus: 'You chose to view the trial. Press any key to continue.'
-        // }
-
-        // var if_node = {
-        //     timeline: [if_trial],
-        //     conditional_function: function(){
-        //         // get the data from the previous trial,
-        //         // and check which key was pressed
-        //         var data = jsPsych.data.get().last(1).values()[0];
-        //         if(data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode('s')){
-        //             return false;
-        //         } else {
-        //             return true;
-        //         }
-        //     }
-        // }
-
-        // var after_if_trial = {
-        //     type: 'html-keyboard-response',
-        //     stimulus: 'This is the trial after the conditional.'
-        // }
-
-        // jsPsych.init({
-        //     timeline: [pre_if_trial, if_node, after_if_trial],
-        //     on_finish: function(){jsPsych.data.displayData(); }
-        // });
-
-
 
         var instruction_screen_practice = {
             type: 'html-button-response',
@@ -617,7 +604,18 @@
             data: { useful_data_flag: false }
         };
 
-        // procedures
+        // procedures//////////////////////////////////////////////////////////
+
+        var survey_procedure = {
+            timeline: [
+                survey_multi_html_block,
+                survey_multi_choice_block,
+                survey_review_survey_data
+            ],
+            timeline_variables:[],
+            randomize_order: false
+        }
+
         var practice_procedure = {
             timeline:[
                 present_fixation,
@@ -640,31 +638,25 @@
         };
 
         // procedures
-        var keyboard_select_key_procedure = {
-            timeline:[
-                select_keyboard_layout,
-                if_node_chosen_layout,
-                test_keyboard_key_left,
-                test_keyboard_key_right
-            ],
-            timeline_variables: [],
-            randomize_order: false
-        };
+        // var keyboard_select_key_procedure = {
+        //     timeline:[
+        //         select_keyboard_layout,
+        //         if_node_chosen_layout,
+        //         test_keyboard_key_left,
+        //         test_keyboard_key_right
+        //     ],
+        //     timeline_variables: [],
+        //     randomize_order: false
+        // };
 
-        var survey_procedure = {
-            timeline: [
-                survey_multi_html_block,
-                survey_multi_choice_block,
-                survey_review_survey_data
-            ],
-            timeline_vairables:[],
-            randomize_order: false
-        }
+
 
         ///////////////////////////////////////////////////////////
 
         //////////////// timeline /////////////////////////////////
+
         var timeline = []
+
 
         // best practice to have user I/O first
         timeline.push(start_screen);
@@ -673,7 +665,12 @@
         //timeline.push(survey_valid_year_html_number);
         //timeline.push(survey_valid_month_html_number);
         //timeline.push(survey_valid_language_html_text);
+
         timeline.push(survey_procedure);
+        timeline.push(redo_survey_conditional);
+
+        //ik kan wel huilen
+        //timeline.push(survey_loop);
 
 
         //timeline.push(test_audio_start);
@@ -704,7 +701,7 @@
 
 
 
-        timeline.push(instruction_screen_practice);
+        //timeline.push(instruction_screen_practice);
 
         // then push the rest
         timeline.push(practice_procedure);
@@ -738,7 +735,6 @@
                 uil.saveData(ACCESS_KEY, true);
             }
         })
-
     //})
     </script>
 </html>
