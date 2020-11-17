@@ -74,7 +74,7 @@
     // Wait till the browser has loaded all files, then execute the
     // contents of this method
     
-    //window.addEventListener('load', function() {
+    window.addEventListener('load', function() {
 
         var stimuli = pickRandomGroup();
 
@@ -147,10 +147,6 @@
                 var survey_html_responses = data.responses;
                 //
                 data.survey_html_responses = survey_html_responses;
-                
-                console.log(data.survey_html_responses);
-                //
-                //jsPsych.data.get().addToAll({'survey_html_responses': data.survey_html_responses});
 
             }
         };
@@ -191,8 +187,6 @@
                 }
             ],
             on_finish: function(data){
-                //from before
-                var survey_html_responses = data.survey_html;
                 //from here
                 var survey_multi_choice = data.responses;   
                 //setting old data from here
@@ -200,42 +194,6 @@
                 //jsPsych.data.get().addToAll({'survey_multi_choice_responses': data.responses});
             }
         };
-
-        var redo_survey_message = {
-            type: 'html-button-response',
-            stimulus: 'You were not happy with your data, or so it seems. Please fill out the survey once again',
-            choices: [OK_BUTTON_TEXT]
-        }
-
-        var redo_survey_conditional = {
-            timeline: [redo_survey_message],
-            conditional_function: function(){
-
-                var last_trial_response = jsPsych.data.get().last(1).values()[0].survey_info_correct;
-                console.log(last_trial_response);
-                if ( last_trial_response == true ){
-                    repeat_survey = false;
-                    return false // 
-                } else {
-                    repeat_survey = true;
-                    return true //
-                }
-            }
-        };
-
-        var survey_loop = {
-            timeline: [
-                survey_procedure, 
-                redo_survey_conditional
-            ],
-            loop_function: function(){
-                if (repeat_survey == true){
-                    return true
-                } else {
-                    return false
-                }
-            }
-        }
 
         var survey_review_survey_data = {
             type: "html-button-response",
@@ -283,23 +241,11 @@
                 useful_data_flag: false,
                 survey_data_flag: true
             },
-            // on_load: function(data){
-            //     var survey_a_data = jsPsych.data.getLastTrialData().values()[0]['survey_multi_choice_responses'];
-            //     console.log('survey data html');
-            //     console.log(survey_a_data);
-            // },
             on_finish: function(data){
-                if (data.button_pressed == 0){
-                    var survey_info_correct = true;
-                    //return true
-                } else {
-                    var survey_info_correct = false;
-                    //return false
-                }
-                data.survey_info_correct = survey_info_correct;
+                // Repeat the survey if yes (0) was not pressed
+                repeat_survey = data.button_pressed != 0
             }
         };
-
 
         // generic tests 
         var test_audio_start = {
@@ -610,10 +556,28 @@
             timeline: [
                 survey_multi_html_block,
                 survey_multi_choice_block,
-                survey_review_survey_data
+                survey_review_survey_data,
             ],
-            timeline_variables:[],
-            randomize_order: false
+            /**
+             * When this method returns true, jsPsych will repeat this
+             * procedure
+             *
+             * This is used to give participants the option to correct any
+             * mistakes in their input.
+             *
+             * @returns {boolean}
+             */
+            loop_function: function(){
+                if (repeat_survey == true){
+                    // Remove any previously recorded data, to prevent
+                    // duplicate entries
+                    jsPsych.data.reset()
+
+                    return true
+                } else {
+                    return false
+                }
+            }
         }
 
         var practice_procedure = {
@@ -667,11 +631,6 @@
         //timeline.push(survey_valid_language_html_text);
 
         timeline.push(survey_procedure);
-        timeline.push(redo_survey_conditional);
-
-        //ik kan wel huilen
-        //timeline.push(survey_loop);
-
 
         //timeline.push(test_audio_start);
 
@@ -735,7 +694,7 @@
                 uil.saveData(ACCESS_KEY, true);
             }
         })
-    //})
+    })
     </script>
 </html>
 
