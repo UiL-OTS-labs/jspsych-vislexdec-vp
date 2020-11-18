@@ -352,7 +352,7 @@
                 var button_number = parseInt(button_id, 10);
                 var keyboard_chosen = KEYBOARD_CHOICES[button_number];
                 data.keyboard = keyboard_chosen;
-                chosen_keyboard = keyboard_chosen;
+                chosen_keyboard = keyboard_chosen;//setting global to somthing else than undefined
                 var keyboard_timeline = KEYBOARD_DEFAULTS[keyboard_chosen];
                 
                 data.keyboard_timeline = keyboard_timeline;
@@ -382,15 +382,15 @@
             on_finish: function(data) {
                 // this would be the best  situation
                 var expected_key_press = jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_DEFAULTS[chosen_keyboard]['left_key']);
-                var left_key_chosen_ascii = data.key_press;
-                var left_key_chosen_char = upperCaseFromASCII(left_key_chosen_ascii);
+                var key_chosen_ascii = data.key_press;
+                var key_chosen_char = upperCaseFromASCII(key_chosen_ascii);
 
-                console.log(left_key_chosen_ascii);
-                console.log(left_key_chosen_char);
+                console.log(key_chosen_ascii);
+                console.log(key_chosen_char);
 
-                data.left_key_confirmed = data.key_press == expected_key_press;
-                data.left_key_chosen_ascii = left_key_chosen_ascii;
-                data.left_key_chosen_char = left_key_chosen_char ;
+                data.key_confirmed = data.key_press == expected_key_press;
+                data.key_chosen_ascii = key_chosen_ascii;
+                data.key_chosen_char = key_chosen_char;
                 // if (left_key_confirmed == true){
                 //     return true
                 // } else {
@@ -400,40 +400,40 @@
             }
         };
 
-        var validate_left_key = {
+        var validate_key_left= {
             type: 'html-button-response',
             stimulus: function() {
-                var wanted_left_key = KEYBOARD_DEFAULTS[chosen_keyboard]['left_key'];
-                var chosen_left_key = jsPsych.data.getLastTrialData().values()[0].left_key_chosen_char;
+                var wanted_key = KEYBOARD_DEFAULTS[chosen_keyboard]['left_key'];
+                var chosen_key = jsPsych.data.getLastTrialData().values()[0].key_chosen_char;
 
-                console.log(chosen_left_key)
-                return "<p> We asked you to press: " + wanted_left_key + "<BR><BR>" + 
-                    "And you pressed: " + chosen_left_key + "</p>"
+                console.log(chosen_key)
+                return "<p> We asked you to press: " + wanted_key + "<BR><BR>" + 
+                    "And you pressed: " + chosen_key + "</p>"
             },
             choices: [OK_BUTTON_TEXT]
         } 
 
-        var test_keyboard_key_right = {
-            type: 'html-keyboard-response',
-            stimulus: function(){
-                return "<class='stimulus' >" +
-                    '<p>Press the <kbd>' + KEYBOARD_DEFAULTS[chosen_keyboard]['right_key'] + '</kbd> key on your keyboard.</p>'
-            },
-            choices: jsPsych.ALL_KEYS,
-            response_ends_trial: true,
-            stimulus_duration: 10000,
-            trial_duration: 10000,
-            prompt: "push it!",
-            data: {
-                trial_phase: 'test_keyboard_key_right',
-                useful_data_flag: false
-            },
-            on_finish: function(data) {
-                // this would be the best  situation
-                var expected_key_press = jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_DEFAULTS[chosen_keyboard]['right_key']);
-                data.right_key_confirmed = data.key_press == expected_key_press;
-            }
-        };
+        // var test_keyboard_key_right = {
+        //     type: 'html-keyboard-response',
+        //     stimulus: function(){
+        //         return "<class='stimulus' >" +
+        //             '<p>Press the <kbd>' + KEYBOARD_DEFAULTS[chosen_keyboard]['right_key'] + '</kbd> key on your keyboard.</p>'
+        //     },
+        //     choices: jsPsych.ALL_KEYS,
+        //     response_ends_trial: true,
+        //     stimulus_duration: 10000,
+        //     trial_duration: 10000,
+        //     prompt: "push it!",
+        //     data: {
+        //         trial_phase: 'test_keyboard_key_right',
+        //         useful_data_flag: false
+        //     },
+        //     on_finish: function(data) {
+        //         // this would be the best  situation
+        //         var expected_key_press = jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_DEFAULTS[chosen_keyboard]['right_key']);
+        //         data.right_key_confirmed = data.key_press == expected_key_press;
+        //     }
+        // };
 
         var instruction_screen_practice = {
             type: 'html-button-response',
@@ -649,14 +649,13 @@
             randomize_order: false
         };
 
-        var keyboard_select_key_procedure = {
+        var keyboard_set_key_procedure = {
             timeline:[
                 select_keyboard_layout,
                 test_keyboard_key_left,
-                validate_left_key
+                validate_key_left
                 // test_keyboard_key_right
             ],
-            timeline_variables: [],
             randomize_order: false
         };
 
@@ -676,7 +675,7 @@
         //timeline.push(test_audio_start);
         //timeline.push(test_audio_looped);
 
-        timeline.push(keyboard_select_key_procedure);
+        timeline.push(keyboard_set_key_procedure);
 
 
 
