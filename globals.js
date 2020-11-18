@@ -75,10 +75,10 @@ const KEYBOARD_DEFAULTS = {
 	'CUSTOM': CUSTOM,
 };
 
-const KEYBOARD_KEYS_TIMELINE = [
-    { key: 'left_key' },
-    { key: 'right_key'}
-];
+// const KEYBOARD_KEYS_TIMELINE = [
+//     { key: 'left_key' },
+//     { key: 'right_key'}
+// ];
 
 
 
