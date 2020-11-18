@@ -37,11 +37,6 @@
         margin: 5% 10% 5% 10%;
     }
 
-    .template {
-        padding: 5%;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-}
 
     kbd {
         border-radius: 2px;
@@ -83,6 +78,10 @@
         // Used by survey
         var repeat_survey = false;
 
+        // used by the keyboard validation
+        var repeat_validate_left_key = false;
+        var repeat_validate_right_key = false;
+
         var chosen_keyboard = undefined;
 
         function getLeftOrRightHanded()
@@ -104,6 +103,13 @@
             // If left handed, use right. Otherwise, use left.
             let incorrect_key = (handed == 'left' ? 'right' : 'left') + '_key'
             return KEYBOARD_DEFAULTS[chosen_keyboard][incorrect_key]
+        }
+
+        //simple version, single digit input, not a list
+        function upperCaseFromASCII(keycode)
+        {
+            character = String.fromCharCode(keycode);
+            return(character.toUpperCase());
         }
 
         //stimuli.table = 
@@ -149,11 +155,11 @@
             }
         };
 
-        ////////////// survey-related
+        ////////////// SURVEY /////////////////////////////////
 
         var survey_multi_html_block = {
             type: 'survey-html-form',
-            preamble: '<h2>' + "Some stuff we'd like to ask you first..." + '</h2><BR><BR>',
+            preamble: '<h2>' + PREPARE_FOR_SURVEY + '</h2><BR><BR>',
             html: '<label for="birth_year">In what year were you born?:</label>' +
                   '<input type="number" id="birth_year" name="birth_year" placeholder=1999 min=1919 max=2019 required>' +
                 '<span class="validity"></span><BR>' + 
@@ -170,15 +176,12 @@
             on_finish: function(data){
 
                 var survey_html_responses = data.responses;
-                //
                 data.survey_html_responses = survey_html_responses;
 
             }
         };
 
-        // this multi-choice is a very usable plugin, since it has built-in
-        // validation..
-
+        // The multi-choice survey plugin has built-in validation..
         var survey_multi_choice_block = {
             type: 'survey-multi-choice',
             questions: [
@@ -256,7 +259,7 @@
                     <div>Your gender: ${gender} </div>
                     <div>Hand preference: ${hand_pref} </div>
    
-                    <p>Is this information right? 
+                    <p>Is this information correct? 
                     If not, you can click NO. 
                     You will then be asked to fill out <b>all those</b> questions again</p>.` 
             },
@@ -335,21 +338,6 @@
             }
         };
 
-        // var select_keyboard_nav = {
-        //     type: 'instructions',
-        //     pages: [
-        //         "<h1>Keyboard layout</h1><BR>" +
-        //         "<p>Let's figure out what keyboard you use. A couple of well known layouts will be shown with a caption</p>" +
-        //         "<p>Please have a look at the following layouts and remember the one that looks most like the keyboard you're using.</p>" + "Click 'next' to proceed and 'back' to review layouts. You don't have to select them here, just look at them...",
-        //         '1/5 <b>QWERTY</b>:<BR><BR><img src="./images/QWERTY.png"></img>',
-        //         '2/5 <b>AZERTY</b>:<BR><BR><img src="./images/AZERTY.png"></img>',
-        //         '3/5 <b>DVORAK</b>:<BR><BR><img src="./images/DVORAK.png"></img>',
-        //         '3/5 <b>QWERTZ</b>:<BR><BR><img src="./images/QWERTZ.png"></img>',
-        //         '5/5 <b>OTHER</b>:<BR><BR><img src="./images/CUSTOM.png"></img>',
-        //     ],
-        //     show_clickable_nav: true
-        // };
-
         var select_keyboard_layout = {
             type: 'html-button-response',
             stimulus: '<h2>Choose the keyboardlayout that looks most like yours...</h2>',
@@ -366,7 +354,9 @@
                 data.keyboard = keyboard_chosen;
                 chosen_keyboard = keyboard_chosen;
                 var keyboard_timeline = KEYBOARD_DEFAULTS[keyboard_chosen];
+                
                 data.keyboard_timeline = keyboard_timeline;
+                
                 console.log('keyboard', data.keyboard)
                 console.log('keyboard_timeline', data.keyboard_timeline)
             }
@@ -376,7 +366,9 @@
             type: 'html-keyboard-response',
             stimulus: function(){
                 return "<class='stimulus' >" +
-                    '<p>Press the <kbd>' + KEYBOARD_DEFAULTS[chosen_keyboard]['left_key'] + '</kbd> key on your keyboard.</p>'
+                    '<p>Press the <kbd>' + 
+                    KEYBOARD_DEFAULTS[chosen_keyboard]['left_key'] + 
+                    '</kbd> key on your keyboard.</p>'
             },
             choices: jsPsych.ALL_KEYS,
             response_ends_trial: true,
@@ -385,14 +377,41 @@
             prompt: "push it!",
             data: {
                 trial_phase: 'test_keyboard_key_left',
-                useful_data_flag: true,
+                useful_data_flag: false,
             },
             on_finish: function(data) {
                 // this would be the best  situation
                 var expected_key_press = jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_DEFAULTS[chosen_keyboard]['left_key']);
-                data.correct = data.key_press == expected_key_press;
+                var left_key_chosen_ascii = data.key_press;
+                var left_key_chosen_char = upperCaseFromASCII(left_key_chosen_ascii);
+
+                console.log(left_key_chosen_ascii);
+                console.log(left_key_chosen_char);
+
+                data.left_key_confirmed = data.key_press == expected_key_press;
+                data.left_key_chosen_ascii = left_key_chosen_ascii;
+                data.left_key_chosen_char = left_key_chosen_char ;
+                // if (left_key_confirmed == true){
+                //     return true
+                // } else {
+                //     return false
+                // }
+
             }
         };
+
+        var validate_left_key = {
+            type: 'html-button-response',
+            stimulus: function() {
+                var wanted_left_key = KEYBOARD_DEFAULTS[chosen_keyboard]['left_key'];
+                var chosen_left_key = jsPsych.data.getLastTrialData().values()[0].left_key_chosen_char;
+
+                console.log(chosen_left_key)
+                return "<p> We asked you to press: " + wanted_left_key + "<BR><BR>" + 
+                    "And you pressed: " + chosen_left_key + "</p>"
+            },
+            choices: [OK_BUTTON_TEXT]
+        } 
 
         var test_keyboard_key_right = {
             type: 'html-keyboard-response',
@@ -407,15 +426,14 @@
             prompt: "push it!",
             data: {
                 trial_phase: 'test_keyboard_key_right',
-                useful_data_flag: true
+                useful_data_flag: false
             },
             on_finish: function(data) {
                 // this would be the best  situation
                 var expected_key_press = jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_DEFAULTS[chosen_keyboard]['right_key']);
-                data.correct = data.key_press == expected_key_press;
+                data.right_key_confirmed = data.key_press == expected_key_press;
             }
         };
-
 
         var instruction_screen_practice = {
             type: 'html-button-response',
@@ -582,6 +600,34 @@
             }
         }
 
+        // var keyboard_procedure = {
+        //     timeline: [
+        //         select_keyboard_layout,
+        //         test_keyboard_key_left,
+        //         test_keyboard_key_right,
+        //     ],
+        //     *
+        //      * When this method returns true, jsPsych will repeat this
+        //      * procedure
+        //      *
+        //      * This is used to give participants the option to correct any
+        //      * mistakes in their input.
+        //      *
+        //      * @returns {boolean}
+             
+        //     loop_function: function(){
+        //         if (repeat_survey == true){
+        //             // Remove any previously recorded data, to prevent
+        //             // duplicate entries
+        //             jsPsych.data.reset()
+
+        //             return true
+        //         } else {
+        //             return false
+        //         }
+        //     }
+        // }
+
         var practice_procedure = {
             timeline:[
                 present_fixation,
@@ -607,13 +653,12 @@
             timeline:[
                 select_keyboard_layout,
                 test_keyboard_key_left,
-                test_keyboard_key_right
+                validate_left_key
+                // test_keyboard_key_right
             ],
             timeline_variables: [],
             randomize_order: false
         };
-
-
 
         ///////////////////////////////////////////////////////////
 
@@ -629,8 +674,6 @@
         timeline.push(survey_procedure);
 
         //timeline.push(test_audio_start);
-
-        //timeline.push(test_audio_single);
         //timeline.push(test_audio_looped);
 
         timeline.push(keyboard_select_key_procedure);

@@ -18,23 +18,19 @@ const OK_BUTTON_TEXT = "OK";
 
 const YES_OR_NO_BUTTON_TEXT = ["Yes", "No"];
 
-const ACCESS_KEY = '382b7538-e7bf-4197-a1a4-73b1351f9198';
+const ACCESS_KEY = 'secretkeyforwebimplementation';
 
-// TESTING THINGS 
+// GENERIC TESTS/CHECKS
 const GENERIC_CHECK = "In order to participate in this experiment, please confirm that you:<BR><BR><ul><li>Run this on a Laptop or Desktop computer, <b>not</b> on a phone or a tablet!</li><li>Have a <b>real keyboard</b> working.</li><li>Have a <b>mouse</b> and/or <b>trackpad</b> that works.</li><li>Have your browser's audio enabled and your volume on.</li></ul><h5>Before you click OK, make sure you have your browser window nice and large!</h5><BR><p>We'll try and help you check some additional things..."
-
-const AUDIO_CHECK_ONE = "<h1>Test audio</h><BR><BR><p>Are you alone in a room? It would be best to use your headphones, if you have them, but otherwise: please don't be in a place where some sound from your device would be really annoying...<BR><BR>Click 'play sound' to start playing a test sound.</p>"
 
 const AUDIO_CHECK_PROMPT_TEXT_LOOP = "Please make sure your audio is audible, you can play the sound again to adjust your device volume. Once you're happy with the levels, click 'Continue'"
 
-//ASK THING BEFORE TESTING OTHER THINGS 
-//survey (simple, no input validation from within multi-question)
-const PREPARE_FOR_BINARY_SURVEY = "We will ask you to answer some questions in a quick survey. This is a quick screening we need, before we (think we) can use your data for this particular experiment. Please know that we know how limited this is at many levels...<BR><BR>";//placeholder
+const PREPARE_FOR_SURVEY = "We will ask you to answer some screening questions in a quick (forced choice) survey.";
 
 //survey html plugin
-const NATIVE_LANGUAGE_QUESTION = 'What is your native language? (todo, pattern now at: "[a-zA-Z]+")'
-const YEAR_BORN_QUESTION = 'In what <i>year</i> were you born? (valid input: 1919 - 2019)';
-const MONTH_BORN_QUESTION = 'In what <i>month</i> were you born? (valid input: 1 - 12)';
+const NATIVE_LANGUAGE_QUESTION = 'What is your native language?'
+const YEAR_BORN_QUESTION = 'In what <i>year</i> were you born?';
+const MONTH_BORN_QUESTION = 'In what <i>month</i> were you born? (1 - 12)';
 
 // block
 const BILINGUAL_QUESTION = "Were you raised to understand and speak more than one language, from when you were an infant and onwards?"
@@ -52,36 +48,23 @@ const HAND_OPTIONS = ["Left", "Right"];
 // for which we have some defaults configured
 const KEYBOARD_CHOICES = ['QWERTY','AZERTY','DVORAK','QWERTZ','CUSTOM'];
 
-// what default keys to configure if we 
-//- have not data from tests -
-//- or the participant can't hit the same key after some tries?
-
 const KEYBOARD_FALLBACK = 'CUSTOM';
 
-// unused
-const KEYBOARD_KEYS_PLACE_LR = ['left', 'right'];
-// unused 
-const KEYBOARD_KEYS_PLACE_TB= ['top', 'bottom'];
+//now for finding out the real bits..
+// simple sheme
+// Type     |   Left  |   Right
+// ---------|---------|----------
+// QWERTY   |   A     |  L
+// AZERTY   |   Q     |  M
+// DVORAK   |   A     |  S (or N?)
+// QWERTZ   |   A     |  L
+// OTHER    |   A     |  L (fallback, more tries?)
 
-// let's confuse everyone's hands
-const ASSUMED_DOMINANT_TRUE = 'left_key';
-const ASSUMED_DOMINANT_FALSE = 'right_key';
-
-        //now for finding out the real bits..
-        // simple sheme
-        // Type     |   Left  |   Right
-        // ---------|---------|----------
-        // QWERTY   |   A     |  L
-        // AZERTY   |   Q     |  M
-        // DVORAK   |   A     |  S (or N?)
-        // QWERTZ   |   A     |  L
-        // OTHER    |   A     |  L (fallback, more tries?)
-
-const QWERTY = { kb_type: 'QUERTY', left_key: "A", right_key: "L", max_tries: 2 };
-const AZERTY = { kb_type: 'AZERTY', left_key: "Q", right_key: "M", max_tries: 2 };
-const DVORAK = { kb_type: 'DVORAK', left_key: "A", right_key: "S", max_tries: 2 };
-const QWERTZ = { kb_type: 'QWERTZ', left_key: "A", right_key: "L", max_tries: 2 };
-const CUSTOM = { kb_type: 'CUSTOM', left_key: "A", right_key: "L", max_tries: 2 };
+const QWERTY = { kb_type: 'QUERTY', left_key: "A", right_key: "L" };
+const AZERTY = { kb_type: 'AZERTY', left_key: "Q", right_key: "M" };
+const DVORAK = { kb_type: 'DVORAK', left_key: "A", right_key: "S" };
+const QWERTZ = { kb_type: 'QWERTZ', left_key: "A", right_key: "L" };
+const CUSTOM = { kb_type: 'CUSTOM', left_key: "A", right_key: "L" };
 
 // Quick lookup table
 const KEYBOARD_DEFAULTS = {
@@ -91,6 +74,11 @@ const KEYBOARD_DEFAULTS = {
 	'QWERTZ': QWERTZ,
 	'CUSTOM': CUSTOM,
 };
+
+const KEYBOARD_KEYS_TIMELINE = [
+    { key: 'left_key' },
+    { key: 'right_key'}
+];
 
 
 
