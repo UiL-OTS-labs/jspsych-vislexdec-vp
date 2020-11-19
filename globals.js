@@ -19,18 +19,21 @@ const YES_OR_NO_BUTTON_TEXT = ["Yes", "No"];
 const ACCESS_KEY = 'zeeekretkeey'; // don't commit the real key
 
 // GENERIC TESTS/CHECKS
-const GENERIC_CHECK = "In order to participate in this experiment, please confirm that you:<BR><BR>" +
-	"<ul><li>Run this on a Laptop or Desktop computer, <b>not</b> on a phone or a tablet!" + 
-	"</li><li>Have a <b>real keyboard</b> working.</li><li>Have a <b>mouse</b> and/or <b>trackpad</b>" + 
-	" that works.</li><li>Have your browser's audio enabled and your volume on.</li></ul>" +
-	"<h5>Before you click OK, make sure you have your browser window nice and large!</h5><BR>" +
-	"<p>Next, we will do some more test and checks.";
-
-//unused here
-const AUDIO_CHECK_PROMPT_TEXT_LOOP = "Please make sure your audio is audible, you can play the sound" + 
-    " again to adjust your device volume. Once you're happy with the levels, click 'Continue'";
-
-const PREPARE_FOR_SURVEY = "We will ask you to answer some screening questions in a quick (forced choice) survey.";
+const GENERIC_CHECK = `In order to participate in this experiment, please confirm that you:<BR><BR>
+    <ul>
+    <li>Run this on a Laptop or Desktop computer, <b>not</b> on a phone or a tablet!</li>
+    <li>Have a <b>real keyboard</b> working.</li><li>Have a <b>mouse</b> and/or 
+    <b>trackpad</b> that works.</li>
+    <li>Have your browser's audio enabled and your volume on.</li>
+    </ul>
+    <h5>Before you click OK, make sure you have your browser window nice and large!</h5>
+    <BR>
+    <p>Next, we will do some more test and checks.
+    `;
+    
+const PREPARE_FOR_SURVEY = `
+    Please answer some screening questions in a quick (forced choice) survey.
+    `;
 
 //survey html plugin
 const NATIVE_LANGUAGE_QUESTION = 'What is your native language?'
@@ -38,14 +41,22 @@ const YEAR_BORN_QUESTION = 'In what <i>year</i> were you born?';
 const MONTH_BORN_QUESTION = 'In what <i>month</i> were you born? (1 - 12)';
 
 // survey multiple choice block
-const BILINGUAL_QUESTION = 'Were you born and raised in a ' + 
-    '<a href="https://en.wikipedia.org/wiki/Multilingualism" target="_blank">multilingual</a> environment?';
+const BILINGUAL_QUESTION = `
+    Were you born and raised in a  
+    <a href="https://en.wikipedia.org/wiki/Multilingualism" target="_blank">multilingual</a>
+    environment?
+    `;
 const BILINGUAL_OPTIONS = ["No","Yes"];
 
-const DYSLEXIC_QUESTION = 'Are you <a href="https://en.wikipedia.org/wiki/Dyslexia" target="_blank">dyslexic</a>?';
+const DYSLEXIC_QUESTION = `Are you 
+    <a href="https://en.wikipedia.org/wiki/Dyslexia" target="_blank">dyslexic</a>?
+    `;
 const DYSLEXIC_OPTIONS = ["No", "Yes"];
 
-const GENDER_QUESTION = 'What is your <a href="https://en.wikipedia.org/wiki/Gender" target="_blank">gender</a>?';
+const GENDER_QUESTION = `
+    What is your 
+    <a href="https://en.wikipedia.org/wiki/Gender" target="_blank">gender</a>?
+    `;
 const GENDER_OPTIONS = ["Female", "Male"];
 
 const HAND_QUESTION = 'Which hand do you prefer to write with?';
@@ -72,11 +83,11 @@ const CUSTOM = { kb_type: 'CUSTOM', left_key: "1", right_key: "0" };
 
 // Quick lookup table
 const KEYBOARD_DEFAULTS = {
-	'QWERTY': QWERTY,
-	'AZERTY': AZERTY,
-	'DVORAK': DVORAK,
-	'QWERTZ': QWERTZ,
-	'CUSTOM': CUSTOM,
+    'QWERTY': QWERTY,
+    'AZERTY': AZERTY,
+    'DVORAK': DVORAK,
+    'QWERTZ': QWERTZ,
+    'CUSTOM': CUSTOM,
 };
 
 

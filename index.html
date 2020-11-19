@@ -90,7 +90,7 @@
 
         function getLeftOrRightHanded()
         {
-            let data = jsPsych.data.get().select('survey_multi_choice_responses');                 
+            let data = jsPsych.data.get().select('survey_multi_choice_responses');
             data = JSON.parse(data.values[0])
             return data.HandPreference;
         }
@@ -115,8 +115,6 @@
             character = String.fromCharCode(keycode);
             return(character.toUpperCase());
         }
-
-        //stimuli.table = 
 
         // data one would like to add to __all__ trials, according to:
         // https://www.jspsych.org/overview/data/
@@ -247,9 +245,9 @@
             stimulus: function(data){
 
                 var survey_html = 
-                    jsPsych.data.get().last(2).values()[0].survey_html_responses; //former former data (2)
+                    jsPsych.data.get().last(2).values()[0].survey_html_responses; //former
                 var survey_multi = 
-                    jsPsych.data.get().last(1).values()[0].survey_multi_choice_responses; //former (1)
+                    jsPsych.data.get().last(1).values()[0].survey_multi_choice_responses;
                 var jsHTML = JSON.parse(survey_html);
                 var b_year = jsHTML.birth_year;
                 var b_month = jsHTML.birth_month;
@@ -347,7 +345,7 @@
                     );
                 var key_chosen_ascii = data.key_press;
                 var key_chosen_char = 
-                    upperCaseFromASCII(key_chosen_ascii); //will give blanks for other than 0-9 & A-Z
+                    upperCaseFromASCII(key_chosen_ascii); //blanks for other than 0-9 & A-Z
                 data.key_confirmed = data.key_press == expected_key_press;
                 data.key_chosen_ascii = key_chosen_ascii;
                 data.key_chosen_char = key_chosen_char;
