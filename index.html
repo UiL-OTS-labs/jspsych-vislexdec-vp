@@ -90,7 +90,7 @@
 
         function getLeftOrRightHanded()
         {
-            let data = jsPsych.data.get().select('survey_multi_choice_responses');
+            let data = jsPsych.data.get().select('survey_multi_choice_responses');                 
             data = JSON.parse(data.values[0])
             return data.HandPreference;
         }
@@ -143,13 +143,20 @@
                 var iamamobile = uil.isMobileOrTablet();
                 if (iamamobile == true){
                     console.log('tablet/mobile');
-                    jsPsych.endExperiment("The experiment was ended because we fear you are not on the right type of device to proceed. You're supposed to dot his task on a laptop or PC with audio and keyboard and mouse or trackpad available.")
+                    jsPsych.endExperiment(
+                        `
+                        The experiment was ended because we fear 
+                        you are not on the right type of device to proceed. 
+                        You're supposed to dot his task on a laptop or PC 
+                        with audio and keyboard and mouse or trackpad available.
+                        `
+                        )
                 } else {
                     console.log("This device might be alright to proceed!");
                 }
             },
             data: {
-                useful_data_flag: false
+                useful_data_flag: false,
             }
         };
 
@@ -158,18 +165,26 @@
         var survey_multi_html_block = {
             type: 'survey-html-form',
             preamble: '<h5>' + PREPARE_FOR_SURVEY + '</h5><BR><BR>',
-            html: '<div class="survey" >' +
-                '<label for="birth_year">In what year were you born?    </label>' +
-                '<input type="number" id="birth_year" ' + 
-                'name="birth_year" placeholder=1999 min=1919 max=2019 required>' +
-                '<span class="validity"></span><BR>' + 
-                '<label for="birth_month">In what month were you born?   </label>' +
-                '<input type="number" id="birth_month" name="birth_month" placeholder=7 min=1 max=12 required>' +
-                '<span class="validity"></span><BR>' + 
-                '<label for="native_language">What is your native language?     </label>' +
-                '<input type="text" id="native_language" name="native_language" pattern="[a-zA-Z]+" placeholder="Dutch" required>' + 
-                '<span class="validity"></span><BR>' + 
-                '</div>',
+            html: `
+                <div class="survey" >
+                
+                <label for="birth_year">In what year were you born? </label>
+                <input type="number" id="birth_year" 
+                name="birth_year" placeholder=1999 min=1919 max=2019 required>
+                <span class="validity"></span><BR>
+                
+                <label for="birth_month">In what month were you born? </label>
+                <input type="number" id="birth_month" name="birth_month" 
+                placeholder=7 min=1 max=12 required>
+                <span class="validity"></span><BR>
+                
+                <label for="native_language">What is your native language?</label>
+                <input type="text" id="native_language" name="native_language"
+                pattern="[a-zA-Z]+" placeholder="Dutch" required>
+                <span class="validity"></span><BR> 
+                
+                </div>
+                `,
             data: {
                 useful_data_flag: false,
                 survey_data_flag: true
@@ -185,6 +200,10 @@
         // The multi-choice survey plugin has built-in validation..
         var survey_multi_choice_block = {
             type: 'survey-multi-choice',
+            data: {
+                useful_data_flag: false,
+                survey_data_flag: true
+            },
             questions: [
                 {
                     prompt: BILINGUAL_QUESTION,
@@ -225,24 +244,18 @@
 
         var survey_review_survey_data = {
             type: "html-button-response",
-            //stimulus: "We hope you filled out things correctly?", 
             stimulus: function(data){
 
-                var survey_html = jsPsych.data.get().last(2).values()[0].survey_html_responses; //former former data (2)
-                var survey_multi = jsPsych.data.get().last(1).values()[0].survey_multi_choice_responses; //former (1)
-
-                //----------------------------
-
+                var survey_html = 
+                    jsPsych.data.get().last(2).values()[0].survey_html_responses; //former former data (2)
+                var survey_multi = 
+                    jsPsych.data.get().last(1).values()[0].survey_multi_choice_responses; //former (1)
                 var jsHTML = JSON.parse(survey_html);
-
                 var b_year = jsHTML.birth_year;
                 var b_month = jsHTML.birth_month;
                 var n_lang = jsHTML.native_language;
 
-                //----------------------------
-
                 var jsMulti = JSON.parse(survey_multi);
-
                 var bilingual = jsMulti.Multilingual;
                 var dyslexic = jsMulti.Dyslexic;
                 var gender = jsMulti.Gender;
@@ -260,7 +273,7 @@
                     <div><strong>Hand preference</strong>: ${hand_pref} </div>
                     </p>
                     <BR><BR>
-                    Is this information correct?</p>
+                    <p>Is this information correct?</p>
                     ` 
             },
             choices: YES_OR_NO_BUTTON_TEXT,
@@ -275,55 +288,20 @@
             }
         };
 
-        // // generic tests 
-        // var test_audio_start = {
-        //     type: 'html-button-response',
-        //     stimulus: function(){
-        //         return "<div class='instruction' >" +
-        //             '<p>' + AUDIO_CHECK_ONE + '</p></div>';
-        //     },
-        //     choices: [OK_BUTTON_TEXT],
-        //     response_ends_trial: true,
-        //     data: {
-        //         useful_data_flag: false
-        //     }
-        // };
-
-        // var test_audio_looped = {
-        //     timeline:
-        //         [
-        //             {
-        //                 type: 'audio-button-response',
-        //                 stimulus: './sounds/boat.mp3',
-        //                 choices: ['Play Again', 'Continue'],
-        //                 prompt: function(){
-        //                     return "<div class='instruction' >" +
-        //                         '<p>' + AUDIO_CHECK_PROMPT_TEXT_LOOP + '</p></div>'
-        //                 }
-        //             }
-        //         ],
-        //     loop_function: function(data){
-        //         if (data.values()[0].button_pressed == 0){
-        //             return true; // loop again!
-        //         } else {
-        //             return false; // continue
-        //         }
-        //     },
-        //     on_finish: function(data) {
-        //         data.audio_checked = true;
-        //         //console.log(data.audio_checked);
-        //     }
-        // };
-
-
-        //////////// generic keyboard checking  /////////////////////////
+        //////////// keyboard layout  /////////////////////////
 
         var select_keyboard_layout = {
             type: 'html-button-response',
-            stimulus: '<h2>Choose the keyboardlayout that looks most like yours...</h2>',
+            stimulus: '<h2>Choose the keyboardlayout that looks most like yours</h2>',
             choices: KEYBOARD_CHOICES,
-            prompt: "Focus on the first 6 <b>letters</b> in the top left of your keyboard layout if you're unsure",
-            button_html: '<button class="img-btn"><img src=./images/%choice%.png></button>',
+            prompt: `
+                Focus on the first 6 <b>letters</b> in the top left of your 
+                keyboard layout if you're unsure.
+                `,
+            button_html: `
+                <button class="img-btn">
+                <img src=./images/%choice%.png></button>
+                `,
             data: {
                 useful_data_flag: false
             },
@@ -332,11 +310,11 @@
                 var button_number = parseInt(button_id, 10);
                 var keyboard_chosen = KEYBOARD_CHOICES[button_number];
                 data.keyboard = keyboard_chosen;
-                chosen_keyboard = keyboard_chosen;//setting global to somthing else than undefined
+                chosen_keyboard = keyboard_chosen;//setting global value
             }
         };
 
-        //////////// left key setting&validation /////////////////////////
+        //////////// left key setting & validation /////////////////////////
 
         var test_keyboard_key_left = {
             type: 'html-keyboard-response',
@@ -350,7 +328,7 @@
             response_ends_trial: true,
             stimulus_duration: 10000,
             trial_duration: 10000,
-            prompt: "push it!",
+            prompt: "Please respond within 10 seconds.",
             data: {
                 trial_phase: 'test_keyboard_key_left',
                 useful_data_flag: false,
@@ -363,14 +341,17 @@
                 }
             },
             on_finish: function(data) {
-                var expected_key_press = jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_DEFAULTS[chosen_keyboard]['left_key']);
+                var expected_key_press = 
+                    jsPsych.pluginAPI.convertKeyCharacterToKeyCode(
+                    KEYBOARD_DEFAULTS[chosen_keyboard]['left_key']
+                    );
                 var key_chosen_ascii = data.key_press;
-                var key_chosen_char = upperCaseFromASCII(key_chosen_ascii);
+                var key_chosen_char = 
+                    upperCaseFromASCII(key_chosen_ascii); //will give blanks for other than 0-9 & A-Z
                 data.key_confirmed = data.key_press == expected_key_press;
                 data.key_chosen_ascii = key_chosen_ascii;
                 data.key_chosen_char = key_chosen_char;
 
-                //overly verbose, but testing
                 if (data.key_confirmed == true){
                     left_key_confirmed = true;
                 } else {
@@ -384,8 +365,9 @@
             stimulus: function() {
                 var wanted_key = KEYBOARD_DEFAULTS[chosen_keyboard]['left_key'];
                 var chosen_key = jsPsych.data.getLastTrialData().values()[0].key_chosen_char;
-                return "<p> We asked you to press: " + wanted_key + "<BR><BR>" + 
-                    "You pressed: " + chosen_key + "<BR><BR>Try again, please...</p>"
+                return "<p> You were asked to press: " + wanted_key + "<BR><BR>" + 
+                    "You pressed: " + chosen_key + 
+                    "<BR><BR>Try again, please...</p>"
             },
             choices: [OK_BUTTON_TEXT]
         }
@@ -417,13 +399,16 @@
             response_ends_trial: true,
             stimulus_duration: 10000,
             trial_duration: 10000,
-            prompt: "push it!",
+            prompt: "Please respond within 10 seconds",
             data: {
                 trial_phase: 'test_keyboard_key_right',
                 useful_data_flag: false,
             },
             on_finish: function(data) {
-                var expected_key_press = jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_DEFAULTS[chosen_keyboard]['right_key']);
+                var expected_key_press = 
+                    jsPsych.pluginAPI.convertKeyCharacterToKeyCode(
+                    KEYBOARD_DEFAULTS[chosen_keyboard]['right_key']
+                    );
                 var key_chosen_ascii = data.key_press;
                 var key_chosen_char = upperCaseFromASCII(key_chosen_ascii);
                 data.key_confirmed = data.key_press == expected_key_press;
@@ -442,11 +427,11 @@
             type: 'html-button-response',
             stimulus: function() {
                 var wanted_key = KEYBOARD_DEFAULTS[chosen_keyboard]['right_key'];
-                var chosen_key = jsPsych.data.getLastTrialData().values()[0].key_chosen_char;
-
-                console.log(chosen_key)
-                return "<p> We asked you to press: " + wanted_key + "<BR><BR>" + 
-                    "You pressed: " + chosen_key + "<BR><BR>Try again, please...</p>"
+                var chosen_key = 
+                    jsPsych.data.getLastTrialData().values()[0].key_chosen_char;
+                return "<p> You were asked to press: " + wanted_key + "<BR><BR>" + 
+                    "You pressed: " + chosen_key + 
+                    "<BR><BR>Try again, please...</p>"
             },
             choices: [OK_BUTTON_TEXT]
         } 
@@ -509,7 +494,8 @@
         var present_prime = {
             type: 'html-keyboard-response',
             stimulus: function(){
-                return "<p class='stimulus'>" + jsPsych.timelineVariable('prime', true) + "</p>";
+                return "<p class='stimulus'>" + 
+                    jsPsych.timelineVariable('prime', true) + "</p>";
             },
             choices: jsPsych.NO_KEYS,
             trial_duration: PRIME_DURATION,
@@ -569,11 +555,14 @@
                 var correct_key = getCorrectKey()
                 var incorrect_key = getIncorrectKey();
                 if(data.condition == 'RELATED'){
-                    var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(correct_key);
+                    var correct = data.key_press == 
+                        jsPsych.pluginAPI.convertKeyCharacterToKeyCode(correct_key);
                 } else if (data.condition == 'UNRELATED'){
-                    var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(correct_key);
+                    var correct = data.key_press == 
+                        jsPsych.pluginAPI.convertKeyCharacterToKeyCode(correct_key);
                 } else {
-                    var correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(incorrect_key);
+                    var correct = data.key_press == 
+                        jsPsych.pluginAPI.convertKeyCharacterToKeyCode(incorrect_key);
                 }
                 data.correct = correct;
             }
@@ -660,7 +649,8 @@
                 present_prime,
                 present_word,
             ],
-            timeline_variables: uil.randomization.randomizeStimuli(stimuli.table, MAX_SUCCEEDING_ITEMS_OF_TYPE, 'item_type'),
+            timeline_variables: uil.randomization.randomizeStimuli(stimuli.table, 
+                MAX_SUCCEEDING_ITEMS_OF_TYPE, 'item_type'),
             randomize_order: false // this should be false if uil randomization is used...
         };
 
@@ -671,7 +661,7 @@
                 present_word,
             ],
             timeline_variables: stimuli.table,
-            randomize_order: true // this should be true if you want regular timelineVar jsPsych randomization
+            randomize_order: true // this should be true if you want jsPsych's randomization
         };
 
         //////////////// timeline /////////////////////////////////
@@ -680,32 +670,23 @@
 
         // best practice to have *mouse click* user I/O first
         timeline.push(start_screen);
-
         // survey
         timeline.push(survey_procedure);
-
-        // silly in a non-audio template, but well, let's fix that later
-        // timeline.push(test_audio_start);
-        // timeline.push(test_audio_looped);
-
+        // kb layout
         timeline.push(select_keyboard_layout);
-
+        // kb important keys
         timeline.push(keyboard_set_key_left_procedure);
         timeline.push(keyboard_set_key_right_procedure);
-
+        // task instruction
         timeline.push(instruction_screen_practice);
-
-        // then push the rest
         timeline.push(practice_procedure);
         timeline.push(well_done_screen);
 
         // NOTE options below! comment/uncomment for regular vs restrained randomization
         //true randomness is great for this current template's amount of items...
 
-        //timeline.push(trial_procedure_pseudo_random);// don't do this with this little stimuli
+        //timeline.push(trial_procedure_pseudo_random);// don't do this with little stimuli
         timeline.push(trial_procedure_random);
-
-
         timeline.push(end_screen);
 
         jsPsych.init({
