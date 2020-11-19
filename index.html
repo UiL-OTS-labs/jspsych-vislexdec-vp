@@ -275,45 +275,45 @@
             }
         };
 
-        // generic tests 
-        var test_audio_start = {
-            type: 'html-button-response',
-            stimulus: function(){
-                return "<div class='instruction' >" +
-                    '<p>' + AUDIO_CHECK_ONE + '</p></div>';
-            },
-            choices: [OK_BUTTON_TEXT],
-            response_ends_trial: true,
-            data: {
-                useful_data_flag: false
-            }
-        };
+        // // generic tests 
+        // var test_audio_start = {
+        //     type: 'html-button-response',
+        //     stimulus: function(){
+        //         return "<div class='instruction' >" +
+        //             '<p>' + AUDIO_CHECK_ONE + '</p></div>';
+        //     },
+        //     choices: [OK_BUTTON_TEXT],
+        //     response_ends_trial: true,
+        //     data: {
+        //         useful_data_flag: false
+        //     }
+        // };
 
-        var test_audio_looped = {
-            timeline:
-                [
-                    {
-                        type: 'audio-button-response',
-                        stimulus: './sounds/boat.mp3',
-                        choices: ['Play Again', 'Continue'],
-                        prompt: function(){
-                            return "<div class='instruction' >" +
-                                '<p>' + AUDIO_CHECK_PROMPT_TEXT_LOOP + '</p></div>'
-                        }
-                    }
-                ],
-            loop_function: function(data){
-                if (data.values()[0].button_pressed == 0){
-                    return true; // loop again!
-                } else {
-                    return false; // continue
-                }
-            },
-            on_finish: function(data) {
-                data.audio_checked = true;
-                //console.log(data.audio_checked);
-            }
-        };
+        // var test_audio_looped = {
+        //     timeline:
+        //         [
+        //             {
+        //                 type: 'audio-button-response',
+        //                 stimulus: './sounds/boat.mp3',
+        //                 choices: ['Play Again', 'Continue'],
+        //                 prompt: function(){
+        //                     return "<div class='instruction' >" +
+        //                         '<p>' + AUDIO_CHECK_PROMPT_TEXT_LOOP + '</p></div>'
+        //                 }
+        //             }
+        //         ],
+        //     loop_function: function(data){
+        //         if (data.values()[0].button_pressed == 0){
+        //             return true; // loop again!
+        //         } else {
+        //             return false; // continue
+        //         }
+        //     },
+        //     on_finish: function(data) {
+        //         data.audio_checked = true;
+        //         //console.log(data.audio_checked);
+        //     }
+        // };
 
 
         //////////// generic keyboard checking  /////////////////////////
@@ -685,8 +685,8 @@
         timeline.push(survey_procedure);
 
         // silly in a non-audio template, but well, let's fix that later
-        timeline.push(test_audio_start);
-        timeline.push(test_audio_looped);
+        // timeline.push(test_audio_start);
+        // timeline.push(test_audio_looped);
 
         timeline.push(select_keyboard_layout);
 

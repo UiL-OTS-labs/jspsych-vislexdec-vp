@@ -18,7 +18,7 @@ const OK_BUTTON_TEXT = "OK";
 
 const YES_OR_NO_BUTTON_TEXT = ["Yes", "No"];
 
-const ACCESS_KEY = 'secretkeyforwebimplementation';
+const ACCESS_KEY = 'zeeekretkeey';
 
 // GENERIC TESTS/CHECKS
 const GENERIC_CHECK = "In order to participate in this experiment, please confirm that you:<BR><BR><ul><li>Run this on a Laptop or Desktop computer, <b>not</b> on a phone or a tablet!</li><li>Have a <b>real keyboard</b> working.</li><li>Have a <b>mouse</b> and/or <b>trackpad</b> that works.</li><li>Have your browser's audio enabled and your volume on.</li></ul><h5>Before you click OK, make sure you have your browser window nice and large!</h5><BR><p>We'll try and help you check some additional things..."
@@ -39,10 +39,10 @@ const BILINGUAL_OPTIONS = ["No","Yes"];
 const DYSLEXIC_QUESTION = 'Are you <a href="https://en.wikipedia.org/wiki/Dyslexia" target="_blank">dyslexic</a>?';
 const DYSLEXIC_OPTIONS = ["No", "Yes"];
 
-const GENDER_QUESTION = 'What is your current <a href="https://en.wikipedia.org/wiki/Gender" target="_blank">gender</a>?';
+const GENDER_QUESTION = 'What is your <a href="https://en.wikipedia.org/wiki/Gender" target="_blank">gender</a>?';
 const GENDER_OPTIONS = ["Female", "Male"];
 
-const HAND_QUESTION = 'What is you fastest, most <a href="https://www.dictionary.com/browse/trigger-happy" target="_blank">trigger-happy</a> hand to respond on a keyboard?'
+const HAND_QUESTION = 'Which hand do you prefer to write with?'
 const HAND_OPTIONS = ["Left", "Right"];
 
 // for which we have some defaults configured
@@ -60,8 +60,6 @@ const KEYBOARD_FALLBACK = 'CUSTOM';
 // DVORAK   |   A     |  S (or N?)
 // QWERTZ   |   A     |  L
 // OTHER    |   A     |  L (fallback, more tries?)
-
-
 
 const QWERTY = { kb_type: 'QUERTY', left_key: "A", right_key: "L" };
 const AZERTY = { kb_type: 'AZERTY', left_key: "Q", right_key: "M" };
