@@ -80,6 +80,10 @@
         // used by the keyboard validation
         var repeat_validate_left_key = false;
         var repeat_validate_right_key = false;
+
+        var left_key_confirmed = false;
+        var right_key_confirmed = false;
+
         var chosen_keyboard = undefined;
 
         function getLeftOrRightHanded()
@@ -137,7 +141,7 @@
                 var iamamobile = uil.isMobileOrTablet();
                 if (iamamobile == true){
                     console.log('tablet/mobile');
-                    jsPsych.endExperiment("The experiment was ended because we fear you are not on the right type of device to proceed. You're on a laptop or PC with audio and keyboard and mouse or trackpad available, right? If not, please come back here on a device that qualifies!")
+                    jsPsych.endExperiment("The experiment was ended because we fear you are not on the right type of device to proceed. You're supposed to dot his task on a laptop or PC with audio and keyboard and mouse or trackpad available.")
                 } else {
                     console.log("This device might be alright to proceed!");
                 }
@@ -151,16 +155,19 @@
 
         var survey_multi_html_block = {
             type: 'survey-html-form',
-            preamble: '<h2>' + PREPARE_FOR_SURVEY + '</h2><BR><BR>',
-            html: '<label for="birth_year">In what year were you born?:</label>' +
-                  '<input type="number" id="birth_year" name="birth_year" placeholder=1999 min=1919 max=2019 required>' +
+            preamble: '<h5>' + PREPARE_FOR_SURVEY + '</h5><BR><BR>',
+            html: '<div class="instruction" >' +
+                '<label for="birth_year">In what year were you born?:</label>' +
+                '<input type="number" id="birth_year" ' + 
+                ' name="birth_year" placeholder=1999 min=1919 max=2019 required>' +
                 '<span class="validity"></span><BR>' + 
                 '<label for="birth_month">In what month were you born?:</label>' +
                 '<input type="number" id="birth_month" name="birth_month" placeholder=7 min=1 max=12 required>' +
                 '<span class="validity"></span><BR>' + 
                 '<label for="native_language">What is your native language?:</label>' +
                 '<input type="text" id="native_language" name="native_language" pattern="[a-zA-Z]+" placeholder="Dutch" required>' + 
-                '<span class="validity"></span><BR>',
+                '<span class="validity"></span><BR>' + 
+                '</div>',
             data: {
                 useful_data_flag: false,
                 survey_data_flag: true
@@ -211,7 +218,6 @@
                 var survey_multi_choice = data.responses;   
                 //setting old data from here
                 data.survey_multi_choice_responses = survey_multi_choice;
-                //jsPsych.data.get().addToAll({'survey_multi_choice_responses': data.responses});
             }
         };
 
@@ -241,19 +247,19 @@
                 var hand_pref = jsMulti.HandPreference;
 
                 return `
-                    <p>You've filled out the following data: </p>
-                    <div>Birth year: ${b_year} </div>
-                    <div>Birth month: ${b_month} </div>
-                    <div>Native language: ${n_lang} </div>
-        
-                    <div>Multilingual: ${bilingual} </div>
-                    <div>Dyslexic: ${dyslexic} </div>
-                    <div>Your gender: ${gender} </div>
-                    <div>Hand preference: ${hand_pref} </div>
-   
-                    <p>Is this information correct? 
-                    If not, you can click NO. 
-                    You will then be asked to fill out <b>all those</b> questions again</p>.` 
+                    <h1>Your data</h1>
+                    <p>
+                    <div><strong>Birth year</strong>: ${b_year} </div>
+                    <div><strong>Birth month</strong>: ${b_month} </div>
+                    <div><strong>Native language</strong>: ${n_lang} </div>
+                    <div><strong>Multilingual</strong>: ${bilingual} </div>
+                    <div><strong>Dyslexic</strong>: ${dyslexic} </div>
+                    <div><strong>Gender</strong>: ${gender} </div>
+                    <div><strong>Hand preference</strong>: ${hand_pref} </div>
+                    </p>
+                    <BR><BR>
+                    Is this information correct?</p>
+                    ` 
             },
             choices: YES_OR_NO_BUTTON_TEXT,
             response_ends_trial: true,
@@ -278,29 +284,6 @@
             response_ends_trial: true,
             data: {
                 useful_data_flag: false
-            }
-        };
-
-        // unused now
-        var test_audio_single = {
-            type: 'audio-button-response',
-            stimulus: './sounds/boat.mp3',//timelinevar for audio checks?
-            choices: ['I hear a sound','I hear no sound'],
-            prompt: function(){
-                return "<div class='instruction' >" +
-                    '<p>' + AUDIO_CHECK_PROMPT_TEXT + '</p></div>';
-            },
-            data: {
-                trial_phase: 'test_audio_single',
-                useful_data_flag: false,
-            },
-            on_finish: function(data){
-                if (data.button_pressed == 0){
-                    var audio_correct = true;
-                } else {
-                    var audio_correct = false;
-                }
-                data.audio_tested = audio_correct;
             }
         };
 
@@ -376,6 +359,13 @@
                 trial_phase: 'test_keyboard_key_left',
                 useful_data_flag: false,
             },
+            loop_function: function(data){
+                if (repeat_validate_left_key == true){
+                    return true
+                } else {
+                    return false
+                }
+            },
             on_finish: function(data) {
                 // this would be the best  situation
                 var expected_key_press = jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_DEFAULTS[chosen_keyboard]['left_key']);
@@ -386,12 +376,22 @@
                 console.log(key_chosen_char);
 
                 data.key_confirmed = data.key_press == expected_key_press;
+
+
                 data.key_chosen_ascii = key_chosen_ascii;
                 data.key_chosen_char = key_chosen_char;
+
+                //overly verbose, but testing
+                if (data.key_confirmed == true){
+                    left_key_confirmed = true;
+                } else {
+                    left_key_confirmed = false;
+                }
             }
         };
 
-        var validate_key_left= {
+
+        var if_validated_key_left_feedback_needed = {
             type: 'html-button-response',
             stimulus: function() {
                 var wanted_key = KEYBOARD_DEFAULTS[chosen_keyboard]['left_key'];
@@ -402,7 +402,21 @@
                     "And you pressed: " + chosen_key + "</p>"
             },
             choices: [OK_BUTTON_TEXT]
-        } 
+        }
+
+
+        var if_key_left_node = {
+            timeline: [if_validated_key_left_feedback_needed],
+            conditional_function: function(){
+                if (left_key_confirmed == true){
+                    repeat_validate_left_key = false;
+                    return false;
+                } else {
+                    repeat_validate_left_key = true;
+                    return true;
+                }
+            }
+        };
 
 
         //////////// right key stuff /////////////////////////
@@ -421,7 +435,7 @@
             trial_duration: 10000,
             prompt: "push it!",
             data: {
-                trial_phase: 'test_keyboard_key_left',
+                trial_phase: 'test_keyboard_key_right',
                 useful_data_flag: false,
             },
             on_finish: function(data) {
@@ -434,12 +448,22 @@
                 console.log(key_chosen_char);
 
                 data.key_confirmed = data.key_press == expected_key_press;
+
+
                 data.key_chosen_ascii = key_chosen_ascii;
                 data.key_chosen_char = key_chosen_char;
+
+                //overly verbose, but testing
+                if (data.key_confirmed == true){
+                    right_key_confirmed = true;
+                } else {
+                    right_key_confirmed = false;
+                }
             }
         };
 
-        var validate_key_right= {
+
+        var if_validated_key_right_feedback_needed = {
             type: 'html-button-response',
             stimulus: function() {
                 var wanted_key = KEYBOARD_DEFAULTS[chosen_keyboard]['right_key'];
@@ -451,6 +475,21 @@
             },
             choices: [OK_BUTTON_TEXT]
         } 
+
+        var if_key_right_node = {
+            timeline: [if_validated_key_right_feedback_needed],
+            conditional_function: function(){
+                if (right_key_confirmed == true){
+                    repeat_validate_right_key = false;
+                    return false;
+                } else {
+                    repeat_validate_right_key = true;
+                    return true;
+                }
+            }
+        };
+
+        //////////////////////////// end of checks ///////////
 
         var instruction_screen_practice = {
             type: 'html-button-response',
@@ -617,17 +656,33 @@
             }
         }
 
-        var keyboard_set_keys_procedure = {
+        var keyboard_set_key_left_procedure = {
             timeline:[
-                select_keyboard_layout,
-                //
                 test_keyboard_key_left,
-                validate_key_left,
-                test_keyboard_key_right,
-                validate_key_right
+                if_key_left_node,
             ],
-            randomize_order: false
-        };
+            loop_function: function(){
+                if (repeat_validate_left_key == true){
+                    return true
+                } else {
+                    return false
+                }
+            }
+        }; 
+
+        var keyboard_set_key_right_procedure = {
+            timeline:[
+                test_keyboard_key_right,
+                if_key_right_node,
+            ],
+            loop_function: function(){
+                if (repeat_validate_right_key == true){
+                    return true
+                } else {
+                    return false
+                }
+            }
+        }; 
 
         var practice_procedure = {
             timeline:[
@@ -646,7 +701,7 @@
                 present_prime,
                 present_word,
             ],
-            timeline_variables: stimuli.table,//uil.randomization.randomizeStimuli(stimuli.table, MAX_SUCCEEDING_ITEMS_OF_TYPE, 'item_type'),
+            timeline_variables: uil.randomization.randomizeStimuli(stimuli.table, MAX_SUCCEEDING_ITEMS_OF_TYPE, 'item_type'),
             randomize_order: false
         };
 
@@ -668,7 +723,10 @@
         //timeline.push(test_audio_start);
         //timeline.push(test_audio_looped);
 
-        timeline.push(keyboard_set_keys_procedure);
+        timeline.push(select_keyboard_layout);
+
+        timeline.push(keyboard_set_key_left_procedure);
+        timeline.push(keyboard_set_key_right_procedure);
 
         timeline.push(instruction_screen_practice);
 
@@ -678,19 +736,6 @@
         timeline.push(trial_procedure);
         timeline.push(end_screen_server);
 
-        // localinit
-
-        // jsPsych.init({
-        //     timeline: timeline,
-        //     show_preload_progress_bar: false,
-        //     use_webaudio: false,
-        //     on_finish: function() {
-        //         jsPsych.data.displayData();
-        //     }
-        // })
-
-        // serverinit, with --apparently -- fallback to
-        //```jsPsych.data.displayData();``` if ran locally ```
 
         jsPsych.init({
             timeline: timeline,

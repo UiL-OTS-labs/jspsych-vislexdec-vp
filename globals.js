@@ -33,16 +33,16 @@ const YEAR_BORN_QUESTION = 'In what <i>year</i> were you born?';
 const MONTH_BORN_QUESTION = 'In what <i>month</i> were you born? (1 - 12)';
 
 // block
-const BILINGUAL_QUESTION = "Were you raised to understand and speak more than one language, from when you were an infant and onwards?"
+const BILINGUAL_QUESTION = 'Were you born and raised in a <a href="https://en.wikipedia.org/wiki/Multilingualism" target="_blank">multilingual</a> environment?'
 const BILINGUAL_OPTIONS = ["No","Yes"];
 
-const DYSLEXIC_QUESTION = "Are you dyslexic?";
+const DYSLEXIC_QUESTION = 'Are you <a href="https://en.wikipedia.org/wiki/Dyslexia" target="_blank">dyslexic</a>?';
 const DYSLEXIC_OPTIONS = ["No", "Yes"];
 
-const GENDER_QUESTION = "What is your gender?";
+const GENDER_QUESTION = 'What is your current <a href="https://en.wikipedia.org/wiki/Gender" target="_blank">gender</a>?';
 const GENDER_OPTIONS = ["Female", "Male"];
 
-const HAND_QUESTION = "What hand do you use to write with?"
+const HAND_QUESTION = 'What is you fastest, most <a href="https://www.dictionary.com/browse/trigger-happy" target="_blank">trigger-happy</a> hand to respond with "YES?"'
 const HAND_OPTIONS = ["Left", "Right"];
 
 // for which we have some defaults configured
@@ -60,11 +60,13 @@ const KEYBOARD_FALLBACK = 'CUSTOM';
 // QWERTZ   |   A     |  L
 // OTHER    |   A     |  L (fallback, more tries?)
 
+//binary experiments, given no num pads used
+
 const QWERTY = { kb_type: 'QUERTY', left_key: "A", right_key: "L" };
 const AZERTY = { kb_type: 'AZERTY', left_key: "Q", right_key: "M" };
 const DVORAK = { kb_type: 'DVORAK', left_key: "A", right_key: "S" };
 const QWERTZ = { kb_type: 'QWERTZ', left_key: "A", right_key: "L" };
-const CUSTOM = { kb_type: 'CUSTOM', left_key: "A", right_key: "L" };
+const CUSTOM = { kb_type: 'CUSTOM', left_key: "1", right_key: "0" };
 
 // Quick lookup table
 const KEYBOARD_DEFAULTS = {

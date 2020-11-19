@@ -33,6 +33,6 @@ const PRE_PRACTICE_INSTRUCTION =
 const PRE_TEST_INSTRUCTION = 
     "End of the practice part.<BR><BR>"                 +
     "If you have any questions at this moment, please " +
-    " ask the experimenter now.<BR><BR>"                +
+    " ask yourself now.<BR><BR>"                        +
     "If not, click OK to continue with the real task."
     ;
