@@ -42,7 +42,7 @@ const DYSLEXIC_OPTIONS = ["No", "Yes"];
 const GENDER_QUESTION = 'What is your current <a href="https://en.wikipedia.org/wiki/Gender" target="_blank">gender</a>?';
 const GENDER_OPTIONS = ["Female", "Male"];
 
-const HAND_QUESTION = 'What is you fastest, most <a href="https://www.dictionary.com/browse/trigger-happy" target="_blank">trigger-happy</a> hand to respond with "YES?"'
+const HAND_QUESTION = 'What is you fastest, most <a href="https://www.dictionary.com/browse/trigger-happy" target="_blank">trigger-happy</a> hand to respond on a keyboard?'
 const HAND_OPTIONS = ["Left", "Right"];
 
 // for which we have some defaults configured
@@ -51,7 +51,8 @@ const KEYBOARD_CHOICES = ['QWERTY','AZERTY','DVORAK','QWERTZ','CUSTOM'];
 const KEYBOARD_FALLBACK = 'CUSTOM';
 
 //now for finding out the real bits..
-// simple sheme
+// simple layout for left/right keys given some known layouts
+
 // Type     |   Left  |   Right
 // ---------|---------|----------
 // QWERTY   |   A     |  L
@@ -60,7 +61,7 @@ const KEYBOARD_FALLBACK = 'CUSTOM';
 // QWERTZ   |   A     |  L
 // OTHER    |   A     |  L (fallback, more tries?)
 
-//binary experiments, given no num pads used
+
 
 const QWERTY = { kb_type: 'QUERTY', left_key: "A", right_key: "L" };
 const AZERTY = { kb_type: 'AZERTY', left_key: "Q", right_key: "M" };
@@ -76,12 +77,6 @@ const KEYBOARD_DEFAULTS = {
 	'QWERTZ': QWERTZ,
 	'CUSTOM': CUSTOM,
 };
-
-// const KEYBOARD_KEYS_TIMELINE = [
-//     { key: 'left_key' },
-//     { key: 'right_key'}
-// ];
-
 
 
 

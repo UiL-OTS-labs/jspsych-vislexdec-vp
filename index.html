@@ -37,6 +37,10 @@
         margin: 5% 10% 5% 10%;
     }
 
+    .survey {
+        text-align: left;
+        margin: 5% 5% 5% 5%;
+    }
 
     kbd {
         border-radius: 2px;
@@ -50,7 +54,7 @@
     }
 
     span::after {
-        padding-left: 5px;
+        padding-left: 5%;
     }
 
     input:invalid + span::after {
@@ -77,13 +81,11 @@
         // Used by survey
         var repeat_survey = false;
 
-        // used by the keyboard validation
+        // used by the keyboard validation, overly verbose...
         var repeat_validate_left_key = false;
         var repeat_validate_right_key = false;
-
         var left_key_confirmed = false;
         var right_key_confirmed = false;
-
         var chosen_keyboard = undefined;
 
         function getLeftOrRightHanded()
@@ -156,15 +158,15 @@
         var survey_multi_html_block = {
             type: 'survey-html-form',
             preamble: '<h5>' + PREPARE_FOR_SURVEY + '</h5><BR><BR>',
-            html: '<div class="instruction" >' +
-                '<label for="birth_year">In what year were you born?:</label>' +
+            html: '<div class="survey" >' +
+                '<label for="birth_year">In what year were you born?    </label>' +
                 '<input type="number" id="birth_year" ' + 
-                ' name="birth_year" placeholder=1999 min=1919 max=2019 required>' +
+                'name="birth_year" placeholder=1999 min=1919 max=2019 required>' +
                 '<span class="validity"></span><BR>' + 
-                '<label for="birth_month">In what month were you born?:</label>' +
+                '<label for="birth_month">In what month were you born?   </label>' +
                 '<input type="number" id="birth_month" name="birth_month" placeholder=7 min=1 max=12 required>' +
                 '<span class="validity"></span><BR>' + 
-                '<label for="native_language">What is your native language?:</label>' +
+                '<label for="native_language">What is your native language?     </label>' +
                 '<input type="text" id="native_language" name="native_language" pattern="[a-zA-Z]+" placeholder="Dutch" required>' + 
                 '<span class="validity"></span><BR>' + 
                 '</div>',
@@ -314,13 +316,13 @@
         };
 
 
-        //////////// generic key stuff /////////////////////////
+        //////////// generic keyboard checking  /////////////////////////
 
         var select_keyboard_layout = {
             type: 'html-button-response',
             stimulus: '<h2>Choose the keyboardlayout that looks most like yours...</h2>',
             choices: KEYBOARD_CHOICES,
-            prompt: "Depending on your screen resolution, you may need to scroll a bit...",
+            prompt: "Focus on the first 6 <b>letters</b> in the top left of your keyboard layout if you're unsure",
             button_html: '<button class="img-btn"><img src=./images/%choice%.png></button>',
             data: {
                 useful_data_flag: false
@@ -331,16 +333,10 @@
                 var keyboard_chosen = KEYBOARD_CHOICES[button_number];
                 data.keyboard = keyboard_chosen;
                 chosen_keyboard = keyboard_chosen;//setting global to somthing else than undefined
-                var keyboard_timeline = KEYBOARD_DEFAULTS[keyboard_chosen];
-                
-                data.keyboard_timeline = keyboard_timeline;
-                
-                console.log('keyboard', data.keyboard)
-                console.log('keyboard_timeline', data.keyboard_timeline)
             }
         };
 
-        //////////// left key stuff /////////////////////////
+        //////////// left key setting&validation /////////////////////////
 
         var test_keyboard_key_left = {
             type: 'html-keyboard-response',
@@ -367,17 +363,10 @@
                 }
             },
             on_finish: function(data) {
-                // this would be the best  situation
                 var expected_key_press = jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_DEFAULTS[chosen_keyboard]['left_key']);
                 var key_chosen_ascii = data.key_press;
                 var key_chosen_char = upperCaseFromASCII(key_chosen_ascii);
-
-                console.log(key_chosen_ascii);
-                console.log(key_chosen_char);
-
                 data.key_confirmed = data.key_press == expected_key_press;
-
-
                 data.key_chosen_ascii = key_chosen_ascii;
                 data.key_chosen_char = key_chosen_char;
 
@@ -390,20 +379,16 @@
             }
         };
 
-
         var if_validated_key_left_feedback_needed = {
             type: 'html-button-response',
             stimulus: function() {
                 var wanted_key = KEYBOARD_DEFAULTS[chosen_keyboard]['left_key'];
                 var chosen_key = jsPsych.data.getLastTrialData().values()[0].key_chosen_char;
-
-                console.log(chosen_key)
                 return "<p> We asked you to press: " + wanted_key + "<BR><BR>" + 
-                    "And you pressed: " + chosen_key + "</p>"
+                    "You pressed: " + chosen_key + "<BR><BR>Try again, please...</p>"
             },
             choices: [OK_BUTTON_TEXT]
         }
-
 
         var if_key_left_node = {
             timeline: [if_validated_key_left_feedback_needed],
@@ -418,8 +403,7 @@
             }
         };
 
-
-        //////////// right key stuff /////////////////////////
+        //////////// right key setting&validation /////////////////////////
 
         var test_keyboard_key_right = {
             type: 'html-keyboard-response',
@@ -439,20 +423,12 @@
                 useful_data_flag: false,
             },
             on_finish: function(data) {
-                // this would be the best  situation
                 var expected_key_press = jsPsych.pluginAPI.convertKeyCharacterToKeyCode(KEYBOARD_DEFAULTS[chosen_keyboard]['right_key']);
                 var key_chosen_ascii = data.key_press;
                 var key_chosen_char = upperCaseFromASCII(key_chosen_ascii);
-
-                console.log(key_chosen_ascii);
-                console.log(key_chosen_char);
-
                 data.key_confirmed = data.key_press == expected_key_press;
-
-
                 data.key_chosen_ascii = key_chosen_ascii;
                 data.key_chosen_char = key_chosen_char;
-
                 //overly verbose, but testing
                 if (data.key_confirmed == true){
                     right_key_confirmed = true;
@@ -462,7 +438,6 @@
             }
         };
 
-
         var if_validated_key_right_feedback_needed = {
             type: 'html-button-response',
             stimulus: function() {
@@ -471,7 +446,7 @@
 
                 console.log(chosen_key)
                 return "<p> We asked you to press: " + wanted_key + "<BR><BR>" + 
-                    "And you pressed: " + chosen_key + "</p>"
+                    "You pressed: " + chosen_key + "<BR><BR>Try again, please...</p>"
             },
             choices: [OK_BUTTON_TEXT]
         } 
@@ -516,14 +491,7 @@
             data: { useful_data_flag: false }
         };
 
-        var end_screen_local = {
-            type: 'html-keyboard-response',
-            stimulus: "Thanks, you're done. Press spacebar to see data",
-            choices: ['space'],
-            data: { useful_data_flag: false }
-        };
-
-        var end_screen_server = {
+        var end_screen = {
             type: 'html-button-response',
             stimulus: "Thanks, you're done. Would you like to click OK?",
             choices: [OK_BUTTON_TEXT, 'NO'],
@@ -634,15 +602,6 @@
                 survey_multi_choice_block,
                 survey_review_survey_data,
             ],
-            /**
-             * When this method returns true, jsPsych will repeat this
-             * procedure
-             *
-             * This is used to give participants the option to correct any
-             * mistakes in their input.
-             *
-             * @returns {boolean}
-             */
             loop_function: function(){
                 if (repeat_survey == true){
                     // Remove any previously recorded data, to prevent
@@ -654,7 +613,7 @@
                     return false
                 }
             }
-        }
+        };
 
         var keyboard_set_key_left_procedure = {
             timeline:[
@@ -695,33 +654,39 @@
             randomize_order: false
         };
 
-        var trial_procedure = {
+        var trial_procedure_pseudorandom = {
             timeline:[
                 present_fixation,
                 present_prime,
                 present_word,
             ],
             timeline_variables: uil.randomization.randomizeStimuli(stimuli.table, MAX_SUCCEEDING_ITEMS_OF_TYPE, 'item_type'),
-            randomize_order: false
+            randomize_order: false // this should be false if uil randomization is used...
         };
 
-
-
-        ///////////////////////////////////////////////////////////
+        var trial_procedure_random = {
+            timeline:[
+                present_fixation,
+                present_prime,
+                present_word,
+            ],
+            timeline_variables: stimuli.table,
+            randomize_order: true // this should be true if you want regular timelineVar jsPsych randomization
+        };
 
         //////////////// timeline /////////////////////////////////
 
-        var timeline = []
+        var timeline = [];
 
-
-        // best practice to have user I/O first
+        // best practice to have *mouse click* user I/O first
         timeline.push(start_screen);
 
         // survey
         timeline.push(survey_procedure);
 
-        //timeline.push(test_audio_start);
-        //timeline.push(test_audio_looped);
+        // silly in a non-audio template, but well, let's fix that later
+        timeline.push(test_audio_start);
+        timeline.push(test_audio_looped);
 
         timeline.push(select_keyboard_layout);
 
@@ -733,9 +698,15 @@
         // then push the rest
         timeline.push(practice_procedure);
         timeline.push(well_done_screen);
-        timeline.push(trial_procedure);
-        timeline.push(end_screen_server);
 
+        // NOTE options below! comment/uncomment for regular vs restrained randomization
+        //true randomness is great for this current template's amount of items...
+
+        //timeline.push(trial_procedure_pseudo_random);// don't do this with this little stimuli
+        timeline.push(trial_procedure_random);
+
+
+        timeline.push(end_screen);
 
         jsPsych.init({
             timeline: timeline,
