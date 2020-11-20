@@ -15,7 +15,9 @@ const MAX_SUCCEEDING_ITEMS_OF_TYPE = 2;
 // Defaults for buttons
 const OK_BUTTON_TEXT = "OK";
 const YES_OR_NO_BUTTON_TEXT = ["Yes", "No"];
-const ACCESS_KEY = 'zeeekretkeey'; // don't commit the real key
+
+// ACCESS_KEY needs to be used for server setup (data store)
+const ACCESS_KEY = 'zeeekretkeey'; 
 
 // Deafult restrictions of minimal browser dimensions
 const MIN_WIDTH = 800;
@@ -23,16 +25,17 @@ const MIN_HEIGHT = 600;
 
 // GENERIC TESTS/CHECKS
 const GENERIC_CHECK = `
-    In order to participate in this experiment, please confirm that you:<BR><BR>
+    <h3>In order to participate, please make sure that you:</h3>
+    <BR>
     <ul>
     <li>Run this on a Laptop or Desktop computer, <b>not</b> on a phone or a tablet!</li>
     <li>Have a <b>real keyboard</b> working.</li><li>Have a <b>mouse</b> and/or 
     <b>trackpad</b> that works.</li>
     <li>Have your browser's audio enabled and your volume on.</li>
     </ul>
-    <h5>Please maximize your browser window before you continue</h5>
+    <h3>Please <i>maximize</i> your browser window before you continue!</h3>
     <BR>
-    <p>Next, we will perform some more test and checks.
+    <p>Click below if you are ready to proceed</p>
     `;
     
 const PREPARE_FOR_SURVEY = `
@@ -66,11 +69,10 @@ const GENDER_OPTIONS = ["Female", "Male"];
 const HAND_QUESTION = 'Which hand do you prefer to write with?';
 const HAND_OPTIONS = ["Left", "Right"];
 
-// for which we have some defaults configured
+// Keyboard choices
 const KEYBOARD_CHOICES = ['QWERTY','AZERTY','DVORAK','QWERTZ','CUSTOM'];
 
-// simple layout for left/right keys given some known layouts
-
+// simple layout for left/right keys given some known layouts:
 // Type     |   Left  |   Right
 // ---------|---------|----------
 // QWERTY   |   A     |  L

@@ -9,12 +9,12 @@
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-button-response.js"></script>
 
-    <!-- Generic check/ask libraries -->
-    <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-audio-button-response.js"></script>
+    <!-- Generic check/ask libraries (instructions & surveys) -->
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-instructions.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-survey-html-form.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-survey-multi-choice.js"></script>
-    <!-- Generic jspsych style sheets -->
+    
+    <!-- Generic jspsych style sheet -->
     <link href="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"/>
 
     <!-- Uil OTS libraries -->
@@ -137,22 +137,6 @@
             },
             choices: [OK_BUTTON_TEXT],
             response_ends_trial: true,
-            on_load: function(){
-                var iamamobile = uil.isMobileOrTablet();
-                if (iamamobile == true){
-                    console.log('tablet/mobile');
-                    jsPsych.endExperiment(
-                        `
-                        The experiment was ended because we fear 
-                        you are not on the right type of device to proceed. 
-                        You're supposed to dot his task on a laptop or PC 
-                        with audio and keyboard and mouse or trackpad available.
-                        `
-                        )
-                } else {
-                    console.log("This device might be alright to proceed!");
-                }
-            },
             data: {
                 useful_data_flag: false,
             }
