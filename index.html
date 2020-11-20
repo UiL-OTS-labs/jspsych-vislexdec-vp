@@ -127,7 +127,7 @@
                 group: group_name,
             });
 
-        //////////////// test page flows ///////////////////////////////
+        //////////////// 'test page' flows ///////////////////////////////
 
         var start_screen = {
             type: 'html-button-response',
@@ -179,7 +179,7 @@
             }
         };
 
-        // The multi-choice survey plugin has built-in validation..
+        // The multi-choice survey plugin has built-in validation.
         var survey_multi_choice_block = {
             type: 'survey-multi-choice',
             data: {
@@ -352,7 +352,7 @@
                     "<BR><BR>Try again, please...</p>"
             },
             choices: [OK_BUTTON_TEXT]
-        }
+        };
 
         var if_key_left_node = {
             timeline: [if_validated_key_left_feedback_needed],
@@ -416,7 +416,7 @@
                     "<BR><BR>Try again, please...</p>"
             },
             choices: [OK_BUTTON_TEXT]
-        } 
+        };
 
         var if_key_right_node = {
             timeline: [if_validated_key_right_feedback_needed],
@@ -460,9 +460,10 @@
 
         var end_screen = {
             type: 'html-button-response',
-            stimulus: "Thanks, you're done. Would you like to click OK?",
-            choices: [OK_BUTTON_TEXT, 'NO'],
-            data: { useful_data_flag: false }
+            stimulus: DEBRIEF_MESSAGE,
+            choices: [],
+            data: { useful_data_flag: false },
+            trial_duration: DEBRIEF_MESSAGE_DURATION
         };
 
         var present_fixation = {
@@ -513,7 +514,7 @@
                 return this._1;
             },
             length: 2,
-        }
+        };
 
         var present_word = {
             type: 'html-keyboard-response',
@@ -650,22 +651,26 @@
 
         var timeline = [];
 
-        // best practice to have *mouse click* user I/O first
+        // it's best practice to have *mouse click* user I/O first
         timeline.push(start_screen);
+        
         // survey
         timeline.push(survey_procedure);
+        
         // kb layout
         timeline.push(select_keyboard_layout);
+        
         // kb important keys
         timeline.push(keyboard_set_key_left_procedure);
         timeline.push(keyboard_set_key_right_procedure);
+        
         // task instruction
         timeline.push(instruction_screen_practice);
         timeline.push(practice_procedure);
         timeline.push(well_done_screen);
 
         // NOTE options below! comment/uncomment for regular vs restrained randomization
-        //true randomness is great for this current template's amount of items...
+        // true randomness is better for the current template's amount of items...
 
         //timeline.push(trial_procedure_pseudo_random);// don't do this with little stimuli
         timeline.push(trial_procedure_random);
