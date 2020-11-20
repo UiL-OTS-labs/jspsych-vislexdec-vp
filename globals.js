@@ -99,8 +99,7 @@ const KEYBOARD_DEFAULTS = {
 const DEBRIEF_MESSAGE = `
     <h1>End of the experiment</h1><BR><BR>
     <h2>Thank you for participating!</h2>
-    <p>You can now close this window.</p>
     `;
 
-const DEBRIEF_MESSAGE_DURATION = 50000;
+const DEBRIEF_MESSAGE_DURATION = 30000;
 
