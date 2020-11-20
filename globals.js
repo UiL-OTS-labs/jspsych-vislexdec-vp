@@ -5,30 +5,34 @@ const WORD_DURATION = 1000;
 const RESPONSE_TIMEOUT_DURATION = 2000;
 const FEEDBACK_DURATION = 1000;
 const CROSS_GAP_DURATION = 0;
-
-// How many items of the same type may appear in series
-const MAX_SUCCEEDING_ITEMS_OF_TYPE = 2
-
-// Duration of the interval between prime and target.
 const PRIME_GAP_DURATION = 300;
-
 const WORD_GAP_DURATION = 0;
 const TRIAL_GAP_DURATION = 1000;
+
+// How many items of the same type may appear in series in case of pseudorandomisation
+const MAX_SUCCEEDING_ITEMS_OF_TYPE = 2;
+
+// Defaults for buttons
 const OK_BUTTON_TEXT = "OK";
 const YES_OR_NO_BUTTON_TEXT = ["Yes", "No"];
 const ACCESS_KEY = 'zeeekretkeey'; // don't commit the real key
 
+// Deafult restrictions of minimal browser dimensions
+const MIN_WIDTH = 800;
+const MIN_HEIGHT = 600;
+
 // GENERIC TESTS/CHECKS
-const GENERIC_CHECK = `In order to participate in this experiment, please confirm that you:<BR><BR>
+const GENERIC_CHECK = `
+    In order to participate in this experiment, please confirm that you:<BR><BR>
     <ul>
     <li>Run this on a Laptop or Desktop computer, <b>not</b> on a phone or a tablet!</li>
     <li>Have a <b>real keyboard</b> working.</li><li>Have a <b>mouse</b> and/or 
     <b>trackpad</b> that works.</li>
     <li>Have your browser's audio enabled and your volume on.</li>
     </ul>
-    <h5>Before you click OK, make sure you have your browser window nice and large!</h5>
+    <h5>Please maximize your browser window before you continue</h5>
     <BR>
-    <p>Next, we will do some more test and checks.
+    <p>Next, we will perform some more test and checks.
     `;
     
 const PREPARE_FOR_SURVEY = `
@@ -89,6 +93,3 @@ const KEYBOARD_DEFAULTS = {
     'QWERTZ': QWERTZ,
     'CUSTOM': CUSTOM,
 };
-
-
-
