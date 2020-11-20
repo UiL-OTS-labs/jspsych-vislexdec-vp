@@ -101,5 +101,5 @@ const DEBRIEF_MESSAGE = `
     <h2>Thank you for participating!</h2>
     `;
 
-const DEBRIEF_MESSAGE_DURATION = 30000;
+const DEBRIEF_MESSAGE_DURATION = 3000;
 
