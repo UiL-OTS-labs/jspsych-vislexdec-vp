@@ -24,7 +24,9 @@
     <script src="stimuli.js"></script>
     <script src="globals.js"></script>
     <script src="instructions.js"></script>
+
     <style>
+
 
     .stimulus { 
         font-size: 30px; 
@@ -41,6 +43,19 @@
         text-align: left;
         margin: 5% 5% 5% 5%;
     }
+
+    .jspsych-survey-multi-choice-question {
+        text-align: left !important;
+    }
+
+    .jspsych-survey-multi-choice-text {
+        text-align: left !important;
+    }
+
+    .jspsych-survey-multi-choice-option {
+                text-align: left !important;
+    }
+
 
     kbd {
         border-radius: 2px;
@@ -129,7 +144,6 @@
                 group: group_name,
             });
 
-        //////////////// 'test page' flows ///////////////////////////////
 
         let start_screen = {
             type: 'html-button-response',
@@ -138,13 +152,9 @@
                     '<p>' + GENERIC_CHECK + '</p></div>';
             },
             choices: [OK_BUTTON_TEXT],
-            response_ends_trial: true,
-            data: {
-                useful_data_flag: false,
-            }
+            response_ends_trial: true
         };
 
-        ////////////// SURVEY /////////////////////////////////
 
         let survey_multi_html_block = {
             type: 'survey-html-form',
@@ -169,10 +179,6 @@
                 
                 </div>
                 `,
-            data: {
-                useful_data_flag: false,
-                survey_data_flag: true
-            },
             on_finish: function(data){
 
                 var survey_html_responses = data.responses;
@@ -262,17 +268,11 @@
             },
             choices: YES_OR_NO_BUTTON_TEXT,
             response_ends_trial: true,
-            data: {
-                useful_data_flag: false,
-                survey_data_flag: true
-            },
             on_finish: function(data){
                 // Repeat the survey if yes (0) was not pressed
                 repeat_survey = data.button_pressed != 0
             }
         };
-
-        //////////// keyboard layout  /////////////////////////
 
         let select_keyboard_layout = {
             type: 'html-button-response',
@@ -286,9 +286,6 @@
                 <button class="img-btn">
                 <img src=./images/%choice%.png></button>
                 `,
-            data: {
-                useful_data_flag: false
-            },
             on_finish: function(data) {
                 let button_id = data.button_pressed;
                 let button_number = parseInt(button_id, 10);
@@ -297,8 +294,6 @@
                 chosen_keyboard = keyboard_chosen;//setting global value
             }
         };
-
-        //////////// left key setting & validation /////////////////////////
 
         let test_keyboard_key_left = {
             type: 'html-keyboard-response',
@@ -314,8 +309,7 @@
             trial_duration: 10000,
             prompt: "Please respond within 10 seconds.",
             data: {
-                trial_phase: 'test_keyboard_key_left',
-                useful_data_flag: false,
+                trial_phase: 'test_keyboard_key_left'
             },
             loop_function: function(data){
                 if (repeat_validate_left_key == true){
@@ -385,8 +379,7 @@
             trial_duration: 10000,
             prompt: "Please respond within 10 seconds",
             data: {
-                trial_phase: 'test_keyboard_key_right',
-                useful_data_flag: false,
+                trial_phase: 'test_keyboard_key_right'
             },
             on_finish: function(data) {
                 let expected_key_press = 
@@ -433,8 +426,6 @@
             }
         };
 
-        //////////////////////////// end of checks ///////////
-
         var instruction_screen_practice = {
             type: 'html-button-response',
             stimulus: function(){
@@ -446,7 +437,6 @@
             },
             choices: [OK_BUTTON_TEXT],
             response_ends_trial: true,
-            data: { useful_data_flag: false }
         };
 
         let well_done_screen = {
@@ -464,7 +454,6 @@
             type: 'html-button-response',
             stimulus: DEBRIEF_MESSAGE,
             choices: [],
-            data: { useful_data_flag: false },
             trial_duration: DEBRIEF_MESSAGE_DURATION
         };
 
@@ -472,8 +461,7 @@
             type: 'html-keyboard-response',
             stimulus: '<span style="font-size:40px;">+</span>',
             choices: jsPsych.NO_KEYS,
-            trial_duration: FIXCROSS_DURATION,
-            data: { useful_data_flag: false }
+            trial_duration: FIXCROSS_DURATION
         };
 
         var present_prime = {
@@ -485,8 +473,7 @@
             choices: jsPsych.NO_KEYS,
             trial_duration: PRIME_DURATION,
             post_trial_gap: PRIME_GAP_DURATION,
-            prompt: "",
-            data: { useful_data_flag: false }
+            prompt: ""
         };
 
         // So this is a hack (or a clever use of Duck Typing)
@@ -564,8 +551,7 @@
                 return feedback_text;
             },
             choices: jsPsych.NO_KEYS,
-            trial_duration: FEEDBACK_DURATION,
-            data: { useful_data_flag: false }
+            trial_duration: FEEDBACK_DURATION
         };
 
         // procedures//////////////////////////////////////////////////////////
@@ -678,7 +664,6 @@
         timeline.push(trial_procedure_random);
         timeline.push(end_screen);
 
-        //
         // Start jsPsych when running on a Desktop or Laptop style pc.
         if (! uil.isMobileOrTablet()) {
             jsPsych.init(
