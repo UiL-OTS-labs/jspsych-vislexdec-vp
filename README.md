@@ -285,7 +285,7 @@ var myArrayToo = [
 ```
 # Timelines and trials and designs
 
-There are many [randomisation](https://www.jspsych.org/core_library/jspsych-randomization/) batteries included in jsPsych.
+There are many [randomization](https://www.jspsych.org/core_library/jspsych-randomization/) batteries included in jsPsych.
 
 Typical folder structure:
 
