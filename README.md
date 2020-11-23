@@ -75,7 +75,7 @@ On the other hand:
 - You can find a lot of code snippets and examples online, there is a huge user base for jsPsych and many plugins for certain paradigms can be used or adapted to certain needs.
 
 # Mini-overview of a jsPsych experiment
-It's a good idea to really read the documentation on https://www.jspsych.org. The basic things like how some 'experiment.html' file imports from the jspsych library, where and how plugins can be used are quite good to begin with.
+It's a good idea to really read the documentation on https://www.jspsych.org. The basic things like how some 'experiment.html' file imports from the jspsych library, where and how plugins can be used are good to start with.
 
 It gets a bit more complicated when you discover that there are two modes in which all can be run:
 
@@ -99,18 +99,18 @@ In the case of web server setup, it is as good idea to initialise jsPysch with `
 In general, since timing is important, please make sure to [pre-load all media files](https://www.jspsych.org/overview/media-preloading/). This is because, we will typically use trials with a timelineVariables setup. 
 
 ## Generic checks 
-Some generic instruction and test flows (like audio tests) will also be prepared in this specific boilerplate. This may seem an odd choice, since the current boilerplate task does not require audio. The reason to define some generic tests and checks here, is to make the process of making some other boilerplates a bit easier to branch off from the same documentation and reuse generic functionality. Things we habe in mind to check all the time:
+Some generic instruction and test flows (like audio tests) will also be prepared in this specific boilerplate. This may seem an odd choice, since the current boilerplate task does not require audio. The reason to define some generic tests and checks here, is to make the process of making some other boilerplates a bit easier to branch off from the same documentation and reuse generic functionality. Things we have in mind to check all the time:
 
 - Check if the participant is using a tablet or phone. (not intended for 'mobile devices')
-- Check if the audio works (and system sound loudness).
 - A generic survey asking about dominant hand, age, 'gender-related', etc. (not at this point?)
 - Keyboard layout and user-optimised response keys
-- A general consent page/flow
-- Etc.
+
+## Optional checks
+- Check if the audio works (and system sound loudness setting flows).
 
 
 ## Always start an experiment with a html-button-response interaction part
-Browsers will often disallow auto-playing sound/video if there is no user activity related to a _mouse click_. It would be a shame to start of the experiment with errors of this type. An _instruction_ (plugin) with a mouse button response (or a multi-page instuction) will also fix this poitential error.
+Browsers will often disallow auto-playing sound/video if there is no user activity related to a _mouse click_. It would be a shame to start of the experiment with errors of this type. An _instruction_ (plugin) with a mouse button response (or a multi-page instuction) will also fix this potential error.
 
 # HTML, CSS, Javascipt, jsPscyh, jsPsych default plugins
 
@@ -128,7 +128,7 @@ How some concepts relate to each other:
 
 ## CSS
 - CSS deals with mainly styling, like layouts, fonts, colors, backgrounds.
-- CSS evolved from being just a place to put styling parts in a separate file than the html file, but is becoming more like a programming language, in a way.
+- CSS evolved from being primarily a styling language, but is also becoming a bit more like a 'programming language', in a way.
 
 ## jsPsych
 - jspsych _uses_ Javascript code for a specific experimental purpose and the functions from this library need to be imported in the top op your html file before you can use them.
@@ -141,8 +141,8 @@ Be sure to read up on the lab website and learn about rich text vs plain text an
 
 # CSV, JSON and javascript style 
 
-- Lab website on csv links
-- Other links
+- Lab website on csv links?
+- Other links?
 
 ## CSV
 
@@ -233,7 +233,7 @@ id | condition | string
 ```
 
 # Current implementation style: stimuli.js (javascript object)
-In the first templates we will deliver, we design out stimulus configurations in the javascript key-value pair style. It's not that difficult and has the benefits of being available without using extra code to implement the availablity ot test items in context of an experiment. 
+In the first templates we will deliver, we design out stimulus configurations in the javascript key-value pair style. It's not that difficult and has the benefits of being available without using extra code to implement the availablity of test items in an experiment-specific, <i>'dynamic'</i> context. 
 ```
 var stimuli = [
     {
@@ -285,9 +285,7 @@ var myArrayToo = [
 ```
 # Timelines and trials and designs
 
-There are many randomisation batteries included in jsPsych, if you have not read about timelines, you have to look for them using the link, they are important.
-
-(...todo)
+There are many [randomisation](https://www.jspsych.org/core_library/jspsych-randomization/) batteries included in jsPsych.
 
 Typical folder structure:
 
@@ -299,6 +297,7 @@ visdeclex/
          /stimuli.js        <---- Usually a file called stimuli.js
          /globals.js        <---- Often a file called globals.js
 ```
+
 
 
 
