@@ -42,11 +42,6 @@ const PREPARE_FOR_SURVEY = `
     Please answer some screening questions in a quick (forced choice) survey.
     `;
 
-//survey html plugin
-const NATIVE_LANGUAGE_QUESTION = 'What is your native language?'
-const YEAR_BORN_QUESTION = 'In what <i>year</i> were you born?';
-const MONTH_BORN_QUESTION = 'In what <i>month</i> were you born? (1 - 12)';
-
 // survey multiple choice block
 const BILINGUAL_QUESTION = `
     Were you born and raised in a  
@@ -60,11 +55,11 @@ const DYSLEXIC_QUESTION = `Are you
     `;
 const DYSLEXIC_OPTIONS = ["No", "Yes"];
 
-const GENDER_QUESTION = `
-    What is your 
-    <a href="https://en.wikipedia.org/wiki/Gender" target="_blank">gender</a>?
+const SEX_QUESTION = `
+    What is your
+    <a href="https://en.wikipedia.org/wiki/Sex" target="_blank">biological sex</a>?
     `;
-const GENDER_OPTIONS = ["Female", "Male"];
+const SEX_OPTIONS = ["Female", "Male", "Other", "Prefer not to say"];
 
 const HAND_QUESTION = 'Which hand do you prefer to write with?';
 const HAND_OPTIONS = ["Left", "Right"];
