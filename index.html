@@ -205,9 +205,9 @@
                     horizontal: true
                 },
                 {
-                    prompt: GENDER_QUESTION,
-                    name:'Gender',
-                    options: GENDER_OPTIONS,
+                    prompt: SEX_QUESTION,
+                    name:'Sex',
+                    options: SEX_OPTIONS,
                     required: true,
                     horizontal: true
                 },
@@ -233,8 +233,10 @@
 
                 let survey_html = 
                     jsPsych.data.get().last(2).values()[0].survey_html_responses; //former
+                
                 let survey_multi = 
                     jsPsych.data.get().last(1).values()[0].survey_multi_choice_responses;
+                
                 let jsHTML = JSON.parse(survey_html);
                 let b_year = jsHTML.birth_year;
                 let b_month = jsHTML.birth_month;
@@ -243,7 +245,7 @@
                 let jsMulti = JSON.parse(survey_multi);
                 let bilingual = jsMulti.Multilingual;
                 let dyslexic = jsMulti.Dyslexic;
-                let gender = jsMulti.Gender;
+                let sex = jsMulti.Sex;
                 let hand_pref = jsMulti.HandPreference;
 
                 return `
@@ -254,7 +256,7 @@
                     <div><strong>Native language</strong>: ${n_lang} </div>
                     <div><strong>Multilingual</strong>: ${bilingual} </div>
                     <div><strong>Dyslexic</strong>: ${dyslexic} </div>
-                    <div><strong>Gender</strong>: ${gender} </div>
+                    <div><strong>Sex</strong>: ${sex} </div>
                     <div><strong>Hand preference</strong>: ${hand_pref} </div>
 
                     <BR><BR>
