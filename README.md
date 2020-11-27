@@ -1,7 +1,23 @@
 # jspsych-vislexdec-vp
 Template [visual lexical decision](https://en.wikipedia.org/wiki/Lexical_decision_task) experiment with <i>visual prime</i>. 
 
+# Connected templates
+
+The current status of Lexical Decision Templates
+
+### Visual Templates
+1. [vislexdec](todo)
+2. [vislexdec-vp](https://github.com/UiL-OTS-labs/jspsych-vislexdec-vp)
+3. [vislexdec-vp-mp](todo)
+
+### Audio and/or visual Templates
+4. [audlexdec-vp-mp](https://github.com/UiL-OTS-labs/jspsych-audlexdec-vp-mp)
+5. [audlexdec-vp](https://github.com/UiL-OTS-labs/jspsych-audlexdec-vp)
+6. [audlexdec](https://github.com/UiL-OTS-labs/jspsych-audlexdec-vp)
+
+
 # Task Description
+
 
 ## Short description
 The participant first sees a fixation cross, then a prime is presented, followed by the test stimulus. Particpants are instructed to respond as quickly as possible to make the decision if both strings in the pair are words --or not--, using the keyboard.
