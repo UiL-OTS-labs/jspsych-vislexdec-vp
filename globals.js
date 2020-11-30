@@ -31,7 +31,6 @@ const GENERIC_CHECK = `
     <li>Run this on a Laptop or Desktop computer, <b>not</b> on a phone or a tablet!</li>
     <li>Have a <b>real keyboard</b> working.</li><li>Have a <b>mouse</b> and/or 
     <b>trackpad</b> that works.</li>
-    <li>Have your browser's audio enabled and your volume on.</li>
     </ul>
     <h3>Please <i>maximize</i> your browser window before you continue!</h3>
     <BR>
