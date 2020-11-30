@@ -1,7 +1,5 @@
 # jspsych-vislexdec-vp
-Visual [lexical decision](https://en.wikipedia.org/wiki/Lexical_decision_task) experiment with _Visual Prime_. 
-
-# Connected templates
+Visual [lexical decision](https://en.wikipedia.org/wiki/Lexical_decision_task) experiment with _Visual Prime_ (template)
 
 # Connected templates
 
