@@ -17,7 +17,7 @@ const PRACTICE_ITEMS = [
 const LIST_GROUP1 = [
     { id: 1, item_type: NON_WORD, word: "slirque", prime: "eyes" },
     { id: 2, item_type: NON_WORD, word: "crawse", prime: "piano" },
-    { id: 3, item_type: NON_WORD, word: "twurp", prime: "rabbit" },
+    { id: 3, item_type: NON_WORD, word: "thwurp", prime: "rabbit" },
     { id: 4, item_type: NON_WORD, word: "clem", prime: "flower" },
     { id: 5, item_type: RELATED, word: "white", prime: "snow" },
     { id: 6, item_type: RELATED, word: "travel", prime: "suitcase" },
