@@ -22,11 +22,23 @@ const PRE_PRACTICE_INSTRUCTION =
     " as possible whether you think "                   +
     "<i>both words are real words or not</i>. "         +
     "Try to make no mistakes.<BR><BR>"                  +
-    "To respond, hit the <kbd>%correct_key%</kbd> "     +
-    "key for <i>Yes</i> and the "                       +
-    "<kbd>%incorrect_key%</kbd> key for <i>No</i>"      +
-    "<BR><BR>First, you can practice.<BR><BR>"          +
-    "<i>Click OK to start practicing</i>"
+    
+    "After clicking OK, please put your "               +
+    "<i>index</i> fingers on the two "                  + 
+    "keys you've just set. Try keep them in those "     +
+    "positions during the <i>entire experiment</i>!<BR>"+
+
+    "<ul>"                                              + 
+    "<li>Hit the <kbd>%correct_key%</kbd> key for "     + 
+    "<strong>Yes</strong>. "                            + 
+    "<sub><i>(Use this 'Yes' key to proceed throughout "+ 
+    "the experiment)</i>.</sub></li>"                   +
+    "<li>Hit the <kbd>%incorrect_key%</kbd> key for "   +
+    "<strong>No</strong>.</li>"                         + 
+    "</ul>"                                             +
+
+    "First, you can practice.<BR><BR>"                  +
+    "<i>Click OK to start practicing.</i>"
     ;
 
 const PRE_TEST_INSTRUCTION = 
@@ -35,3 +47,10 @@ const PRE_TEST_INSTRUCTION =
     "ask yourself now.<BR><BR>"                         +
     "If not, click OK to continue with the real task."
     ;
+
+const PREPARE_YES_KEY_PROMPT = `
+    <strong>Get your index fingers in position!</strong>
+    <BR><BR>
+    Hit your <kbd>%correct_key%</kbd> key (<i>'yes'</i>) 
+    to start. 
+    `;
