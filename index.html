@@ -536,7 +536,13 @@
                 let incorrect_key = getIncorrectKey();
                 let correct;
 
-                // Alias this function for readability
+                // what was/can be chosen
+                let key_chosen_ascii = data.key_press; //i.e.: 76
+                let key_chosen_char = upperCaseFromASCII(key_chosen_ascii); //blanks for other than 0-9 & A-Z
+                data.key_chosen_ascii = key_chosen_ascii;
+                data.key_chosen_char = key_chosen_char;
+
+                // Alias this jsPsych function for readability
                 let convertToKeyCode = jsPsych.pluginAPI.convertKeyCharacterToKeyCode
 
                 switch (data.condition)
@@ -549,7 +555,6 @@
                         correct = data.key_press == convertToKeyCode(incorrect_key);
                         break;
                 }
-
                 data.correct = correct;
             }
         };
