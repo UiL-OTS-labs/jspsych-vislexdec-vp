@@ -10,19 +10,19 @@ const GROUPS = [
 ];
 
 const PRACTICE_ITEMS = [
-    { id: 1, item_type: NON_WORD, word: "palve", prime: "onion" },
-    { id: 2, item_type: UNRELATED, word: "hot", prime: "stapler" }
+    { id: 1, tag:"pract", item_type: NON_WORD, word: "palve", prime: "onion", correct: 'no' },
+    { id: 2, tag:"pract", item_type: UNRELATED, word: "hot", prime: "stapler", correct: 'yes' }
 ];
 
 const LIST_GROUP1 = [
-    { id: 1, item_type: NON_WORD, word: "slirque", prime: "eyes" },
-    { id: 2, item_type: NON_WORD, word: "crawse", prime: "piano" },
-    { id: 3, item_type: NON_WORD, word: "thwurp", prime: "rabbit" },
-    { id: 4, item_type: NON_WORD, word: "clem", prime: "flower" },
-    { id: 5, item_type: RELATED, word: "white", prime: "snow" },
-    { id: 6, item_type: RELATED, word: "travel", prime: "suitcase" },
-    { id: 7, item_type: UNRELATED, word: "letter", prime: "garden" },
-    { id: 8, item_type: UNRELATED, word: "clown", prime: "forest" }
+    { id: 1, tag:"exp", item_type: NON_WORD, word: "slirque", prime: "eyes", correct: 'no' },
+    { id: 2, tag:"exp", item_type: NON_WORD, word: "crawse", prime: "piano", correct: 'no' },
+    { id: 3, tag:"exp", item_type: NON_WORD, word: "thwurp", prime: "rabbit", correct: 'no' },
+    { id: 4, tag:"exp", item_type: NON_WORD, word: "clem", prime: "flower", correct: 'no' },
+    { id: 5, tag:"exp", item_type: RELATED, word: "white", prime: "snow", correct: 'yes' },
+    { id: 6, tag:"exp", item_type: RELATED, word: "travel", prime: "suitcase", correct: 'yes'},
+    { id: 7, tag:"exp", item_type: UNRELATED, word: "letter", prime: "garden", correct: 'yes' },
+    { id: 8, tag:"exp", item_type: UNRELATED, word: "clown", prime: "forest", correct: 'yes' }
 ];
 
 // Add a second list of stimuli when required.

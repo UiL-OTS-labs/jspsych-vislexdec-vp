@@ -102,6 +102,10 @@
         var right_key_confirmed = false;
         
         var chosen_keyboard = undefined;
+        
+        // more abstract yes/not key that only get a values after survey, so scoring could be easier
+        var yes_key = undefined;
+        var no_key = undefined;
 
         function getLeftOrRightHanded()
         {
@@ -113,7 +117,9 @@
         function getCorrectKey()
         {
             let handed = getLeftOrRightHanded().toLowerCase();
-            return KEYBOARD_DEFAULTS[chosen_keyboard][handed + '_key'];
+            let yes = KEYBOARD_DEFAULTS[chosen_keyboard][handed + '_key'];
+            yes_key = yes; //now set the undefined to what it should become
+            return yes;
         }
 
         function getIncorrectKey()
@@ -121,7 +127,9 @@
             let handed = getLeftOrRightHanded().toLowerCase();
             // If left handed, use right. Otherwise, use left.
             let incorrect_key = (handed == 'left' ? 'right' : 'left') + '_key';
-            return KEYBOARD_DEFAULTS[chosen_keyboard][incorrect_key];
+            no = KEYBOARD_DEFAULTS[chosen_keyboard][incorrect_key];
+            no_key = no;
+            return no;
         }
 
         //simple version, single digit input, not a list
@@ -507,7 +515,6 @@
                 // expensive stuff once
                 if (typeof this._1 === 'undefined')
                     this._1 = getIncorrectKey();
-
                 return this._1;
             },
             length: 2,
@@ -527,35 +534,79 @@
                 condition: jsPsych.timelineVariable('item_type'),
                 word: jsPsych.timelineVariable('word'),
                 prime: jsPsych.timelineVariable('prime'),
+                tag: jsPsych.timelineVariable('tag'),
                 id: jsPsych.timelineVariable('id'),
                 trial_phase: 'present_word',
                 useful_data_flag: true,
+                correct_response: jsPsych.timelineVariable('correct')
             },
             on_finish: function(data){
+
+                // Alias this jsPsych function for readability
+                let convertToKeyCode = jsPsych.pluginAPI.convertKeyCharacterToKeyCode
+                
+                //stuff to give values from interactions
                 let correct_key = getCorrectKey()
                 let incorrect_key = getIncorrectKey();
+
+                let answer;
                 let correct;
+
+                // now, if this is the first time, we should set the exp vars the same way
+
+                if ( yes_key == undefined ){
+                    yes_key = correct_key;
+                } 
+                
+                if ( no_key == undefined ){
+                    no_key = incorrect_key;
+                } 
+
+                console.log('my custom yes key:');
+                console.log(yes_key);
+
+                console.log('my custom no key:');
+                console.log(no_key);
 
                 // what was/can be chosen
                 let key_chosen_ascii = data.key_press; //i.e.: 76
                 let key_chosen_char = upperCaseFromASCII(key_chosen_ascii); //blanks for other than 0-9 & A-Z
+                
+                // actual true/false, if any responses
+                if (key_chosen_char == yes_key){
+                    answer = 'yes';
+                } else if (key_chosen_char == no_key){
+                    answer = 'no';
+                } else { 
+                    answer = undefined;
+                };
+
+                console.log('responded to say:');
+                console.log(answer);
+
+                correct = answer == data.correct_response;
+
+                console.log('the correct response would be:');
+                console.log(data.correct_response);
+                console.log('which in fact now evaluates as...')
+                console.log(answer == data.correct_response);
+ 
+                // switch (data.condition)
+                // {
+                //     case 'RELATED':
+                //     case 'UNRELATED':
+                //         correct = data.key_press == convertToKeyCode(correct_key);
+                //         break;
+                //     default:
+                //         correct = data.key_press == convertToKeyCode(incorrect_key);
+                //         break;
+                // }
+                
+                data.correct = correct;
                 data.key_chosen_ascii = key_chosen_ascii;
                 data.key_chosen_char = key_chosen_char;
-
-                // Alias this jsPsych function for readability
-                let convertToKeyCode = jsPsych.pluginAPI.convertKeyCharacterToKeyCode
-
-                switch (data.condition)
-                {
-                    case 'RELATED':
-                    case 'UNRELATED':
-                        correct = data.key_press == convertToKeyCode(correct_key);
-                        break;
-                    default:
-                        correct = data.key_press == convertToKeyCode(incorrect_key);
-                        break;
-                }
-                data.correct = correct;
+                data.yes_key = yes_key;
+                data.no_key = no_key;
             }
         };
 
