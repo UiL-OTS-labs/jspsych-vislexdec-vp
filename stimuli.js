@@ -2,7 +2,7 @@
 const NON_WORD = "NON_WORD";
 const UNRELATED = "UNRELATED";
 const RELATED = "RELATED";
-const OTHER = "YOU_NAME_IT!";
+const OTHER = "YOU NAME IT!";
 const PRACTICE = "SURE!"
 
 const GROUPS = [
@@ -21,10 +21,10 @@ const LIST_GROUP1 = [
     { id: 2, item_type: NON_WORD, word: "crawse", prime: "piano", correct: 0 },
     { id: 3, item_type: NON_WORD, word: "thwurp", prime: "rabbit", correct: 0 },
     { id: 4, item_type: NON_WORD, word: "clem", prime: "flower", correct: 0 },
-    { id: 5, item_type: OTHER, word: "white", prime: "snow", correct: 1 },
+    { id: 5, item_type: RELATED, word: "white", prime: "snow", correct: 1 },
     { id: 6, item_type: RELATED, word: "travel", prime: "suitcase", correct: 1 },
     { id: 7, item_type: UNRELATED, word: "letter", prime: "garden", correct: 1},
-    { id: 8, item_type: "LOCKDOWN", word: "clown", prime: "forest", correct: 1 }
+    { id: 8, item_type: UNRELATED, word: "clown", prime: "forest", correct: 1 }
 ];
 
 // Add a second list of stimuli when required.

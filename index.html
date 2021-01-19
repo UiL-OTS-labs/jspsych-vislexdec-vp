@@ -21,9 +21,11 @@
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/uil-utils/dev/jspsych-uil-utils.js"></script>
 
     <!-- Uil OTS scripts -->
-    <script src="stimuli.js"></script>
     <script src="globals.js"></script>
+    <script src="consent.js"></script>
     <script src="instructions.js"></script>
+    <script src="stimuli.js"></script>
+    <script src="survey.js"></script>
 
     <style>
 
@@ -44,15 +46,15 @@
     }
 
     .jspsych-survey-multi-choice-question {
-        text-align: left !important;
+        text-align: left;
     }
 
     .jspsych-survey-multi-choice-text {
-        text-align: left !important;
+        text-align: left;
     }
 
     .jspsych-survey-multi-choice-option {
-        text-align: left !important;
+        text-align: left;
     }
 
     kbd {
@@ -67,7 +69,7 @@
     }
 
     span::after {
-        padding-left: 5%;
+        padding-left: 3%;
     }
 
     input:invalid + span::after {
@@ -91,8 +93,6 @@
         let stimuli = pickRandomGroup();
 
         // Experiment logic variables
-        // Used by survey
-        var repeat_survey = false;
 
         // used by the keyboard validation, overly verbose...
         var repeat_validate_left_key = false;
@@ -111,6 +111,7 @@
         function getLeftOrRightHanded()
         {
             let data = jsPsych.data.get().select('survey_multi_choice_responses');
+            console.log(data);
             data = JSON.parse(data.values[0]);
             return data.HandPreference;
         }
@@ -154,124 +155,6 @@
             },
             choices: [OK_BUTTON_TEXT],
             response_ends_trial: true
-        };
-
-        let survey_multi_html_block = {
-            type: 'survey-html-form',
-            preamble: '<h5>' + PREPARE_FOR_SURVEY + '</h5><BR><BR>',
-            html: `
-                <div class="survey" >
-                
-                <label for="birth_year">In what year were you born? </label>
-                <input type="number" id="birth_year" 
-                name="birth_year" placeholder=1999 min=1919 max=2019 required>
-                <span class="validity"></span><BR>
-                
-                <label for="birth_month">In what month were you born? </label>
-                <input type="number" id="birth_month" name="birth_month" 
-                placeholder=7 min=1 max=12 required>
-                <span class="validity"></span><BR>
-                
-                <label for="native_language">What is your native language?</label>
-                <input type="text" id="native_language" name="native_language"
-                pattern="[a-zA-Z]+" placeholder="Dutch" required>
-                <span class="validity"></span><BR> 
-                
-                </div>
-                `,
-            on_finish: function(data){
-                var survey_html_responses = data.responses;
-                data.survey_html_responses = survey_html_responses;
-            }
-        };
-
-        // The multi-choice survey plugin has built-in validation.
-        let survey_multi_choice_block = {
-            type: 'survey-multi-choice',
-            data: {
-                useful_data_flag: false,
-                survey_data_flag: true
-            },
-            questions: [
-                {
-                    prompt: BILINGUAL_QUESTION,
-                    name: 'Multilingual',
-                    options: BILINGUAL_OPTIONS,
-                    required:true,
-                    horizontal: true
-                },
-                {
-                    prompt: DYSLEXIC_QUESTION,
-                    name: 'Dyslexic',
-                    options: DYSLEXIC_OPTIONS,
-                    required: true,
-                    horizontal: true
-                },
-                {
-                    prompt: SEX_QUESTION,
-                    name:'Sex',
-                    options: SEX_OPTIONS,
-                    required: true,
-                    horizontal: true
-                },
-                {
-                    prompt: HAND_QUESTION,
-                    name:'HandPreference',
-                    options: HAND_OPTIONS,
-                    required: true,
-                    horizontal: true
-                }
-            ],
-            on_finish: function(data){
-                //from here
-                let survey_multi_choice = data.responses;   
-                //setting old data from here
-                data.survey_multi_choice_responses = survey_multi_choice;
-            }
-        };
-
-        let survey_review_survey_data = {
-            type: "html-button-response",
-            stimulus: function(data){
-
-                let survey_html = 
-                    jsPsych.data.get().last(2).values()[0].survey_html_responses; //former
-                
-                let survey_multi = 
-                    jsPsych.data.get().last(1).values()[0].survey_multi_choice_responses;
-                
-                let jsHTML = JSON.parse(survey_html);
-                let b_year = jsHTML.birth_year;
-                let b_month = jsHTML.birth_month;
-                let n_lang = jsHTML.native_language;
-
-                let jsMulti = JSON.parse(survey_multi);
-                let bilingual = jsMulti.Multilingual;
-                let dyslexic = jsMulti.Dyslexic;
-                let sex = jsMulti.Sex;
-                let hand_pref = jsMulti.HandPreference;
-
-                return `
-                    <h1>Your data</h1>
-
-                    <div><strong>Birth year</strong>: ${b_year} </div>
-                    <div><strong>Birth month</strong>: ${b_month} </div>
-                    <div><strong>Native language</strong>: ${n_lang} </div>
-                    <div><strong>Multilingual</strong>: ${bilingual} </div>
-                    <div><strong>Dyslexic</strong>: ${dyslexic} </div>
-                    <div><strong>Sex</strong>: ${sex} </div>
-                    <div><strong>Hand preference</strong>: ${hand_pref} </div>
-
-                    <BR><BR>
-                    <p>Is this information correct?</p>
-                    `;
-            },
-            choices: YES_OR_NO_BUTTON_TEXT,
-            response_ends_trial: true,
-            on_finish: function(data){
-                // Repeat the survey if yes (0) was not pressed
-                repeat_survey = data.button_pressed != 0;
-            }
         };
 
         let select_keyboard_layout = {
@@ -431,6 +314,7 @@
             },
             choices: [OK_BUTTON_TEXT],
             response_ends_trial: true,
+            post_trial_gap: DEFAULT_ITI
         };
 
         let participant_keyboard_control_start = {
@@ -447,7 +331,7 @@
             },
             //trial_duration: 10000,
             trial_ends_after_response: true,
-            post_trial_gap: 300,
+            post_trial_gap: DEFAULT_ITI
         };
 
         let well_done_screen = {
@@ -458,7 +342,7 @@
             },
             choices: [OK_BUTTON_TEXT],
             response_ends_trial: true,
-            data: { useful_data_flag: false }
+            post_trial_gap: DEFAULT_ITI
         };
 
         let end_screen = {
@@ -524,6 +408,7 @@
             response_ends_trial: true,
             stimulus_duration: WORD_DURATION,
             trial_duration: RESPONSE_TIMEOUT_DURATION,
+            post_trial_gap: DEFAULT_ITI,
             prompt: "",
             data: {
                 condition: jsPsych.timelineVariable('item_type'),
@@ -553,7 +438,7 @@
                 if ( no_key == undefined ){
                     no_key = incorrect_key;
                 }
-                
+
                 // what was/can be chosen
                 let key_chosen_ascii = data.key_press;
                 let key_chosen_char = upperCaseFromASCII(key_chosen_ascii);
@@ -588,29 +473,29 @@
                 return feedback_text;
             },
             choices: jsPsych.NO_KEYS,
-            trial_duration: FEEDBACK_DURATION
+            trial_duration: FEEDBACK_DURATION,
         };
 
-        // procedures//////////////////////////////////////////////////////////
+        // procedures //////////////////////////////////////////////////////////
 
-        let survey_procedure = {
-            timeline: [
-                survey_multi_html_block,
-                survey_multi_choice_block,
-                survey_review_survey_data,
-            ],
-            loop_function: function(){
-                if (repeat_survey == true){
-                    // Remove any previously recorded data, to prevent
-                    // duplicate entries
-                    jsPsych.data.reset();
+        // let survey_procedure = {
+        //     timeline: [
+        //         survey_multi_html_block,
+        //         survey_multi_choice_block,
+        //         survey_review_survey_data,
+        //     ],
+        //     loop_function: function(){
+        //         if (repeat_survey == true){
+        //             // Remove any previously recorded data, to prevent
+        //             // duplicate entries
+        //             jsPsych.data.reset();
 
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        };
+        //             return true;
+        //         } else {
+        //             return false;
+        //         }
+        //     }
+        // };
 
         let keyboard_set_key_left_procedure = {
             timeline:[
@@ -674,9 +559,12 @@
         // it's best practice to have *mouse click* user I/O first
         timeline.push(start_screen);
         
+        // Obtain informed consent.
+        timeline.push(consent_trial);
+
         // survey
         timeline.push(survey_procedure);
-        
+
         // kb layout
         timeline.push(select_keyboard_layout);
         
