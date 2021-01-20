@@ -6,7 +6,7 @@
 // in the lexical decision cases, the info from surveys needs to actually be used, so the old implementation was actually best.
 // The only thing, is that then the CONSENT value is also deleted.
 
-//In the 'old scenario'
+//In the 'old scenario', we need this logic variable for the looped survey propcedure (current)
 let repeat_survey = false;
 
 ///////////////////////////////////////////

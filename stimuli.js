@@ -2,8 +2,6 @@
 const NON_WORD = "NON_WORD";
 const UNRELATED = "UNRELATED";
 const RELATED = "RELATED";
-const OTHER = "YOU NAME IT!";
-const PRACTICE = "SURE!"
 
 const GROUPS = [
     "group1"
