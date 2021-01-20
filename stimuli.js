@@ -2,6 +2,7 @@
 const NON_WORD = "NON_WORD";
 const UNRELATED = "UNRELATED";
 const RELATED = "RELATED";
+const PRACTICE = "PRACTICE";
 
 const GROUPS = [
     "group1"

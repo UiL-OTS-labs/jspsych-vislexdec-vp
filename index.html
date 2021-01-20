@@ -9,10 +9,11 @@
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-html-button-response.js"></script>
 
-    <!-- Generic check/ask libraries (instructions & surveys) -->
+    <!-- Generic check/ask libraries (instructions & surveys & Consent) -->
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-instructions.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-survey-html-form.js"></script>
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-survey-multi-choice.js"></script>
+    <script src="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/plugins/jspsych-external-html.js"></script>
     
     <!-- Generic jspsych style sheet -->
     <link href="https://web-experiments.lab.hum.uu.nl/jspsych/6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"/>
@@ -93,6 +94,7 @@
         let stimuli = pickRandomGroup();
 
         // Experiment logic variables
+        // let repeat_consent = false;
 
         // used by the keyboard validation, overly verbose...
         var repeat_validate_left_key = false;
@@ -560,7 +562,9 @@
         timeline.push(start_screen);
         
         // Obtain informed consent.
-        timeline.push(consent_trial);
+        //timeline.push(consent_trial);
+
+        timeline.push(consent_page);
 
         // survey
         timeline.push(survey_procedure);

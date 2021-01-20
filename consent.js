@@ -1,36 +1,29 @@
-
-// Replace this text with some custon html of your own. You should
-// end
-const CONSENT_HTML =
-    "<p>"                                                      +
-        "Some small amount of text to display on the screen. " +
-        "If you can read this, you would like to update this " +
-        "in consent.js.<br>"                                   +
-        "Do you consent with the terms above?"                 +
-    "</p>";
-
-const POS_CONSENT = "Yes, I consent";
-const NEG_CONSENT = "No, I do not consent";
-
-const consent_choices = [POS_CONSENT, NEG_CONSENT];
-
-// Global variable that determines whether consent
-// has been given.
 consent_given = false;
 
-// A simple trial, the participant chooses to comply with the consent hopefully
-// if not, the experiment is ended and no data will be stored.
-let consent_trial = {
-    type : 'html-button-response',
-    stimulus : CONSENT_HTML,
-    choices : consent_choices,
-    on_finish : function (data) {
-        var nth_button = data.button_pressed;
-        if (nth_button != 0) {
-            jsPsych.endExperiment();
-        } else {
-            consent_given = true;
-        }
-        data.consent_given = consent_given;
+// consent check function
+let checkConsent = function(elem) {
+    if (document.getElementById('consent_checkbox').checked) {
+        return true;
+    } else {
+        alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
+        return false;
+    }
+    // consent_given = false;
+    consent_given = false;
+    return false;
+};
+
+let consent_page = {
+    type:'external-html',
+    url: "consent_page.html",
+    cont_btn: "start",
+    force_refresh: true,
+    check_fn: checkConsent,
+    execute_script: true,
+    on_finish: function(data) {
+        let consent_status = consent_given === true;
+        console.log('consent_status');
+        console.log(consent_status); 
+        data.consent_given = consent_status;
     }
 };
