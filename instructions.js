@@ -25,14 +25,12 @@ const PRE_PRACTICE_INSTRUCTION =
 
     "After clicking OK, please put your "               +
     "<i>index</i> fingers on the two "                  +
-    "keys you've just set. Try keep them in those "     +
+    "keys you've just set. Try keep to them in those "  +
     "positions during the <i>entire experiment</i>!<BR>"+
 
     "<ul>"                                              +
     "<li>Hit the <kbd>%correct_key%</kbd> key for "     +
-    "<strong>Yes</strong>. "                            +
-    "<sub><i>(Use this 'Yes' key to proceed throughout "+
-    "the experiment)</i>.</sub></li>"                   +
+    "<strong>Yes</strong>.</li>"                        +
     "<li>Hit the <kbd>%incorrect_key%</kbd> key for "   +
     "<strong>No</strong>.</li>"                         +
     "</ul>"                                             +
