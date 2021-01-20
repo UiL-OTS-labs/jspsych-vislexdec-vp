@@ -6,8 +6,8 @@
 // in the lexical decision cases, the info from surveys needs to actually be used, so the old implementation was actually best.
 // The only thing, is that then the CONSENT value is also deleted.
 
-//In the old scenario
-// let repeat_survey = false;
+//In the 'old scenario'
+let repeat_survey = false;
 
 ///////////////////////////////////////////
 // CONSTANTS
@@ -134,10 +134,14 @@ let survey_review_survey_data = {
         let hand_pref = jsMulti.HandPreference;
 
         return `
-            <p> Please verify if your data is correct. 
-            If you click "${NO_BUTTON_TEXT}", this will delete <i>all</i> data. 
-            You can then refresh your browser (press F5) and start again.
-            You will have to give your <i>consent</i> again!</p>
+            <h4> Please verify that your data is correct.</h4>
+
+
+            <p>=======TODO/TODISCUSS implementation:============<br>
+            If you click "${NO_BUTTON_TEXT}", this will delete <i>all</i> data.<br> 
+            You can then refresh your browser (press F5) and start again.<br>
+            You will also have to give your <i>consent</i> again!<br>
+            =======End of TODO/TODISCUSS part ===================<br><br></p>
 
             <h1>Your data</h1>
 
@@ -160,11 +164,11 @@ let survey_review_survey_data = {
 
         // the data reset in the survey loop function may cause the explicit consent value to be lost?
         // however, a participant could never have arrived ghere without having given consent... so it's implicit...
-        // let's test that reset TODO
+        // Tests show that there is NO explicit output data available from anything __before__ the repeat_survey loop
+        // and its call of jsPsych.data.reset, so be careful! 
 
-        // Repeat the survey if yes (0) was not presse
+        // Repeat the survey if yes (0) was not pressed
         repeat_survey = data.button_pressed != 0;
-
 
         // or:
 
@@ -173,10 +177,16 @@ let survey_review_survey_data = {
 
         // if (data.button_pressed != 0)
         //     jsPsych.endExperiment();
-            // maybe a browser refresh? @Ty           
+            // maybe a browser refresh of an extra conditional trial @Ty           
     }
 };
 
+// if we decide to end the experiment and restart everything after a 'No' response to the 
+// "survey_review_survey_data" trial, the 'repeat_survey' experiment logic variable can go and
+// the loop_function can me removed, including the jsPsych.data.reset() call.
+
+// otherwise, the output data will not contain any data related to what has been on the timeline 
+// that was gathered before the loop fucntion was called
 let survey_procedure = {
     timeline: [
         survey_multi_html_block,
