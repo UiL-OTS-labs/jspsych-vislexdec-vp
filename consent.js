@@ -6,7 +6,7 @@
 // this is how jsPsych proposes to use a consent page, using the external-html plugin
 // You can use your own consent_page.html and referende UU css. 
 // But.... this does not allow/is not intende to skip to some (other)
-// 'end_screen' trial, at least not without a lot of additional hassle and not by me.
+// 'end_screen' trial, at least not without a lot of additional hassle. This may probably go at some point?
 
 consent_given = false;
 
@@ -183,25 +183,27 @@ const DEBRIEF_MESSAGE_NO_CONSENT = `
     <h1>End of the experiment</h1><BR><BR>
     <h2>Thank you for <i>not</i> participating!</h2>
     `;
+const DEBRIEF_MESSAGE_NO_CONSENT_DURATION = 3000;
 const CONSENT_STATEMENT = `
-    I agree to participate in this study and consent that my data will be used for scientific research.
+    Yes, I consent to the use of my answers for scientific research.
     `;
 const SHORT_AGREE_STRING = "Yes, I agree";
 const PROCEED_BUTTON_TEXT = "Continue";
 const CONSENT_REFERENCE_NAME = 'consent';
+const IF_REQUIRED_FEEDBACK_MESSAGE = `
+        You must check the box next to '${SHORT_AGREE_STRING}' in order to proceed to the experiment.
+        `
 
 let consent_block = {
     type: 'survey-multi-select',
     preamble: CONSENT_HTML,
-    required_message: `
-        You must check the box next to '${SHORT_AGREE_STRING}' in order to proceed to the experiment
-        `,
+    required_message: IF_REQUIRED_FEEDBACK_MESSAGE,
     questions: [
         {
             prompt: CONSENT_STATEMENT, 
             options: [SHORT_AGREE_STRING], 
             horizontal: true,
-            required: false, 
+            required: false,   //should be false to behave as wanted given comments in https://github.com/UiL-OTS-labs/jspsych-vislexdec-vp/issues/14 
             button_label: PROCEED_BUTTON_TEXT,
             name: CONSENT_REFERENCE_NAME
         }
@@ -218,7 +220,7 @@ let no_consent_end_screen = {
     choices: [],
     trial_duration: DEBRIEF_MESSAGE_DURATION,
     on_finish: function (data){
-        jsPsych.endExperiment()
+        jsPsych.endExperiment() // kill it!
     }
 };
 
