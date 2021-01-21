@@ -1,3 +1,7 @@
+////////////////
+// STIMULI
+///////////////
+
 // Item types
 const NON_WORD = "NON_WORD";
 const UNRELATED = "UNRELATED";
@@ -26,7 +30,7 @@ const LIST_GROUP1 = [
     { id: 8, item_type: UNRELATED, word: "clown", prime: "forest", correct: 1 }
 ];
 
-// Add a second list of stimuli when required.
+// Add a second list of stimuli, if required for your design.
 // const LIST_GROUP2 = [
 // ...
 // ]

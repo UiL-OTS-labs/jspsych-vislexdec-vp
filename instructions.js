@@ -1,3 +1,6 @@
+////////////////
+// INSTRUCTIONS
+///////////////
 /*
  * In this file the instructions are defined that are used throughout
  * the experiment.

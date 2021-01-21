@@ -1,3 +1,7 @@
+////////////////
+// KEYBOARD
+///////////////
+
 // Keyboard choices
 const KEYBOARD_CHOICES = ['QWERTY','AZERTY','DVORAK','QWERTZ','CUSTOM'];
 

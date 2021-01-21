@@ -90,15 +90,15 @@
     
     // Wait till the browser has loaded all files, then execute the
     // contents of this method
-    
     window.addEventListener('load', function() {
 
+        // prep stimuli
         let stimuli = pickRandomGroup();
 
+        // regular JS functions
         function getLeftOrRightHanded()
         {
             let data = jsPsych.data.get().select('survey_multi_choice_responses');
-            //console.log(data);
             data = JSON.parse(data.values[0]);
             return data.HandPreference;
         }
@@ -117,7 +117,7 @@
             return KEYBOARD_DEFAULTS[chosen_keyboard][incorrect_key];
         }
 
-        // data one would like to add to __all__ trials, according to:
+        // Data one would like to add to __all__ trials, according to:
         // https://www.jspsych.org/overview/data/
         let subject_id = jsPsych.randomization.randomID(8);
         let group_name = stimuli.group_name;
@@ -126,6 +126,9 @@
             subject: subject_id,
             group: group_name,
         });
+
+        // ((((((((((((((((((((( basic trial/subtrial definitions )))))))))))))))))
+        // More can also be found in keyboard.js, survey.js, instruction.js, etc.
 
         let start_screen = {
             type: 'html-button-response',
@@ -163,7 +166,6 @@
                 let choice = getCorrectKey();
                 return [choice];
             },
-            //trial_duration: 10000,
             trial_ends_after_response: true,
             post_trial_gap: DEFAULT_ITI
         };
@@ -254,10 +256,9 @@
                 correct_response: jsPsych.timelineVariable('correct')
             },
             on_finish: function(data){
-                // Alias this jsPsych function for readability
                 let convertToKeyCode = jsPsych.pluginAPI.convertKeyCharacterToKeyCode
                 
-                //stuff to give values from interactions
+                // assign values from interactions
                 let correct_key = getCorrectKey();
                 let incorrect_key = getIncorrectKey();
 
@@ -273,11 +274,9 @@
                     no_key = incorrect_key;
                 }
 
-                // what was/can be chosen
                 let key_chosen_ascii = data.key_press;
                 let key_chosen_char = upperCaseFromASCII(key_chosen_ascii);
                 
-                // actual true/false, if any responses...
                 if (key_chosen_char == yes_key){
                     answer = 1;
                 } else if (key_chosen_char == no_key){
@@ -287,7 +286,6 @@
                 };
 
                 correct = answer == data.correct_response;
-                // add to output
                 data.correct = correct;
                 data.key_chosen_ascii = key_chosen_ascii;
                 data.key_chosen_char = key_chosen_char;
@@ -349,44 +347,48 @@
 
         let timeline = [];
 
-        // it's best practice to have *mouse click* user I/O first
+        // BTW, it's _always_ best practice to have *mouse click* user I/O first!
         timeline.push(start_screen);
-        
-        // Obtain informed consent.
+
+        // Informed consent (consent.js)
+        timeline.push(consent_procedure);
         //timeline.push(consent_trial);    // MJA version
         //timeline.push(consent_page);     // jsPysch version
         //timeline.push(consent_block);    // fix issue 14 dev version
-        timeline.push(consent_procedure);  
 
-        // survey
+        // Survey (survey.js)
         timeline.push(survey_procedure);
 
-        // kb layout
+        // Keyboard layout flow (keyboard.js)
         timeline.push(select_keyboard_layout);
-        
-        // kb important keys
         timeline.push(keyboard_set_key_left_procedure);
         timeline.push(keyboard_set_key_right_procedure);
         
-        // task instruction
+        // Task instruction (instruction.js)
         timeline.push(instruction_screen_practice);
 
-        // a keyboard dominant hand configured key continue/prepare flow
+        // Keyboard + dominant hand configured key "get_ready"
         timeline.push(participant_keyboard_control_start);
-        
+
+        // Practice items
         timeline.push(practice_procedure);
+
+        // Feedback/end practice
         timeline.push(well_done_screen);
 
-        // "get ready"
+        // "Get ready" for the real deal...
         timeline.push(participant_keyboard_control_start);
 
         // NOTE options below! comment/uncomment for regular vs restrained randomization
-        // true randomness is better for the current template's amount of items...
-        // otherwise, every now and then, the randomisation will fail (participant will get a blank screen)
-
+        // "True randomness" is better for the current template's amount of items...
+        // otherwise, every now and then, the randomisation will fail... 
+        // (participant will get a blank screen)
+        
+        // Real experimental trials
         //timeline.push(trial_procedure_pseudorandom); // don't do this with little stimuli
         timeline.push(trial_procedure_random);
         
+        // Thanks for all your effort and goodbye! 
         timeline.push(end_screen);
 
         // Start jsPsych when running on a Desktop or Laptop style pc.
@@ -405,10 +407,9 @@
         }
         else { // or bail out.
             let paragraph = document.createElement("p")
-            paragraph.innerHTML = "Please run this experiment on a pc or laptop.";
+            paragraph.innerHTML = BAIL_OUT_MOBILE_TEXT;
             document.body.appendChild(paragraph);
         }
     })
     </script>
 </html>
-

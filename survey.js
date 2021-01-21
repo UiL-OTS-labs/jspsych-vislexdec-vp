@@ -1,21 +1,175 @@
+////////////////
+// SURVEY
+///////////////
 
-// global repeat boolean
-// If the survey is filled out incorrectly the questionaire
-// is repeated.
-
-// in the lexical decision cases, the info from surveys needs to actually be used, so the old implementation was actually best.
-// The only thing, is that then the CONSENT value is also deleted.
-
-//In the 'old scenario', we need this logic variable for the looped survey propcedure (current)
 let repeat_survey = false;
 
-///////////////////////////////////////////
-// CONSTANTS
+const PREPARE_FOR_SURVEY = "<p>Please answer some questions first</p>";
+
+// experiment: one can use the UU style for the HTML survey plugin by appending the style below...
+// however, this is not as of yet possible in the second type of survey plugin
+// might be solved with milestone at https://github.com/jspsych/jsPsych/issues/554#event-3434758022 
+
+const SURVEY_HTML_PLUGIN_STYLE_UU = `
+    <style>
+        body {
+            background: rgb(246, 246, 246);
+            font-family: "Open Sans","Frutiger",Helvetica,Arial,sans-serif;
+            color: rgb(33, 37, 41);
+            text-align: left;
+        }
+
+        p {
+            line-height: 1.4; /* Override paragraph for better readability */
+        }
+
+        label {
+            margin-bottom: 0;
+        }
+
+        h1, h2{
+            font-size: 2rem;
+        }
+
+        h6 {
+            font-size: 1.1rem;
+        }
+
+        /* Input styles */
+
+        form > table th {
+            padding-left: 10px;
+            vertical-align: middle;
+        }
+
+        input, textarea, select {
+            border-radius: 0;
+            border: 1px solid #d7d7d7;
+            padding: 5px 10px;
+            line-height: 20px;
+            font-size: 16px;
+        }
+
+        input[type=submit], input[type=button], button, .button, .jspsych-btn {
+            background: #000;
+            color: #fff;
+            border: none;
+            font-weight: bold;
+            font-size: 15px;
+            padding: 0 20px;
+            line-height: 42px;
+            width: auto;
+            min-width: auto;
+            cursor: pointer;
+            display: inline-block;
+            border-radius: 0;
+        }
+
+        input[type="checkbox"], input[type="radio"]
+        {
+            width: auto;
+        }
+
+        button[type=submit], input[type=submit], .button-colored {
+            background: #ffcd00;
+            color: #000000;
+        }
+
+        button[type=submit].button-black, input[type=submit].button-black {
+            background: #000;
+            color: #fff;
+        }
+
+        button a, .button a,
+        button a:hover, .button a:hover,
+        a.button, a.button:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .button-colored a,
+        .button-colored a:hover,
+        a.button-colored,
+        a.button-colored:hover {
+            color: #000;
+        }
+
+        /* Table styles */
+        table thead th {
+            border-bottom: 1px solid #ccc;
+        }
+
+        table tfoot th {
+            border-top: 1px solid #ccc;
+        }
+
+        table tbody tr:nth-of-type(odd) {
+            background: #eee;
+        }
+
+        table tbody tr:hover {
+            background: #ddd;
+        }
+
+        table tbody tr.no-background:hover, table tbody tr.no-background {
+            background: transparent;
+        }
+
+        table tbody td, table thead th, table tfoot th {
+            padding: 6px 5px;
+        }
+
+        /* Link styles */
+        a {
+            color: rgb(33, 37, 41);
+            text-decoration: underline;
+            transition: 0.2s ease color;
+        }
+
+        a:hover {
+            transition: 0.2s ease color;
+            color: rgb(85, 85, 95);
+        }
 
 
-const PREPARE_FOR_SURVEY = `
-    Please answer some screening questions before the experiment starts.
+        span::after {
+            padding-left: 3%;
+        }
+
+        input:invalid + span::after {
+            content: '✖';
+        }
+
+        input:valid+span::after {
+              content: '✓';
+        }
+    </style>
     `;
+
+const MULTI_CHOICE_HTML =`
+    <label for="birth_year">In what year were you born? </label>
+    <input type="number" id="birth_year" 
+        name="birth_year" placeholder=1999 min=1919 max=2019 required>
+    <span class="validity"></span>
+
+    <br>
+    <br>
+
+    <label for="birth_month">In what month were you born? </label>
+    <input type="number" id="birth_month" name="birth_month" 
+        placeholder=7 min=1 max=12 required>
+    <span class="validity"></span>
+
+    <br>
+    <br>
+
+    <label for="native_language">What is your native language?</label>
+    <input type="text" id="native_language" name="native_language"
+        pattern="[a-zA-Z]+" placeholder="Dutch" required>
+    <span class="validity"></span>
+    <br> 
+    <br> 
+    `
 
 // these constants are used in the survery multip[le choice block]
 const BILINGUAL_QUESTION = `
@@ -36,12 +190,10 @@ const SEX_OPTIONS = ["Female", "Male", "Other", "Prefer not to say"];
 const HAND_QUESTION = 'Which hand do you prefer to write with?';
 const HAND_OPTIONS = ["Left", "Right"];
 
-
 // The multi-choice survey plugin has built-in validation.
 let survey_multi_choice_block = {
     type: 'survey-multi-choice',
     data: {
-        useful_data_flag: false,
         survey_data_flag: true
     },
     questions: [
@@ -75,9 +227,7 @@ let survey_multi_choice_block = {
         }
     ],
     on_finish: function(data){
-        //from here
         let survey_multi_choice = data.responses;   
-        //setting old data from here
         data.survey_multi_choice_responses = survey_multi_choice;
     }
 };
@@ -85,27 +235,8 @@ let survey_multi_choice_block = {
 // this HTML plugin survey block has the content of the questions in the HTML
 let survey_multi_html_block = {
     type: 'survey-html-form',
-    preamble: '<h5>' + PREPARE_FOR_SURVEY + '</h5><BR><BR>',
-    html: `
-        <div class="survey" >
-        
-        <label for="birth_year">In what year were you born? </label>
-        <input type="number" id="birth_year" 
-        name="birth_year" placeholder=1999 min=1919 max=2019 required>
-        <span class="validity"></span><BR>
-        
-        <label for="birth_month">In what month were you born? </label>
-        <input type="number" id="birth_month" name="birth_month" 
-        placeholder=7 min=1 max=12 required>
-        <span class="validity"></span><BR>
-        
-        <label for="native_language">What is your native language?</label>
-        <input type="text" id="native_language" name="native_language"
-        pattern="[a-zA-Z]+" placeholder="Dutch" required>
-        <span class="validity"></span><BR> 
-        
-        </div>
-        `,
+    preamble: PREPARE_FOR_SURVEY,
+    html: SURVEY_HTML_PLUGIN_STYLE_UU + MULTI_CHOICE_HTML,
     on_finish: function(data){
         var survey_html_responses = data.responses;
         data.survey_html_responses = survey_html_responses;
@@ -117,7 +248,7 @@ let survey_review_survey_data = {
     stimulus: function(data){
 
         let survey_html = 
-            jsPsych.data.get().last(2).values()[0].survey_html_responses; //former
+            jsPsych.data.get().last(2).values()[0].survey_html_responses;
         
         let survey_multi = 
             jsPsych.data.get().last(1).values()[0].survey_multi_choice_responses;
@@ -134,15 +265,6 @@ let survey_review_survey_data = {
         let hand_pref = jsMulti.HandPreference;
 
         return `
-            <h4> Please verify that your data is correct.</h4>
-
-
-            <p>=======TODO/TODISCUSS implementation:============<br>
-            If you click "${NO_BUTTON_TEXT}", this will delete <i>all</i> data.<br> 
-            You can then refresh your browser (press F5) and start again.<br>
-            You will also have to give your <i>consent</i> again!<br>
-            =======End of TODO/TODISCUSS part ===================<br><br></p>
-
             <h1>Your data</h1>
 
             <div><strong>Birth year</strong>: ${b_year} </div>
@@ -160,33 +282,12 @@ let survey_review_survey_data = {
     choices: [YES_BUTTON_TEXT, NO_BUTTON_TEXT],
     response_ends_trial: true,
     on_finish: function(data){
-        // either:
-
-        // the data reset in the survey loop function may cause the explicit consent value to be lost?
-        // however, a participant could never have arrived ghere without having given consent... so it's implicit...
-        // Tests show that there is NO explicit output data available from anything __before__ the repeat_survey loop
-        // and its call of jsPsych.data.reset, so be careful! 
-
-        // Repeat the survey if yes (0) was not pressed
-        repeat_survey = data.button_pressed != 0;
-
-        // or:
-
-        // end the experiment if data is not correct, 
-        //the user will have to start again, data is useless
-
-        // if (data.button_pressed != 0)
-        //     jsPsych.endExperiment();
-            // maybe a browser refresh of an extra conditional trial @Ty           
+        // Repeat the survey if yes (0) was not pressed.
+        // this may give multiple entries, up to the researcher to filter out
+        repeat_survey = data.button_pressed != 0;         
     }
 };
 
-// if we decide to end the experiment and restart everything after a 'No' response to the 
-// "survey_review_survey_data" trial, the 'repeat_survey' experiment logic variable can go and
-// the loop_function can me removed, including the jsPsych.data.reset() call.
-
-// otherwise, the output data will not contain any data related to what has been on the timeline 
-// that was gathered before the loop fucntion was called
 let survey_procedure = {
     timeline: [
         survey_multi_html_block,
@@ -195,10 +296,6 @@ let survey_procedure = {
     ],
     loop_function: function(){
         if (repeat_survey == true){
-            // Remove any previously recorded data, to prevent
-            // duplicate entries
-            jsPsych.data.reset();
-
             return true;
         } else {
             return false;
