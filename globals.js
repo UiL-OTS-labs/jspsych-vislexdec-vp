@@ -1,3 +1,7 @@
+////////////////
+// GLOBALS
+///////////////
+
 // ACCESS_KEY needs to be used for server setup (data store)
 const ACCESS_KEY = 'zeeekretkeey'; 
 
@@ -23,6 +27,8 @@ const NO_BUTTON_TEXT = "No";
 const TRUE_BUTTON_TEXT = "True";
 const FALSE_BUTTON_TEXT = "False";
 
+// Bail out string for mobiles
+const BAIL_OUT_MOBILE_TEXT = "Please run this experiment on a PC or Laptop."
 
 // Deafult restrictions of minimal browser dimensions
 const MIN_WIDTH = 800;
@@ -42,33 +48,6 @@ const GENERIC_CHECK = `
     <p>Click below if you are ready to proceed</p>
     `;
     
-// // Keyboard choices
-// const KEYBOARD_CHOICES = ['QWERTY','AZERTY','DVORAK','QWERTZ','CUSTOM'];
-
-// // simple layout for left/right keys given some known layouts:
-// // Type     |   Left  |   Right
-// // ---------|---------|----------
-// // QWERTY   |   A     |  L
-// // AZERTY   |   Q     |  M
-// // DVORAK   |   A     |  S (or N?)
-// // QWERTZ   |   A     |  L
-// // OTHER    |   A     |  L (fallback, more tries?)
-
-// const QWERTY = { kb_type: 'QUERTY', left_key: "A", right_key: "L" };
-// const AZERTY = { kb_type: 'AZERTY', left_key: "Q", right_key: "M" };
-// const DVORAK = { kb_type: 'DVORAK', left_key: "A", right_key: "S" };
-// const QWERTZ = { kb_type: 'QWERTZ', left_key: "A", right_key: "L" };
-// const CUSTOM = { kb_type: 'CUSTOM', left_key: "1", right_key: "0" };
-
-// // Quick lookup table
-// const KEYBOARD_DEFAULTS = {
-//     'QWERTY': QWERTY,
-//     'AZERTY': AZERTY,
-//     'DVORAK': DVORAK,
-//     'QWERTZ': QWERTZ,
-//     'CUSTOM': CUSTOM,
-// };
-
 const DEBRIEF_MESSAGE = `
     <h1>End of the experiment</h1><BR><BR>
     <h2>Thank you for participating!</h2>

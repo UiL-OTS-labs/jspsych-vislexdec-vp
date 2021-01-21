@@ -167,7 +167,7 @@ let consent_block = {
             prompt: "", 
             options: [CONSENT_STATEMENT], 
             horizontal: true,
-            required: false,   //should be false to behave as wanted given https://github.com/UiL-OTS-labs/jspsych-vislexdec-vp/issues/14 
+            required: false,  //should be false to behave as wanted given https://github.com/UiL-OTS-labs/jspsych-vislexdec-vp/issues/14 
             button_label: PROCEED_BUTTON_TEXT,
             name: CONSENT_REFERENCE_NAME
         }
@@ -184,7 +184,7 @@ let no_consent_end_screen = {
     choices: [],
     trial_duration: DEBRIEF_MESSAGE_DURATION,
     on_finish: function (data){
-        jsPsych.endExperiment() // kill it!
+        jsPsych.endExperiment()
     }
 };
 
