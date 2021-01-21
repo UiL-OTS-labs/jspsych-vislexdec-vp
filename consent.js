@@ -1,50 +1,14 @@
-
 ////////////////
-// Version 1 (NOW NOT USED)
+// CONSENT
 ///////////////
 
-// this is how jsPsych proposes to use a consent page, using the external-html plugin
-// You can use your own consent_page.html and referende UU css. 
-// But.... this does not allow/is not intende to skip to some (other)
-// 'end_screen' trial, at least not without a lot of additional hassle. This may probably go at some point?
+// Using the multi select plugin.
 
-consent_given = false;
-
-// consent check function
-let checkConsent = function(elem) {
-    if (document.getElementById('consent_checkbox').checked) {
-        return true;
-    } else {
-        alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
-        return false;
-    }
-    consent_given = false;
-    return false;
-};
-
-let consent_page = {
-    type:'external-html',
-    url: "consent_page.html",
-    cont_btn: "start",
-    force_refresh: true,
-    check_fn: checkConsent,
-    execute_script: true,
-    on_finish: function(data) {
-        let consent_status = consent_given === true;
-        data.consent_given = consent_status;
-    }
-};
-
-////////////////
-// Version 2 (NOW IN USE)
-///////////////
-
-// Using the multi select plugin. This one has an actual checkbox within jsPsych context. 
+// This one has an actual checkbox within jsPsych context. 
 // And you can use the 'required = true' if you want to use it as a showstopper page. 
 // Or (like demanded), it is now also possible to use additional conditional stuff, like proceeding 
 // to the end page, probably.
-// In this version, if you want things to look 'UU-legit', it takes a bunch of css within <style> tags 
-// with the same content as in ./uu/uu.css, except for the @import line....
+// In this version, if you want things to look 'UU-legit', it takes a bunch of css within <style> tags
 
 function getConsentData()
 {
@@ -54,8 +18,7 @@ function getConsentData()
     return data.consent;
 }
 
-const CONSENT_HTML = `
-    <style>
+const CONSENT_HTML_STYLE_UU = `<style>
         body {
             background: rgb(246, 246, 246);
             font-family: "Open Sans","Frutiger",Helvetica,Arial,sans-serif;
@@ -78,7 +41,6 @@ const CONSENT_HTML = `
         h6 {
             font-size: 1.1rem;
         }
-
 
         /* Input styles */
 
@@ -177,6 +139,8 @@ const CONSENT_HTML = `
         }
 
         </style>
+        `
+const CONSENT_HTML = `
     <p>Insert your information letter here; for more information, see the <a href="https://fetc-gw.wp.hum.uu.nl/en/" target="_blank">FEtC-H website</a></p>
     `
 const DEBRIEF_MESSAGE_NO_CONSENT = `
@@ -187,23 +151,23 @@ const DEBRIEF_MESSAGE_NO_CONSENT_DURATION = 3000;
 const CONSENT_STATEMENT = `
     Yes, I consent to the use of my answers for scientific research.
     `;
-const SHORT_AGREE_STRING = "Yes, I agree";
+// const SHORT_AGREE_STRING = "Yes, I agree";
 const PROCEED_BUTTON_TEXT = "Continue";
 const CONSENT_REFERENCE_NAME = 'consent';
 const IF_REQUIRED_FEEDBACK_MESSAGE = `
-        You must check the box next to '${SHORT_AGREE_STRING}' in order to proceed to the experiment.
+        You must check the box next to '${CONSENT_STATEMENT}' in order to proceed to the experiment.
         `
 
 let consent_block = {
     type: 'survey-multi-select',
-    preamble: CONSENT_HTML,
+    preamble: CONSENT_HTML_STYLE_UU + CONSENT_HTML,
     required_message: IF_REQUIRED_FEEDBACK_MESSAGE,
     questions: [
         {
-            prompt: CONSENT_STATEMENT, 
-            options: [SHORT_AGREE_STRING], 
+            prompt: "", 
+            options: [CONSENT_STATEMENT], 
             horizontal: true,
-            required: false,   //should be false to behave as wanted given comments in https://github.com/UiL-OTS-labs/jspsych-vislexdec-vp/issues/14 
+            required: false,   //should be false to behave as wanted given https://github.com/UiL-OTS-labs/jspsych-vislexdec-vp/issues/14 
             button_label: PROCEED_BUTTON_TEXT,
             name: CONSENT_REFERENCE_NAME
         }
@@ -228,7 +192,7 @@ let if_node_consent = {
     timeline: [no_consent_end_screen],
     conditional_function: function(data){
         let mydata = getConsentData();
-        if (mydata == SHORT_AGREE_STRING){
+        if (mydata == CONSENT_STATEMENT){
             return false;
         } else {
             return true;
@@ -239,5 +203,3 @@ let if_node_consent = {
 let consent_procedure = {
     timeline: [consent_block, if_node_consent]
 }
-
-

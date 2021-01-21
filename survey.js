@@ -156,6 +156,7 @@ const SURVEY_HTML_PLUGIN_STYLE_UU = `
     </style>
     `;
 
+// with other survey plugin(s) than html, UU styling seems to not be easy to implement
 const MULTI_CHOICE_HTML =`
     <label for="birth_year">In what year were you born? </label>
     <input type="number" id="birth_year" 
@@ -201,7 +202,7 @@ const SEX_OPTIONS = ["Female", "Male", "Other", "Prefer not to say"];
 const HAND_QUESTION = 'Which hand do you prefer to write with?';
 const HAND_OPTIONS = ["Left", "Right"];
 
-// The multi-choice survey plugin has built-in validation.
+// The multi-choice survey plugin DOES have built-in validation, which is nice
 let survey_multi_choice_block = {
     type: 'survey-multi-choice',
     data: {
@@ -243,7 +244,7 @@ let survey_multi_choice_block = {
     }
 };
 
-// this HTML plugin survey block has the content of the questions in the HTML
+// HTML plugin survey block: questions are in the HTML constant
 let survey_multi_html_block = {
     type: 'survey-html-form',
     preamble: PREPARE_FOR_SURVEY,
@@ -301,8 +302,8 @@ let survey_review_survey_data = {
 
 let survey_procedure = {
     timeline: [
-        survey_multi_html_block,
-        survey_multi_choice_block,
+        survey_multi_html_block, // uu style
+        survey_multi_choice_block, // default style (see index.html styling section)
         survey_review_survey_data,
     ],
     loop_function: function(){
