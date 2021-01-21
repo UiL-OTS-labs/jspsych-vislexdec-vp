@@ -1,14 +1,14 @@
 
 ////////////////
-// Version 1
+// Version 1 (NOW NOT USED)
 ///////////////
 
-// this is how jsPsych handles a consent page, using the external-html plugin
-// you can use your own html and UU css. But.... this does not allow to skip to the
-// end_screen trial without a lot of additional hassle
+// this is how jsPsych proposes to use a consent page, using the external-html plugin
+// You can use your own consent_page.html and referende UU css. 
+// But.... this does not allow/is not intende to skip to some (other)
+// 'end_screen' trial, at least not without a lot of additional hassle and not by me.
 
-
-consent_given1 = false;
+consent_given = false;
 
 // consent check function
 let checkConsent = function(elem) {
@@ -18,8 +18,7 @@ let checkConsent = function(elem) {
         alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
         return false;
     }
-    // consent_given = false;
-    consent_given1 = false;
+    consent_given = false;
     return false;
 };
 
@@ -31,16 +30,21 @@ let consent_page = {
     check_fn: checkConsent,
     execute_script: true,
     on_finish: function(data) {
-        let consent_status = consent_given1 === true;
-        console.log('consent_status');
-        console.log(consent_status); 
-        data.consent_given1 = consent_status;
+        let consent_status = consent_given === true;
+        data.consent_given = consent_status;
     }
 };
 
 ////////////////
-// Version 2
+// Version 2 (NOW IN USE)
 ///////////////
+
+// Using the multi select plugin. This one has an actual checkbox within jsPsych context. 
+// And you can use the 'required = true' if you want to use it as a showstopper page. 
+// Or (like demanded), it is now also possible to use additional conditional stuff, like proceeding 
+// to the end page, probably.
+// In this version, if you want things to look 'UU-legit', it takes a bunch of css within <style> tags 
+// with the same content as in ./uu/uu.css, except for the @import line....
 
 function getConsentData()
 {
@@ -49,12 +53,6 @@ function getConsentData()
     data = JSON.parse(data.values[0]);
     return data.consent;
 }
-// Using the multi select plugin. This one has an actual checkbox within jsPsych context. 
-// And you can use the 'required = true' if you want to use it as a showstopper page. 
-// Or (like demanded), it is now also possible to use additional conditional stuff, like proceeding 
-// to the end page, probably.
-// In this version, if you want things to look 'UU-legit', it takes a bunch of style tags with the same content 
-// as in ./uu/uu.css, except the @import part.
 
 const CONSENT_HTML = `
     <style>
@@ -141,8 +139,6 @@ const CONSENT_HTML = `
             color: #000;
         }
 
-
-
         /* Table styles */
         table thead th {
             border-bottom: 1px solid #ccc;
@@ -185,28 +181,34 @@ const CONSENT_HTML = `
     `
 const DEBRIEF_MESSAGE_NO_CONSENT = `
     <h1>End of the experiment</h1><BR><BR>
-    <h2>Thank you for not participating!</h2>
+    <h2>Thank you for <i>not</i> participating!</h2>
     `;
+const CONSENT_STATEMENT = `
+    I agree to participate in this study and consent that my data will be used for scientific research.
+    `;
+const SHORT_AGREE_STRING = "Yes, I agree";
+const PROCEED_BUTTON_TEXT = "Continue";
+const CONSENT_REFERENCE_NAME = 'consent';
 
 let consent_block = {
     type: 'survey-multi-select',
     preamble: CONSENT_HTML,
-    required_message: "You must check the box next to 'Yes, I agree' in order to proceed to the experiment",
+    required_message: `
+        You must check the box next to '${SHORT_AGREE_STRING}' in order to proceed to the experiment
+        `,
     questions: [
         {
-            prompt: "I agree to participate in this study and consent that my data will be used for scientific research.", 
-            options: ["Yes, I agree"], 
+            prompt: CONSENT_STATEMENT, 
+            options: [SHORT_AGREE_STRING], 
             horizontal: true,
             required: false, 
-            button_label: "Continue",
-            name: 'consent'
+            button_label: PROCEED_BUTTON_TEXT,
+            name: CONSENT_REFERENCE_NAME
         }
     ],
     on_finish: function(data){
         let consent_choice = data.responses;   
-        //setting old data from here
         data.consent_choice_response = consent_choice;
-        console.log("data.consent_choice_response: " + data.consent_choice_response)
     }
 };
 
@@ -216,7 +218,6 @@ let no_consent_end_screen = {
     choices: [],
     trial_duration: DEBRIEF_MESSAGE_DURATION,
     on_finish: function (data){
-        console.log('console.logging it');
         jsPsych.endExperiment()
     }
 };
@@ -224,19 +225,14 @@ let no_consent_end_screen = {
 let if_node_consent = {
     timeline: [no_consent_end_screen],
     conditional_function: function(data){
-        // get the data from the previous trial,
-        //let mydata = jsPsych.data.get().last(1).values()[0];
-        //let mydata = data.consent_choice_response;
         let mydata = getConsentData();
-        console.log(mydata);
-        if (mydata == "Yes, I agree"){
+        if (mydata == SHORT_AGREE_STRING){
             return false;
         } else {
             return true;
         }
     }
 }
-
 
 let consent_procedure = {
     timeline: [consent_block, if_node_consent]
