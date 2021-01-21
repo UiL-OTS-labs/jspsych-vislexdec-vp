@@ -4,11 +4,12 @@
 
 let repeat_survey = false;
 
-const PREPARE_FOR_SURVEY = "<p>Please answer some questions first</p>";
+const PREPARE_FOR_SURVEY = "<h1>Please answer some questions first</h1>";
 
 // experiment: one can use the UU style for the HTML survey plugin by appending the style below...
 // however, this is not as of yet possible in the second type of survey plugin
-// might be solved with milestone at https://github.com/jspsych/jsPsych/issues/554#event-3434758022 
+// might be solved with milestone with things discussed here:
+// https://github.com/jspsych/jsPsych/issues/554#event-3434758022 
 
 const SURVEY_HTML_PLUGIN_STYLE_UU = `
     <style>
@@ -21,18 +22,25 @@ const SURVEY_HTML_PLUGIN_STYLE_UU = `
 
         p {
             line-height: 1.4; /* Override paragraph for better readability */
+            text-align: left;
         }
 
         label {
-            margin-bottom: 0;
+            float: left;
+            width: 15em;
+            margin-right: 1em;
+            text-align: left;
+            margin-bottom: 2%;
         }
 
         h1, h2{
             font-size: 2rem;
+            text-align: left;
         }
 
         h6 {
             font-size: 1.1rem;
+            text-align: left;
         }
 
         /* Input styles */
@@ -48,6 +56,7 @@ const SURVEY_HTML_PLUGIN_STYLE_UU = `
             padding: 5px 10px;
             line-height: 20px;
             font-size: 16px;
+            text-align: left;
         }
 
         input[type=submit], input[type=button], button, .button, .jspsych-btn {
@@ -63,11 +72,13 @@ const SURVEY_HTML_PLUGIN_STYLE_UU = `
             cursor: pointer;
             display: inline-block;
             border-radius: 0;
+            text-align: left;
         }
 
         input[type="checkbox"], input[type="radio"]
         {
             width: auto;
+            text-align: left;
         }
 
         button[type=submit], input[type=submit], .button-colored {
@@ -131,9 +142,8 @@ const SURVEY_HTML_PLUGIN_STYLE_UU = `
             color: rgb(85, 85, 95);
         }
 
-
         span::after {
-            padding-left: 3%;
+            padding-left: 1%;
         }
 
         input:invalid + span::after {
@@ -141,7 +151,7 @@ const SURVEY_HTML_PLUGIN_STYLE_UU = `
         }
 
         input:valid+span::after {
-              content: '✓';
+            content: '✓';
         }
     </style>
     `;
@@ -172,6 +182,7 @@ const MULTI_CHOICE_HTML =`
     `
 
 // these constants are used in the survery multip[le choice block]
+// with this survey plugin, UU styling is not easy to implement
 const BILINGUAL_QUESTION = `
     Were you born and raised in a  
     <a href="https://en.wikipedia.org/wiki/Multilingualism" target="_blank">multilingual</a>
