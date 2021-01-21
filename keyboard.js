@@ -44,7 +44,6 @@ var chosen_keyboard = undefined;
 var yes_key = undefined;
 var no_key = undefined;
 
-//simple version, single digit input, not a list
 function upperCaseFromASCII(keycode)
 {
     character = String.fromCharCode(keycode);
@@ -62,11 +61,9 @@ let select_keyboard_layout = {
         let button_number = parseInt(button_id, 10);
         let keyboard_chosen = KEYBOARD_CHOICES[button_number];
         data.keyboard = keyboard_chosen;
-        chosen_keyboard = keyboard_chosen;//setting global value
+        chosen_keyboard = keyboard_chosen;
     }
 };
-
-//////////// left key setting & validation /////////////////////////
 
 let test_keyboard_key_left = {
     type: 'html-keyboard-response',
@@ -94,13 +91,10 @@ let test_keyboard_key_left = {
             );
         let key_chosen_ascii = data.key_press;
         let key_chosen_char = 
-            upperCaseFromASCII(key_chosen_ascii); //blanks for other than 0-9 & A-Z
+            upperCaseFromASCII(key_chosen_ascii);
         data.key_confirmed = data.key_press == expected_key_press;
         data.key_chosen_ascii = key_chosen_ascii;
         data.key_chosen_char = key_chosen_char;
-
-        // We use === instead of a straight assignment to ensure we
-        // don't get 'undefined' as a value
         left_key_confirmed = data.key_confirmed === true;
     }
 };
@@ -130,8 +124,6 @@ let if_key_left_node = {
     }
 };
 
-//////////// right key setting & validation /////////////////////////
-
 let test_keyboard_key_right = {
     type: 'html-keyboard-response',
     stimulus: function(){
@@ -158,9 +150,6 @@ let test_keyboard_key_right = {
         data.key_confirmed = data.key_press == expected_key_press;
         data.key_chosen_ascii = key_chosen_ascii;
         data.key_chosen_char = key_chosen_char;
-
-        // We use === instead of a straight assignment to ensure we
-        // don't get 'undefined' as a value
         right_key_confirmed = data.key_confirmed === true;
     }
 };
@@ -191,7 +180,7 @@ let if_key_right_node = {
     }
 };
 
-        let keyboard_set_key_left_procedure = {
+let keyboard_set_key_left_procedure = {
     timeline:[
         test_keyboard_key_left,
         if_key_left_node,
