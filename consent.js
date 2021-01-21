@@ -217,7 +217,7 @@ let no_consent_end_screen = {
     trial_duration: DEBRIEF_MESSAGE_DURATION,
     on_finish: function (data){
         console.log('console.logging it');
-        jsPsych.endExperimen()
+        jsPsych.endExperiment()
     }
 };
 
