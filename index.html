@@ -28,6 +28,7 @@
     <script src="instructions.js"></script>
     <script src="stimuli.js"></script>
     <script src="survey.js"></script>
+    <script src="keyboard.js"></script>
 
     <style>
 
@@ -94,23 +95,6 @@
 
         let stimuli = pickRandomGroup();
 
-        // Experiment logic variables
-        // let repeat_consent = false;
-
-        // used by the keyboard validation, overly verbose...
-        var repeat_validate_left_key = false;
-        var repeat_validate_right_key = false;
-
-        var left_key_confirmed = false;
-        var right_key_confirmed = false;
-        
-        var chosen_keyboard = undefined;
-        
-        // more abstract yes/no key placeholders 
-        //so we don't need switch statements for scoring in 'present_word'
-        var yes_key = undefined;
-        var no_key = undefined;
-
         function getLeftOrRightHanded()
         {
             let data = jsPsych.data.get().select('survey_multi_choice_responses');
@@ -133,13 +117,6 @@
             return KEYBOARD_DEFAULTS[chosen_keyboard][incorrect_key];
         }
 
-        //simple version, single digit input, not a list
-        function upperCaseFromASCII(keycode)
-        {
-            character = String.fromCharCode(keycode);
-            return character.toUpperCase();
-        }
-
         // data one would like to add to __all__ trials, according to:
         // https://www.jspsych.org/overview/data/
         let subject_id = jsPsych.randomization.randomID(8);
@@ -158,152 +135,6 @@
             },
             choices: [OK_BUTTON_TEXT],
             response_ends_trial: true
-        };
-
-        let select_keyboard_layout = {
-            type: 'html-button-response',
-            stimulus: '<h2>Choose the keyboard layout that looks most like yours</h2>',
-            choices: KEYBOARD_CHOICES,
-            prompt: `
-                Focus on the first 6 <strong>letters</strong> in the top left of your
-                keyboard layout if you're unsure.
-                `,
-            button_html: `
-                <button class="img-btn">
-                <img src=./images/%choice%.png></button>
-                `,
-            on_finish: function(data) {
-                let button_id = data.button_pressed;
-                let button_number = parseInt(button_id, 10);
-                let keyboard_chosen = KEYBOARD_CHOICES[button_number];
-                data.keyboard = keyboard_chosen;
-                chosen_keyboard = keyboard_chosen;//setting global value
-            }
-        };
-
-        //////////// left key setting & validation /////////////////////////
-
-        let test_keyboard_key_left = {
-            type: 'html-keyboard-response',
-            stimulus: function(){
-                return "<class='stimulus'>" +
-                       "<p>Press the <kbd>" +
-                        KEYBOARD_DEFAULTS[chosen_keyboard]['left_key'] +
-                       "</kbd> key on your keyboard.</p>";
-            },
-            choices: jsPsych.ALL_KEYS,
-            response_ends_trial: true,
-            stimulus_duration: 10000,
-            trial_duration: 10000,
-            prompt: "Please respond within 10 seconds.",
-            data: {
-                trial_phase: 'test_keyboard_key_left'
-            },
-            loop_function: function(data){
-                return repeat_validate_left_key;
-            },
-            on_finish: function(data) {
-                let expected_key_press = 
-                    jsPsych.pluginAPI.convertKeyCharacterToKeyCode(
-                    KEYBOARD_DEFAULTS[chosen_keyboard]['left_key']
-                    );
-                let key_chosen_ascii = data.key_press;
-                let key_chosen_char = 
-                    upperCaseFromASCII(key_chosen_ascii); //blanks for other than 0-9 & A-Z
-                data.key_confirmed = data.key_press == expected_key_press;
-                data.key_chosen_ascii = key_chosen_ascii;
-                data.key_chosen_char = key_chosen_char;
-
-                // We use === instead of a straight assignment to ensure we
-                // don't get 'undefined' as a value
-                left_key_confirmed = data.key_confirmed === true;
-            }
-        };
-
-        let if_validated_key_left_feedback_needed = {
-            type: 'html-button-response',
-            stimulus: function() {
-                let wanted_key = KEYBOARD_DEFAULTS[chosen_keyboard]['left_key'];
-                let chosen_key = jsPsych.data.getLastTrialData().values()[0].key_chosen_char;
-                return "<p> You were asked to press: " + wanted_key + "<BR><BR>" + 
-                       "You pressed: " + chosen_key +
-                       "<BR><BR>Try again, please...</p>";
-            },
-            choices: [OK_BUTTON_TEXT]
-        };
-
-        let if_key_left_node = {
-            timeline: [if_validated_key_left_feedback_needed],
-            conditional_function: function(){
-                if (left_key_confirmed === true){
-                    repeat_validate_left_key = false;
-                    return false;
-                } else {
-                    repeat_validate_left_key = true;
-                    return true;
-                }
-            }
-        };
-
-        //////////// right key setting & validation /////////////////////////
-
-        let test_keyboard_key_right = {
-            type: 'html-keyboard-response',
-            stimulus: function(){
-                return "<class='stimulus' >" +
-                       "<p>Press the <kbd>" +
-                        KEYBOARD_DEFAULTS[chosen_keyboard]['right_key'] +
-                       "</kbd> key on your keyboard.</p>";
-            },
-            choices: jsPsych.ALL_KEYS,
-            response_ends_trial: true,
-            stimulus_duration: 10000,
-            trial_duration: 10000,
-            prompt: "Please respond within 10 seconds",
-            data: {
-                trial_phase: 'test_keyboard_key_right'
-            },
-            on_finish: function(data) {
-                let expected_key_press = 
-                    jsPsych.pluginAPI.convertKeyCharacterToKeyCode(
-                    KEYBOARD_DEFAULTS[chosen_keyboard]['right_key']
-                    );
-                let key_chosen_ascii = data.key_press;
-                let key_chosen_char = upperCaseFromASCII(key_chosen_ascii);
-                data.key_confirmed = data.key_press == expected_key_press;
-                data.key_chosen_ascii = key_chosen_ascii;
-                data.key_chosen_char = key_chosen_char;
-
-                // We use === instead of a straight assignment to ensure we
-                // don't get 'undefined' as a value
-                right_key_confirmed = data.key_confirmed === true;
-            }
-        };
-
-        let if_validated_key_right_feedback_needed = {
-            type: 'html-button-response',
-            stimulus: function() {
-                let wanted_key = KEYBOARD_DEFAULTS[chosen_keyboard]['right_key'];
-                let chosen_key = 
-                    jsPsych.data.getLastTrialData().values()[0].key_chosen_char;
-                return "<p> You were asked to press: " + wanted_key + "<BR><BR>" + 
-                       "You pressed: " + chosen_key +
-                       "<BR><BR>Try again, please...</p>";
-            },
-            choices: [OK_BUTTON_TEXT]
-        };
-
-        let if_key_right_node = {
-            timeline: [if_validated_key_right_feedback_needed],
-            conditional_function: function(){
-                if (right_key_confirmed == true){
-                    repeat_validate_right_key = false;
-                    return false;
-                } else {
-                    repeat_validate_right_key = true;
-                    return true;
-                }
-            }
         };
 
         let instruction_screen_practice = {
@@ -374,7 +205,7 @@
             prompt: ""
         };
 
-        // So this is a hack (or a clever use of Duck Typing)
+        // So, this is a hack (or a clever use of Duck Typing)
         // We don't actually know the right keys when defining present_word,
         // but we need to give an array of choices anyway. This object mimics
         // an array just enough to fool JSPsych into accepting it.
@@ -433,7 +264,7 @@
                 let answer;
                 let correct;
 
-                // now, if this is the first time, we should set the exp vars
+                // now, if this is the first time, we should set the keyboard exp vars
                 if ( yes_key == undefined ){
                     yes_key = correct_key;
                 }
@@ -479,47 +310,6 @@
             trial_duration: FEEDBACK_DURATION,
         };
 
-        // procedures //////////////////////////////////////////////////////////
-
-        // let survey_procedure = {
-        //     timeline: [
-        //         survey_multi_html_block,
-        //         survey_multi_choice_block,
-        //         survey_review_survey_data,
-        //     ],
-        //     loop_function: function(){
-        //         if (repeat_survey == true){
-        //             // Remove any previously recorded data, to prevent
-        //             // duplicate entries
-        //             jsPsych.data.reset();
-
-        //             return true;
-        //         } else {
-        //             return false;
-        //         }
-        //     }
-        // };
-
-        let keyboard_set_key_left_procedure = {
-            timeline:[
-                test_keyboard_key_left,
-                if_key_left_node,
-            ],
-            loop_function: function(){
-                return repeat_validate_left_key === true;
-            }
-        }; 
-
-        let keyboard_set_key_right_procedure = {
-            timeline:[
-                test_keyboard_key_right,
-                if_key_right_node,
-            ],
-            loop_function: function(){
-                return repeat_validate_right_key === true;
-            }
-        }; 
-
         let practice_procedure = {
             timeline:[
                 present_fixation,
@@ -563,11 +353,10 @@
         timeline.push(start_screen);
         
         // Obtain informed consent.
-        //timeline.push(consent_trial);
-
-        //timeline.push(consent_page);
-        //timeline.push(consent_block);
-        timeline.push(consent_procedure);
+        //timeline.push(consent_trial);    // MJA version
+        //timeline.push(consent_page);     // jsPysch version
+        //timeline.push(consent_block);    // fix issue 14 dev version
+        timeline.push(consent_procedure);  
 
         // survey
         timeline.push(survey_procedure);
@@ -593,9 +382,10 @@
 
         // NOTE options below! comment/uncomment for regular vs restrained randomization
         // true randomness is better for the current template's amount of items...
+        // otherwise, every now and then, the randomisation will fail (participant will get a blank screen)
 
-        timeline.push(trial_procedure_pseudorandom); // don't do this with little stimuli
-        //timeline.push(trial_procedure_random);
+        //timeline.push(trial_procedure_pseudorandom); // don't do this with little stimuli
+        timeline.push(trial_procedure_random);
         
         timeline.push(end_screen);
 

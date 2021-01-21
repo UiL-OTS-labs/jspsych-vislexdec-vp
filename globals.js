@@ -42,61 +42,32 @@ const GENERIC_CHECK = `
     <p>Click below if you are ready to proceed</p>
     `;
     
-// const PREPARE_FOR_SURVEY = `
-//     Please answer some screening questions in a quick (forced choice) survey.
-//     `;
+// // Keyboard choices
+// const KEYBOARD_CHOICES = ['QWERTY','AZERTY','DVORAK','QWERTZ','CUSTOM'];
 
-// survey multiple choice block
-// const BILINGUAL_QUESTION = `
-//     Were you born and raised in a  
-//     <a href="https://en.wikipedia.org/wiki/Multilingualism" target="_blank">multilingual</a>
-//     environment?
-//     `;
+// // simple layout for left/right keys given some known layouts:
+// // Type     |   Left  |   Right
+// // ---------|---------|----------
+// // QWERTY   |   A     |  L
+// // AZERTY   |   Q     |  M
+// // DVORAK   |   A     |  S (or N?)
+// // QWERTZ   |   A     |  L
+// // OTHER    |   A     |  L (fallback, more tries?)
 
-// const BILINGUAL_OPTIONS = ["No","Yes"];
+// const QWERTY = { kb_type: 'QUERTY', left_key: "A", right_key: "L" };
+// const AZERTY = { kb_type: 'AZERTY', left_key: "Q", right_key: "M" };
+// const DVORAK = { kb_type: 'DVORAK', left_key: "A", right_key: "S" };
+// const QWERTZ = { kb_type: 'QWERTZ', left_key: "A", right_key: "L" };
+// const CUSTOM = { kb_type: 'CUSTOM', left_key: "1", right_key: "0" };
 
-// const DYSLEXIC_QUESTION = `Are you 
-//     <a href="https://en.wikipedia.org/wiki/Dyslexia" target="_blank">dyslexic</a>?
-//     `;
-
-// const DYSLEXIC_OPTIONS = ["No", "Yes"];
-
-// const SEX_QUESTION = `
-//     What is your
-//     <a href="https://en.wikipedia.org/wiki/Sex" target="_blank">biological sex</a>?
-//     `;
-
-// const SEX_OPTIONS = ["Female", "Male", "Other", "Prefer not to say"];
-
-// const HAND_QUESTION = 'Which hand do you prefer to write with?';
-// const HAND_OPTIONS = ["Left", "Right"];
-
-// Keyboard choices
-const KEYBOARD_CHOICES = ['QWERTY','AZERTY','DVORAK','QWERTZ','CUSTOM'];
-
-// simple layout for left/right keys given some known layouts:
-// Type     |   Left  |   Right
-// ---------|---------|----------
-// QWERTY   |   A     |  L
-// AZERTY   |   Q     |  M
-// DVORAK   |   A     |  S (or N?)
-// QWERTZ   |   A     |  L
-// OTHER    |   A     |  L (fallback, more tries?)
-
-const QWERTY = { kb_type: 'QUERTY', left_key: "A", right_key: "L" };
-const AZERTY = { kb_type: 'AZERTY', left_key: "Q", right_key: "M" };
-const DVORAK = { kb_type: 'DVORAK', left_key: "A", right_key: "S" };
-const QWERTZ = { kb_type: 'QWERTZ', left_key: "A", right_key: "L" };
-const CUSTOM = { kb_type: 'CUSTOM', left_key: "1", right_key: "0" };
-
-// Quick lookup table
-const KEYBOARD_DEFAULTS = {
-    'QWERTY': QWERTY,
-    'AZERTY': AZERTY,
-    'DVORAK': DVORAK,
-    'QWERTZ': QWERTZ,
-    'CUSTOM': CUSTOM,
-};
+// // Quick lookup table
+// const KEYBOARD_DEFAULTS = {
+//     'QWERTY': QWERTY,
+//     'AZERTY': AZERTY,
+//     'DVORAK': DVORAK,
+//     'QWERTZ': QWERTZ,
+//     'CUSTOM': CUSTOM,
+// };
 
 const DEBRIEF_MESSAGE = `
     <h1>End of the experiment</h1><BR><BR>
