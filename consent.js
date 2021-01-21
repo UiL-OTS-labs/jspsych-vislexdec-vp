@@ -8,7 +8,7 @@
 // end_screen trial without a lot of additional hassle
 
 
-consent_given = false;
+consent_given1 = false;
 
 // consent check function
 let checkConsent = function(elem) {
@@ -19,7 +19,7 @@ let checkConsent = function(elem) {
         return false;
     }
     // consent_given = false;
-    consent_given = false;
+    consent_given1 = false;
     return false;
 };
 
@@ -31,10 +31,10 @@ let consent_page = {
     check_fn: checkConsent,
     execute_script: true,
     on_finish: function(data) {
-        let consent_status = consent_given === true;
+        let consent_status = consent_given1 === true;
         console.log('consent_status');
         console.log(consent_status); 
-        data.consent_given = consent_status;
+        data.consent_given1 = consent_status;
     }
 };
 
@@ -42,6 +42,13 @@ let consent_page = {
 // Version 2
 ///////////////
 
+function getConsentData()
+{
+    let data = jsPsych.data.get().select('consent_choice_response');
+    console.log(data);
+    data = JSON.parse(data.values[0]);
+    return data.consent;
+}
 // Using the multi select plugin. This one has an actual checkbox within jsPsych context. 
 // And you can use the 'required = true' if you want to use it as a showstopper page. 
 // Or (like demanded), it is now also possible to use additional conditional stuff, like proceeding 
@@ -176,18 +183,63 @@ const CONSENT_HTML = `
         </style>
     <p>Insert your information letter here; for more information, see the <a href="https://fetc-gw.wp.hum.uu.nl/en/" target="_blank">FEtC-H website</a></p>
     `
-var consent_block = {
+const DEBRIEF_MESSAGE_NO_CONSENT = `
+    <h1>End of the experiment</h1><BR><BR>
+    <h2>Thank you for not participating!</h2>
+    `;
+
+let consent_block = {
     type: 'survey-multi-select',
     preamble: CONSENT_HTML,
     required_message: "You must check the box next to 'Yes, I agree' in order to proceed to the experiment",
     questions: [
-      {
-        prompt: "I agree to participate in this study and consent that my data will be used for scientific research.", 
-        options: ["Yes, I agree"], 
-        horizontal: true,
-        required: true, 
-        button_label: "Continue"
-
-      }
-    ], 
+        {
+            prompt: "I agree to participate in this study and consent that my data will be used for scientific research.", 
+            options: ["Yes, I agree"], 
+            horizontal: true,
+            required: false, 
+            button_label: "Continue",
+            name: 'consent'
+        }
+    ],
+    on_finish: function(data){
+        let consent_choice = data.responses;   
+        //setting old data from here
+        data.consent_choice_response = consent_choice;
+        console.log("data.consent_choice_response: " + data.consent_choice_response)
+    }
 };
+
+let no_consent_end_screen = {
+    type: 'html-button-response',
+    stimulus: DEBRIEF_MESSAGE_NO_CONSENT,
+    choices: [],
+    trial_duration: DEBRIEF_MESSAGE_DURATION,
+    on_finish: function (data){
+        console.log('console.logging it');
+        jsPsych.endExperimen()
+    }
+};
+
+let if_node_consent = {
+    timeline: [no_consent_end_screen],
+    conditional_function: function(data){
+        // get the data from the previous trial,
+        //let mydata = jsPsych.data.get().last(1).values()[0];
+        //let mydata = data.consent_choice_response;
+        let mydata = getConsentData();
+        console.log(mydata);
+        if (mydata == "Yes, I agree"){
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+
+
+let consent_procedure = {
+    timeline: [consent_block, if_node_consent]
+}
+
+

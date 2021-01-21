@@ -114,7 +114,7 @@
         function getLeftOrRightHanded()
         {
             let data = jsPsych.data.get().select('survey_multi_choice_responses');
-            console.log(data);
+            //console.log(data);
             data = JSON.parse(data.values[0]);
             return data.HandPreference;
         }
@@ -566,7 +566,8 @@
         //timeline.push(consent_trial);
 
         //timeline.push(consent_page);
-        timeline.push(consent_block);
+        //timeline.push(consent_block);
+        timeline.push(consent_procedure);
 
         // survey
         timeline.push(survey_procedure);
