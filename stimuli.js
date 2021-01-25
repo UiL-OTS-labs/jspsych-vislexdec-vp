@@ -21,6 +21,8 @@ const PRACTICE_ITEMS = [
 ];
 
 // LIST ONE
+////////////
+
 const LIST_GROUP1 = [
     { id: 1, item_type: NON_WORD, word: "slirque", prime: "eyes", correct: 0 },
     { id: 2, item_type: NON_WORD, word: "crawse", prime: "piano", correct: 0 },
@@ -32,18 +34,28 @@ const LIST_GROUP1 = [
     { id: 8, item_type: UNRELATED, word: "clown", prime: "forest", correct: 1 }
 ];
 
-// Latin Square Extension example, this is how i started out from just list one:
+// Latin Square Extension example;
+// This is how i started out from just list one:
 //
-// Copied list 'group one' and edited the values to 'sort of matched versions';
+// Copied list 'group one' and edited all those values to 'sort of matched versions';
 
-//    [ Trying pronouncability and letter matching for non words (permutation, if possible).
-//    [ The true words have no word frequency matching! 
-//    [ Tried to match 'other things' (linguistic stuff)
-//    [ Numbered on with ID's in that edited copy, so:
+//    [ Tried pronouncability and letter matching for non words (just permutation, if possible).
+//    [ To keep it simple, kept the non-word primes the same throughout all copies]
+//    [ (The 'true words' have no word frequency matching!) 
+//    [ Tried to match on some 'other things' (linguistic stuff)
+//    [ Numbered on with ID's in the first "matched" (edited )copy, so:
+//     /////////////////////////////
+//         List one has ID's 1-8, 
+//         This list with 'matches' get new unique ID's (9-16) (!!!)
+//         After that, one can mix,  match according to ID's in the group...
+//         
+//         _One_ of the groups is randomly chosen in the context of index.html, the experiment file.
+//
 
-//    group1 has ID's 1-8, while this list two with 'matches' get ID's 9-16 (!!!)
 
 // LIST TWO
+////////////
+
 const LIST_GROUP2 = [
     { id: 9, item_type: NON_WORD, word: "quelirs", prime: "eyes", correct: 0 },
     { id: 10, item_type: NON_WORD, word: "acrews", prime: "piano", correct: 0 },
@@ -55,9 +67,11 @@ const LIST_GROUP2 = [
     { id: 16, item_type: UNRELATED, word: "teacher", prime: "beach", correct: 1 }
 ];
 
-//Made a new copy with the _uneven items_ from list one and the _even items_ from list 2 
+//Made a new copy: the _uneven items_ from list one and the _even items_ from list 2 
 
 //LIST THREE
+//////////////
+
 const LIST_GROUP3 = [
     { id: 9, item_type: NON_WORD, word: "quelirs", prime: "eyes", correct: 0 },
     { id: 2, item_type: NON_WORD, word: "crawse", prime: "piano", correct: 0 },
@@ -69,9 +83,10 @@ const LIST_GROUP3 = [
     { id: 8, item_type: UNRELATED, word: "clown", prime: "forest", correct: 1 }
 ];
 
-//Made another copy, this one has the even items from list one and the uneven items from list2
+//Made another copy, _even items_ from list one and the _uneven items_ from list2
 
 // LIST FOUR
+///////////////
 const LIST_GROUP4 = [
     { id: 1, item_type: NON_WORD, word: "slirque", prime: "eyes", correct: 0 },
     { id: 10, item_type: NON_WORD, word: "acrews", prime: "piano", correct: 0 },
@@ -83,22 +98,16 @@ const LIST_GROUP4 = [
     { id: 16, item_type: UNRELATED, word: "teacher", prime: "beach", correct: 1 }
 ];
 
-// latin square with two sort of matched' items, simply copy the list and then
-// copy and replace according to your needs
+// latin square with two sort of matched' unique items: 
+// add all the lists from above
 
-
-// Add a second list of stimuli, if required for your design.
-// const LIST_GROUP2 = [
-// ...
-// ]
-
+// from this list of tables, four lists, 
+// --> four groups with balancing one or more items, some overlapping, or not...
 const TEST_ITEMS = [
     {group_name: GROUPS[0], table: LIST_GROUP1},
     {group_name: GROUPS[1], table: LIST_GROUP2},    
     {group_name: GROUPS[2], table: LIST_GROUP3}, 
     {group_name: GROUPS[3], table: LIST_GROUP4}
-    // Add the third group here, put a comma on the end of the line above here.
-    //{group_name: GROUPS[1], table: LIST_GROUP2}
 ];
 
 /**
