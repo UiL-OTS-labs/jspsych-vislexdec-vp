@@ -42,23 +42,65 @@
         margin: 5% 10% 5% 10%;
     }
 
-    .jspsych-survey-multi-choice-question {
-        text-align: left;
-    }
-
-    .jspsych-survey-multi-choice-text {
-        text-align: left;
-    }
-
-    .jspsych-survey-multi-choice-option {
-        text-align: left;
-    }
 
     kbd {
         border-radius: 2px;
         padding: 2px;
         border: 1px solid black;
     }
+
+        /* UU-like Link styles */
+    a {
+        color: rgb(33, 37, 41);
+        text-decoration: underline;
+        transition: 0.2s ease color;
+    }
+
+    a:hover {
+        transition: 0.2s ease color;
+        color: rgb(85, 85, 95);
+    }
+
+    span::after {
+        padding-left: 1%;
+    }
+
+    /* valid input */
+
+    input:invalid + span::after {
+        content: '✖';
+    }
+
+    input:valid+span::after {
+        content: '✓';
+    }
+
+    /* survey layout text-align */
+
+    .survey {
+        text-align: left !important;
+    }
+
+    .jspsych-survey-html-form {
+        text-align: left !important;
+    }
+
+    .jspsych-survey-multi-choice-question {
+        text-align: left !important;
+    }
+
+    .jspsych-survey-multi-choice-horizontal {
+        text-align: left !important;
+    }
+
+    .jspsych-survey-multi-choice-text {
+        text-align: left !important;
+    }
+
+    .jspsych-survey-multi-choice-option {
+        text-align: left !important;
+    }
+
     
     </style>
     </head>
