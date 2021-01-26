@@ -39,23 +39,25 @@ const LIST_GROUP1 = [
 //
 // Copied list 'group one' and edited all those values to 'sort of matched versions';
 
-//    [ Tried pronouncability and letter matching for non words (just permutation, if possible).
-//    [ To keep it simple, kept the non-word primes the same throughout all copies]
+//    [ * Where possible, 'pronouncability' and letter matching for non words (just permutation, if possible).
+//    [ * To keep it simple, kept the non-word primes the same throughout all copies]
 //    [ (The 'true words' have no word frequency matching!) 
-//    [ Tried to match on some 'other things' (linguistic stuff)
-//    [ Numbered on with ID's in the first "matched" (edited )copy, so:
-//     /////////////////////////////
+//    [ * Tried to match on some 'other things' (linguistic stuff)
+//    
+//     * Numbered on with ID's in the first "matched" (edited )copy, so:
+//
 //         List one has ID's 1-8, 
-//         This list with 'matches' get new unique ID's (9-16) (!!!)
-//         After that, one can mix,  match according to ID's in the group...
+//         This new list with 'matches' get new unique ID's (9-16) (!!!)
+//         After that, one can mix,  match according to ID's in the group, latin square or other.
 //         
-//         _One_ of the groups is randomly chosen in the context of index.html, the experiment file.
+//         _One_ of the 4 groups is _randomly_ chosen in the context of index.html, the experiment file!
 //
 
 
 // LIST TWO
 ////////////
 
+//note the incremented 'id' values in this 'matched' copy of LIST_GROUP1
 const LIST_GROUP2 = [
     { id: 9, item_type: NON_WORD, word: "quelirs", prime: "eyes", correct: 0 },
     { id: 10, item_type: NON_WORD, word: "acrews", prime: "piano", correct: 0 },
@@ -98,11 +100,9 @@ const LIST_GROUP4 = [
     { id: 16, item_type: UNRELATED, word: "teacher", prime: "beach", correct: 1 }
 ];
 
-// latin square with two sort of matched' unique items: 
-// add all the lists from above
 
 // from this list of tables, four lists, 
-// --> four groups with balancing one or more items, some overlapping, or not...
+// --> i.e. now four groups with balancing one or more items
 const TEST_ITEMS = [
     {group_name: GROUPS[0], table: LIST_GROUP1},
     {group_name: GROUPS[1], table: LIST_GROUP2},    
