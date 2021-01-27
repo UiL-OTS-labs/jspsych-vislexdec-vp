@@ -65,7 +65,7 @@ In the `data: { ` section of the above code, you see some `'key: value'` pairs. 
 
 The 'useful_data_flag' was added so it could be used for filtering the aggregate of output from your online experiment. You can alter or add data (key, value pairs) according to your own goals and needs, but you would need to edit the present_block, be careful and concise!
 
-The 'raw' ([JSON](https://www.json.org/json-en.html)) output data of a `'present_word'` 'trial' (our 'trial' is in fact a _sub trial_ phase) may look like this:
+The 'raw' ([JSON](https://www.json.org/json-en.html)) output data of a `'present_word'` 'trial' (our 'trial' is in fact a _sub trial phase_) may look like this:
 
 ```JSON
 	{
@@ -93,10 +93,16 @@ The 'raw' ([JSON](https://www.json.org/json-en.html)) output data of a `'present
 	},
  ...
  ```
-Clearly, it contains a lot more `key: value` pairs than what was mentioned above in the experpt `present_word` trial from `index.html`. Some of them are native to jsPsych and have been mentioned in the primer on data output. Others have been explicitly added to the data in the ```on_finish()``` method call that happens further down in the `present_word` trial definition. Open ```index.html``` in your plain text editor for more details and read the comments.
+Clearly, it contains a lot more `key: value` pairs than what was mentioned above in the experpt `present_word` trial from `index.html`. 
+
+- Some of them are native to jsPsych and have been mentioned in the primer on data output. 
+- Others have been explicitly added to the data in the ```on_finish()``` method call that happens further down in the `present_word` trial definition. 
+- Open ```index.html``` in your plain text editor for more details.
+
+Here is a description of the above example, using "#" as comments on the `"key: value"` pairs:
 
 ```JSON
-#this is a commen
+                                               #this is a comment
 
 "rt": 643,                                     # Reaction Time, in miliseconds (jsPysch default)
 "stimulus": "<p class='stimulus'>clown</p>",   # The word or string and/or its HTML specifics (jsPsych default)
@@ -121,7 +127,7 @@ Clearly, it contains a lot more `key: value` pairs than what was mentioned above
 "no_key": "L"                                  # Verbose info on key defined for choosing 'no' (UiL template default)
 ```
 
-Similar things appear in all other 'trials' data output. For instance, this is output from a survey type of trial from the same template:
+In short, similar things appear in all other 'trials' data output. For instance, this is output from a _survey type_ of trial, as could be in the output from the same template's code:
 ```JSON
 {
 	"rt": 6359,
@@ -147,7 +153,7 @@ const ACCESS_KEY = 'zeekretkey';
 ```
 For uploading to the UiL-OTS data server you will need to change this to the access_key that you obtained when your experiment was approved. For elaborate info see `globals.js`.
 
-### Adapting stimuli
+### Adapt stimuli
 - Open the file `stimuli.js` in your plain text editor.
 - There is a list, called LIST_GROUP1:
 
@@ -169,16 +175,17 @@ const LIST_GROUP1 = [
 
 In short: you can add additional lists if your experiment requires this, but then you also have to edit some other values in stimuli.js in order for your experiment to work as intended.
 
-# Getting started (the easy way, working internet connection required)
-For now, the easiest way to test these templates, is:
+# Getting started (without a data + html server set up).
+
+- Make sure you have a functioning internet connection!
+- Do this on a desktop PC or a laptop. Do _NOT_ use a mobile device, like a phone or tablet!
+
+The easiest way to test a template _as is_:
 
 1. Download this repository by clicking the green code button above and Download zip.
 2. Unzip the jspsych-vislexdec-vp-main.zip at a location of your choosing.
 3. Inside the folder is a file called index.html, double click it in order to open it
    in a browser.
-
-
-
 
 
 
