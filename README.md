@@ -59,7 +59,9 @@ The following code block, 'present_word' (exerpt from 'index.html' contents) yie
             },
             //...(left out for brevity)
    ```
-In the data section, you see some _key: value_ pairs. They implement the stimulus definitions (`stimuli.js`) to the presentation (`index.html`) and connect relevant data to the OUTPUT of that trial phase. In this case`'condition', 'word', 'prime', 'id'` and `'correct_response'` do so by referencing timelineVariable information from `stimuli.js`, whereas `'trial_phase'` and `'useful_data_flag'` are added there directly. The 'useful_data_flag' can be used for filtering your output. You can alter or add data (key, value pars) according to your own goals and needs, but you would need to edit the present_block itself, so be careful!
+In the data section, you see some _key: value_ pairs. They implement the stimulus definitions (`stimuli.js`) to the presentation phase (in `index.html`) and connect relevant of that trial phase. These can then also be used in context and added in the output. In this case,`'condition', 'word', 'prime', 'id'` and `'correct_response'` reference timelineVariable information from `stimuli.js`, whereas `'trial_phase'` and `'useful_data_flag'` are added 'directly'. 
+
+The 'useful_data_flag' was added so it can be used for filtering the aggregate of output from your experiment. You can alter or add data (key, value pars) according to your own goals and needs, but you would need to edit the present_block itself, so be careful!
 
 The 'raw' ([JSON](https://www.json.org/json-en.html)) output data of a `'present_word'` 'trial' (our 'trial' is in fact a _sub trial_ phase) may look like this:
 
@@ -89,7 +91,33 @@ The 'raw' ([JSON](https://www.json.org/json-en.html)) output data of a `'present
 	},
  ...
  ```
- 
+Clearly, it contains a lot more `key: value` pairs than what was mentioned above in the experpt `present_word` trial from `index.html`. Some of them are native to jsPsych and have been mentioned in the primer on data output. Others have been explicitly added to the data in the ```on_finish()``` method call that happens further down in the `present_word` trial definition. Open ```index.html``` in your plain text editor for more details and read the comments.
+
+```JSON
+#this is a commen
+
+"rt": 643,                                     # Reaction Time, in miliseconds (jsPysch default)
+"stimulus": "<p class='stimulus'>clown</p>",   # The word or string and/or its HTML specifics (jsPsych default)
+"key_press": 76,                               # ASCII code of keyboard key pressed within phase (jsPysch default)
+"condition": "UNRELATED",                      # timelineVariable from 'stimuli.js' (UiL template default)
+"word": "clown",                               # timelineVariable from 'stimuli.js' (UiL template default)
+"prime": "forest",                             # timelineVariable from 'stimuli.js' (UiL template default)
+"id": 8,                                       # timelineVariable from 'stimuli.js' (UiL template default)
+"trial_phase": "present_word",                 # timelineVariable from 'stimuli.js' (UiL template default)
+"useful_data_flag": true,                      # timelineVariable from 'stimuli.js' (UiL template default)
+"correct_response": 1,                         # timelineVariable from 'stimuli.js' (UiL template default)
+"trial_type": "html-keyboard-response",        # jsPysch default
+"trial_index": 25,                             # jsPysch default
+"time_elapsed": 69378,                         # jsPysch default (miliseconds)
+"internal_node_id": "0.0-11.0-2.0",            # jsPysch default
+"subject": "h2gaya5g",                         # Subject ID (from index.html)(UiL template default)
+"group": "group3",                             # Group or list (from stimuli.js) (UiL template default) 
+"correct": false,                              # Correctness of item (word, string, from trial phase)
+"key_chosen_ascii": 76,                        # Verbose info on key chosen (UiL template default)
+"key_chosen_char": "L",                        # Verbose info on key chosen (UiL template default)
+"yes_key": "A",                                # Verbose info on key defined for choosing 'yes' (UiL template default)
+"no_key": "L"                                  # Verbose info on key defined for choosing 'no' (UiL template default)
+```
 
 ## Prepare for the data server (only for people affiliated with our lab!)
 
