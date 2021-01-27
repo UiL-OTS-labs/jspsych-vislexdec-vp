@@ -160,7 +160,7 @@ The easiest way to test a template _as is_:
 
 ### Adapting stimuli
 - Open the file `stimuli.js` in your plain text editor.
-- There is a list, called LIST_GROUP1:
+- Note, there is a list, called LIST_1:
 
 ```javacript
 const LIST_1 = [
