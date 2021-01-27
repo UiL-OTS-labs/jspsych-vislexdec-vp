@@ -1,7 +1,7 @@
 # jspsych-vislexdec-vp
 Visual [Lexical Decision](https://en.wikipedia.org/wiki/Lexical_decision_task) Experiment with _Visual Prime_ (template)
 
-# Generic documentation
+# Generic template documentation
 Please read the [generic documentation](https://github.com/UiL-OTS-labs/jspsych-uil-template-docs) for some context and scope.
 
 # Task Description
