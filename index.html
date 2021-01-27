@@ -113,7 +113,9 @@
 
         // prep stimuli
         let stimuli = pickRandomList();
-        
+        console.log("The selected list is %s", stimuli.list_name);
+
+
         var handpref = undefined;
 
         // regular JS functions
@@ -143,12 +145,13 @@
 
         // Data one would like to add to __all__ trials, according to:
         // https://www.jspsych.org/overview/data/
+        
         let subject_id = jsPsych.randomization.randomID(8);
-        let group_name = stimuli.group_name;
+        let list_name = stimuli.list_name;
 
         jsPsych.data.addProperties({
             subject: subject_id,
-            group: group_name,
+            list: list_name,
         });
 
         // ((((((((((((((((((((( basic trial/subtrial definitions )))))))))))))))))

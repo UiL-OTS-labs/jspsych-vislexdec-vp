@@ -56,12 +56,12 @@ const TEST_ITEMS = [
  * @returns {object} object with group and table fields
  */
 function getPracticeItems() {
-    return {group_name : "practice", table : PRACTICE_ITEMS};
+    return {list_name : "practice", table : PRACTICE_ITEMS};
 }
 
 /**
  * This function will pick a random list from the TEST_ITEMS array.
- * @returns {object} object with group and table fields
+ * @returns {object} object with one or more "lists" and table fields
  */
 function pickRandomList() {
     let range = function (n) {
