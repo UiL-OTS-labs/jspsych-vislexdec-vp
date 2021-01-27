@@ -61,9 +61,35 @@ The following code block, 'present_word' (exerpt from 'index.html' contents) yie
    ```
 In the data section, you see some _key: value_ pairs. They implement the stimulus definitions (`stimuli.js`) to the presentation (`index.html`) and connect relevant data to the OUTPUT of that trial phase. In this case`'condition', 'word', 'prime', 'id'` and `'correct_response'` do so by referencing timelineVariable information from `stimuli.js`, whereas `'trial_phase'` and `'useful_data_flag'` are added there directly. The 'useful_data_flag' can be used for filtering your output. You can alter or add data (key, value pars) according to your own goals and needs, but you would need to edit the present_block itself, so be careful!
 
-The output data of a `'present_word'` 'trial' (our 'trial' is in fact a _sub trial_ phase) may look like this:
+The 'raw' ([JSON](https://www.json.org/json-en.html)) output data of a `'present_word'` 'trial' (our 'trial' is in fact a _sub trial_ phase) may look like this:
 
-
+```JSON
+	{
+		"rt": 643,
+		"stimulus": "<p class='stimulus'>clown</p>",
+		"key_press": 76,
+		"condition": "UNRELATED",
+		"word": "clown",
+		"prime": "forest",
+		"id": 8,
+		"trial_phase": "present_word",
+		"useful_data_flag": true,
+		"correct_response": 1,
+		"trial_type": "html-keyboard-response",
+		"trial_index": 25,
+		"time_elapsed": 69378,
+		"internal_node_id": "0.0-11.0-2.0",
+		"subject": "h2gaya5g",
+		"group": "group3",
+		"correct": false,
+		"key_chosen_ascii": 76,
+		"key_chosen_char": "L",
+		"yes_key": "A",
+		"no_key": "L"
+	},
+ ...
+ ```
+ 
 
 ## Prepare for the data server (only for people affiliated with our lab!)
 
