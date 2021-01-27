@@ -7,14 +7,13 @@ const NON_WORD = "NON_WORD";
 const UNRELATED = "UNRELATED";
 const RELATED = "RELATED";
 const PRACTICE = "PRACTICE";
-
-const TEST_LISTS = [
+const LISTS = [
     "my_one_and_only_list",
 ];
 
 // In case of more complex design, the above could be, for example:
 
-// const TEST_LISTS = [
+// const LISTS = [
 //     "my_first_list",
 //     "my_second_list"
 // ];
@@ -37,23 +36,21 @@ const LIST_1 = [
     { id: 8, item_type: UNRELATED, word: "clown", prime: "forest", correct: 1 }
 ];
 
-
 const TEST_ITEMS = [
-    {group_name: TEST_LISTS[0], table: LIST_1},
+    {list_name: LISTS[0], table: LIST_1}
 ];
 
 // If there were two lists to choose from:
 
 // const TEST_ITEMS = [
-//     {group_name: TEST_LISTS[0], table: LIST_1},
-//     {group_name: TEST_LISTS[0], table: LIST_2}
+//     {list_name: LISTS[0], table: LIST_1},
+//     {list_name: LISTS[1], table: LIST_2}
 // ];
-
 
 /**
  * Get the list of practice items
  *
- * Returns an object with a group and a table, the group will always indicate
+ * Returns an object with a list and a table, the list will always indicate
  * "practice" since it are the practice items
  *
  * @returns {object} object with group and table fields
@@ -63,14 +60,10 @@ function getPracticeItems() {
 }
 
 /**
- * This function will pick a random group from the TEST_ITEMS array.
- *
- * Returns an object with a group and a table, the group will always indicate
- * which list has been chosen for the participant.
- *
+ * This function will pick a random list from the TEST_ITEMS array.
  * @returns {object} object with group and table fields
  */
-function pickRandomGroup() {
+function pickRandomList() {
     let range = function (n) {
         let empty_array = [];
         let i;
@@ -79,8 +72,8 @@ function pickRandomGroup() {
         }
         return empty_array;
     }
-    let num_groups = TEST_ITEMS.length;
-    var shuffled_range = jsPsych.randomization.repeat(range(num_groups), 1)
-    var retgroup = TEST_ITEMS[shuffled_range[0]];
-    return retgroup
+    let num_lists = TEST_ITEMS.length;
+    var shuffled_range = jsPsych.randomization.repeat(range(num_lists), 1);
+    var retlist = TEST_ITEMS[shuffled_range[0]];
+    return retlist;
 }

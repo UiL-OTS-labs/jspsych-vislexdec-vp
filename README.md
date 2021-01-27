@@ -171,7 +171,7 @@ const LIST_GROUP1 = [
 ```
 - This list can be adapted to your own needs, i.e, you can replace values, make the list longer (don't forget to increment the 'id' values for new items!).
 - If you need to implement a more complex design, you should read the file and its comment sections a little better. 
-- For an example of a 'Latin square' design, please have a look [here](https://github.com/UiL-OTS-labs/jspsych-spr-mw) for some inspiration. 
+- For an example of a Latin square design, please have a look [here](https://github.com/UiL-OTS-labs/jspsych-spr-mw) for some inspiration. 
 
 In short: you can add additional lists if your experiment requires this, but then you also have to edit some other values in stimuli.js in order for your experiment to work as intended.
 
@@ -186,8 +186,6 @@ The easiest way to test a template _as is_:
 2. Unzip the jspsych-vislexdec-vp-main.zip at a location of your choosing.
 3. Inside the folder is a file called index.html, double click it in order to open it
    in a browser.
-
-
 
 
 
