@@ -230,13 +230,6 @@
             prompt: ""
         };
 
-        // So, this is a hack (or a clever use of Duck Typing)
-        // We don't actually know the right keys when defining present_word,
-        // but we need to give an array of choices anyway. This object mimics
-        // an array just enough to fool JSPsych into accepting it.
-        // It works by defining the 0 and 1 'indexes' as getter functions. As
-        // JSPsych only uses the array when we already know the keys, the
-        // values are only computed once we know them.
         let present_word_choices = {
             _0: undefined,
             _1: undefined,
@@ -370,9 +363,6 @@
 
         // Informed consent (consent.js)
         timeline.push(consent_procedure);
-        //timeline.push(consent_trial);    // MJA version
-        //timeline.push(consent_page);     // jsPysch version
-        //timeline.push(consent_block);    // fix issue 14 dev version
 
         // Survey (survey.js)
         timeline.push(survey_procedure);
@@ -403,7 +393,7 @@
         // (participant will get a blank screen)
         
         // Real experimental trials
-        //timeline.push(trial_procedure_pseudorandom); // don't do this with little stimuli
+        //timeline.push(trial_procedure_pseudorandom); // don't do this with very little stimuli
         timeline.push(trial_procedure_random);
         
         // Thanks for all your effort and goodbye! 
