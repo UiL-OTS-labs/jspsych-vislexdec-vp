@@ -144,7 +144,7 @@ In short, similar things appear in all other 'trials' data output. For instance,
 },
 ```
 
-Note that in it's raw JSON format, data like the values for the "responses" key essentially contain new key-value pairs, only with some so-called 'escape characters'. 
+Note that in it's raw JSON format, data like the values for the "survey_html_responses" (uil OTS) and "responses" (default) keys essentially contain new key-value pairs, only with some so-called 'escape characters'. Search for "JSON.parse" if you want more info on how to use this to your advantage.
 
 # Getting started (no experiment server set up)
 
@@ -158,16 +158,7 @@ The easiest way to test a template _as is_:
 3. Inside the folder is a file called index.html, double click it in order to open it
    in a browser.
 
-## Prepare for the data server setup (only for people affiliated to our lab!)
-
-### Update access key
-In the file `globals.js` is a variable:
-```javascript
-const ACCESS_KEY = 'zeekretkey';
-```
-For uploading to the UiL-OTS data server you will need to change this to the access_key that you obtained when your experiment was approved. For elaborate info see `globals.js`.
-
-### Adapt stimuli
+### Adapting stimuli
 - Open the file `stimuli.js` in your plain text editor.
 - There is a list, called LIST_GROUP1:
 
@@ -183,11 +174,20 @@ const LIST_1 = [
     { id: 8, item_type: UNRELATED, word: "clown", prime: "forest", correct: 1 }
 ];
 ```
-- This list can be adapted to your own needs, i.e, you can replace values, make the list longer (don't forget to increment the 'id' values for new items!).
+-  This list can be adapted to your own needs, i.e, you can replace values, make the list longer (don't forget to increment the 'id' values for new items!).
 - If you need to implement a more complex design, you should read the file and its comment sections a little better. 
 - For an example of a Latin square design, please have a look [here](https://github.com/UiL-OTS-labs/jspsych-spr-mw) for some inspiration. 
 
 In short: you can add additional lists if your experiment requires this, but then you also have to edit some other values in stimuli.js in order for your experiment to work as intended.
+
+## Prepare for the data server setup (only for people affiliated to our lab!)
+
+### Updating access key
+In the file `globals.js` is a variable:
+```javascript
+const ACCESS_KEY = 'zeekretkey';
+```
+For uploading to the UiL-OTS data server you will need to change this to the access_key that you obtained when your experiment was approved. For elaborate info see `globals.js`.
 
 Good luck!
 
