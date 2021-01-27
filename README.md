@@ -68,29 +68,29 @@ The 'useful_data_flag' was added so it could be used for filtering the aggregate
 The 'raw' ([JSON](https://www.json.org/json-en.html)) output data of a `'present_word'` 'trial' (our 'trial' is in fact a _sub trial phase_) may look like this:
 
 ```JSON
-	{
-		"rt": 643,
-		"stimulus": "<p class='stimulus'>clown</p>",
-		"key_press": 76,
-		"condition": "UNRELATED",
-		"word": "clown",
-		"prime": "forest",
-		"id": 8,
-		"trial_phase": "present_word",
-		"useful_data_flag": true,
-		"correct_response": 1,
-		"trial_type": "html-keyboard-response",
-		"trial_index": 25,
-		"time_elapsed": 69378,
-		"internal_node_id": "0.0-11.0-2.0",
-		"subject": "h2gaya5g",
-		"group": "group3",
-		"correct": false,
-		"key_chosen_ascii": 76,
-		"key_chosen_char": "L",
-		"yes_key": "A",
-		"no_key": "L"
-	},
+    {
+        "rt": 368.0000000000073,
+        "stimulus": "<p class='stimulus'>crawse</p>",
+        "key_press": 76,
+        "condition": "NON_WORD",
+        "word": "crawse",
+        "prime": "piano",
+        "id": 2,
+        "trial_phase": "present_word",
+        "useful_data_flag": true,
+        "correct_response": 0,
+        "trial_type": "html-keyboard-response",
+        "trial_index": 25,
+        "time_elapsed": 44933,
+        "internal_node_id": "0.0-11.0-2.1",
+        "subject": "f9pdgg60",
+        "list": "my_one_and_only_list",
+        "correct": true,
+        "key_chosen_ascii": 76,
+        "key_chosen_char": "L",
+        "yes_key": "A",
+        "no_key": "L"
+    },
  ...
  ```
 Clearly, it contains a lot more `key: value` pairs than what was mentioned above in the experpt `present_word` trial from `index.html`. 
@@ -101,30 +101,32 @@ Clearly, it contains a lot more `key: value` pairs than what was mentioned above
 
 Here is a description of the above example, using "#" as comments on the `"key: value"` pairs:
 
+
+
 ```JSON
                                                #this is a comment
 
-"rt": 643,                                     # Reaction Time, in miliseconds (jsPysch default)
-"stimulus": "<p class='stimulus'>clown</p>",   # The word or string and/or its HTML specifics (jsPsych default)
-"key_press": 76,                               # ASCII code of keyboard key pressed within phase (jsPysch default)
-"condition": "UNRELATED",                      # timelineVariable from 'stimuli.js' (UiL template default)
-"word": "clown",                               # timelineVariable from 'stimuli.js' (UiL template default)
-"prime": "forest",                             # timelineVariable from 'stimuli.js' (UiL template default)
-"id": 8,                                       # timelineVariable from 'stimuli.js' (UiL template default)
+"rt": 368.0000000000073,
+"stimulus": "<p class='stimulus'>crawse</p>",  # Reaction Time, in miliseconds (jsPysch default)
+"key_press": 76,                               # The word or string and/or its HTML specifics (jsPsych default)
+"condition": "NON_WORD",                       # ASCII code of keyboard key pressed within phase (jsPysch default)
+"word": "crawse",                              # timelineVariable from 'stimuli.js' (UiL template default)
+"prime": "piano",                              # timelineVariable from 'stimuli.js' (UiL template default)
+"id": 2,                                       # timelineVariable from 'stimuli.js' (UiL template default)
 "trial_phase": "present_word",                 # timelineVariable from 'stimuli.js' (UiL template default)
-"useful_data_flag": true,                      # timelineVariable from 'stimuli.js' (UiL template default)
-"correct_response": 1,                         # timelineVariable from 'stimuli.js' (UiL template default)
+"useful_data_flag": true,                      # (UiL template default filter flag)
+"correct_response": 0,                         # timelineVariable from 'stimuli.js' (UiL template default)
 "trial_type": "html-keyboard-response",        # jsPysch default
-"trial_index": 25,                             # jsPysch default
-"time_elapsed": 69378,                         # jsPysch default (miliseconds)
-"internal_node_id": "0.0-11.0-2.0",            # jsPysch default
-"subject": "h2gaya5g",                         # Subject ID (from index.html)(UiL template default)
-"group": "group3",                             # Group or list (from stimuli.js) (UiL template default) 
-"correct": false,                              # Correctness of item (word, string, from trial phase)
-"key_chosen_ascii": 76,                        # Verbose info on key chosen (UiL template default)
-"key_chosen_char": "L",                        # Verbose info on key chosen (UiL template default)
-"yes_key": "A",                                # Verbose info on key defined for choosing 'yes' (UiL template default)
-"no_key": "L"                                  # Verbose info on key defined for choosing 'no' (UiL template default)
+"trial_index": 25,                             # jsPysch default                          
+"time_elapsed": 44933,                         # jsPysch default
+"internal_node_id": "0.0-11.0-2.1",            # jsPysch default
+"subject": "f9pdgg60",                         # Subject ID (from index.html)(UiL template default)             
+"list": "my_one_and_only_list",                # Name of the list of epxerimental stimuli (UiL template default)
+"correct": true,                               # Scored response value {true or talse }(UiL template default)
+"key_chosen_ascii": 76,                        # Info on key chosen in experiment trial (UiL template default)
+"key_chosen_char": "L",                        # Info on key chosen in experiment trial (UiL template default)
+"yes_key": "A",                                # Info on key defined for participant for choosing 'yes' (UiL template default)
+"no_key": "L"                                  # Info on key defined for participant for choosing 'no' (UiL template default)
 ```
 
 In short, similar things appear in all other 'trials' data output. For instance, this is output from a _survey type_ of trial, as could be in the output from the same template's code:
@@ -137,14 +139,26 @@ In short, similar things appear in all other 'trials' data output. For instance,
 	"time_elapsed": 34682,
 	"internal_node_id": "0.0-2.1-0.1",
 	"subject": "h2gaya5g",
-	"group": "group3",
+	"list": "my_one_and_only_list",
 	"survey_html_responses": "{\"birth_year\":\"1919\",\"birth_month\":\"1\",\"native_language\":\"NL\"}"
 },
 ```
 
 Note that in it's raw JSON format, data like the values for the "responses" key essentially contain new key-value pairs, only with some so-called 'escape characters'. 
 
-## Prepare for the data server (only for people affiliated with our lab!)
+# Getting started (no experiment server set up)
+
+- Make sure you have a functioning internet connection!
+- Do this on a desktop PC or a laptop. Do _NOT_ use a mobile device, like a phone or tablet!
+
+The easiest way to test a template _as is_:
+
+1. Download this repository by clicking the green code button above and Download zip.
+2. Unzip the jspsych-vislexdec-vp-main.zip at a location of your choosing.
+3. Inside the folder is a file called index.html, double click it in order to open it
+   in a browser.
+
+## Prepare for the data server setup (only for people affiliated to our lab!)
 
 ### Update access key
 In the file `globals.js` is a variable:
@@ -158,7 +172,7 @@ For uploading to the UiL-OTS data server you will need to change this to the acc
 - There is a list, called LIST_GROUP1:
 
 ```javacript
-const LIST_GROUP1 = [
+const LIST_1 = [
     { id: 1, item_type: NON_WORD, word: "slirque", prime: "eyes", correct: 0 },
     { id: 2, item_type: NON_WORD, word: "crawse", prime: "piano", correct: 0 },
     { id: 3, item_type: NON_WORD, word: "thwurp", prime: "rabbit", correct: 0 },
@@ -175,19 +189,7 @@ const LIST_GROUP1 = [
 
 In short: you can add additional lists if your experiment requires this, but then you also have to edit some other values in stimuli.js in order for your experiment to work as intended.
 
-# Getting started (no experiment server set up)
-
-- Make sure you have a functioning internet connection!
-- Do this on a desktop PC or a laptop. Do _NOT_ use a mobile device, like a phone or tablet!
-
-The easiest way to test a template _as is_:
-
-1. Download this repository by clicking the green code button above and Download zip.
-2. Unzip the jspsych-vislexdec-vp-main.zip at a location of your choosing.
-3. Inside the folder is a file called index.html, double click it in order to open it
-   in a browser.
-
-
+Good luck!
 
   
 
