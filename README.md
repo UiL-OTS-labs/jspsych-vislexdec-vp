@@ -7,11 +7,13 @@ Please read the [generic documentation](https://github.com/UiL-OTS-labs/jspsych-
 # Task Description
 The participant first sees a fixation cross, then a prime is presented, followed by the test stimulus. Particpants are instructed to respond as quickly as possible to make the decision if both strings in the pair are words --or not--, using the keyboard.
 
-- The _prime_ is a string of letters and can be a real word or a nonword.
-- The _'test stimulus'_ is a string of letters and can also be a real word or a nonword.
+- The _prime_ is a string of letters and can be a _real word_ or a _nonword_.
+- The _'test stimulus'_ is a string of letters and can also be a _real word_ or a _nonword_.
 
 ## Longer description
-There are many (slightly) different variations of a lexical decision task. In this version, a trial consists of subsequently presenting _two_ words or nonwords. The participant needs to make a swift decision whether the _pair_ of presented sets of letters - the test stimuli - are _both_ acutal words or not. 
+There are many (slightly) different variations of a lexical decision task. 
+
+In this version, a trial consists of subsequently presenting _two_ words or nonwords. The participant needs to make a swift decision whether the _pair_ of presented sets of letters - the test stimuli - are _both_ acutal words or not. 
 
 The idea behind this _primed_ variant is that there may be semantic (or visual or grammatical) associations that influence reaction time in the last decision stage. For instance, after presenting the word 'snow' as a _prime_, there might be a speedup in the reaction time (RT) to the test stimulus if it were 'white', as opposed to --for instance-- 'potato', due to <i>semantic association</i>.
 
@@ -27,15 +29,15 @@ Only in this _last phase_, as soon as the "test item" is being presented, the pa
 
 ## Output
  
-By default, the data of all sub trial phases are logged in the data, but the output data can quite easily be filtered after data collection.
-Please read the [general primer on jsPsych's data](https://github.com/UiL-OTS-labs/jspsych-output) if you are new to jsPsych.
+The data of _all_ (sub) _trial phases_ are logged in the data, but the output data can be filtered after data collection in many ways.
+Please read the [general primer on jsPsych's data](https://github.com/UiL-OTS-labs/jspsych-output) if you are new to jsPsych data output.
 
 Essential output for the _'true experimental'_ purpose in this template are:
 
-- Reaction Time of the keyboard response in the decision phase
+- Reaction Time (RT) of the keyboard response in the decision phase
 - Correctness of the keyboard response in the decision phase
 
-The following code block, 'present_word' (exerpt from 'index.html' contents) yields these relevant RT and Correctness responses:
+The following code block, 'present_word' (exerpt from 'index.html' contents) yields these relevant RT and correctness of responses:
 ```javascript
         let present_word = {
             type: 'html-keyboard-response',
@@ -59,9 +61,9 @@ The following code block, 'present_word' (exerpt from 'index.html' contents) yie
             },
             //...(left out for brevity)
    ```
-In the data section, you see some _key: value_ pairs. They implement the stimulus definitions (`stimuli.js`) to the presentation phase (in `index.html`) and connect relevant of that trial phase. These can then also be used in context and added in the output. In this case,`'condition', 'word', 'prime', 'id'` and `'correct_response'` reference timelineVariable information from `stimuli.js`, whereas `'trial_phase'` and `'useful_data_flag'` are added 'directly'. 
+In the `data: { ` section of the above code, you see some `'key: value'` pairs. They implement the stimulus definitions (`stimuli.js`) to the presentation phase (in `index.html`) and connect relevant data needed in that trial phase. These can then also be used in context and added in the output. In this case,`'condition', 'word', 'prime', 'id'` and `'correct_response'` reference 'timelineVariable' information from `stimuli.js`, whereas `'trial_phase'` and `'useful_data_flag'` are added there 'directly'. 
 
-The 'useful_data_flag' was added so it can be used for filtering the aggregate of output from your experiment. You can alter or add data (key, value pars) according to your own goals and needs, but you would need to edit the present_block itself, so be careful!
+The 'useful_data_flag' was added so it could be used for filtering the aggregate of output from your online experiment. You can alter or add data (key, value pairs) according to your own goals and needs, but you would need to edit the present_block, be careful and concise!
 
 The 'raw' ([JSON](https://www.json.org/json-en.html)) output data of a `'present_word'` 'trial' (our 'trial' is in fact a _sub trial_ phase) may look like this:
 
@@ -118,6 +120,23 @@ Clearly, it contains a lot more `key: value` pairs than what was mentioned above
 "yes_key": "A",                                # Verbose info on key defined for choosing 'yes' (UiL template default)
 "no_key": "L"                                  # Verbose info on key defined for choosing 'no' (UiL template default)
 ```
+
+Similar things appear in all other 'trials' data output. For instance, this is output from a survey type of trial from the same template:
+```JSON
+{
+	"rt": 6359,
+	"responses": "{\"birth_year\":\"1919\",\"birth_month\":\"1\",\"native_language\":\"NL\"}",
+	"trial_type": "survey-html-form",
+	"trial_index": 5,
+	"time_elapsed": 34682,
+	"internal_node_id": "0.0-2.1-0.1",
+	"subject": "h2gaya5g",
+	"group": "group3",
+	"survey_html_responses": "{\"birth_year\":\"1919\",\"birth_month\":\"1\",\"native_language\":\"NL\"}"
+},
+```
+
+Note that in it's raw JSON format, data like the values for the "responses" key essentially contain new key-value pairs, only with some so-called 'escape characters'. 
 
 ## Prepare for the data server (only for people affiliated with our lab!)
 
