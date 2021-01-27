@@ -175,7 +175,7 @@ const LIST_GROUP1 = [
 
 In short: you can add additional lists if your experiment requires this, but then you also have to edit some other values in stimuli.js in order for your experiment to work as intended.
 
-# Getting started (without a data + html server set up).
+# Getting started (no experiment server set up)
 
 - Make sure you have a functioning internet connection!
 - Do this on a desktop PC or a laptop. Do _NOT_ use a mobile device, like a phone or tablet!
@@ -186,7 +186,6 @@ The easiest way to test a template _as is_:
 2. Unzip the jspsych-vislexdec-vp-main.zip at a location of your choosing.
 3. Inside the folder is a file called index.html, double click it in order to open it
    in a browser.
-
 
 
 
