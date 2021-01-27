@@ -35,6 +35,34 @@ Essential output for the _'true experimental'_ purpose in this template are:
 - Reaction Time of the keyboard response in the decision phase
 - Correctness of the keyboard response in the decision phase
 
+The following code block, 'present_word' (exerpt from 'index.html' contents) yields these relevant RT and Correctness responses:
+```javascript
+        let present_word = {
+            type: 'html-keyboard-response',
+            stimulus: function(){
+                return "<p class='stimulus'>" + jsPsych.timelineVariable('word', true) + "</p>";
+            },
+            choices: present_word_choices,
+            response_ends_trial: true,
+            stimulus_duration: WORD_DURATION,
+            trial_duration: RESPONSE_TIMEOUT_DURATION,
+            post_trial_gap: DEFAULT_ITI,
+            prompt: "",
+            data: {
+                condition: jsPsych.timelineVariable('item_type'),
+                word: jsPsych.timelineVariable('word'),
+                prime: jsPsych.timelineVariable('prime'),
+                id: jsPsych.timelineVariable('id'),
+                trial_phase: 'present_word',
+                useful_data_flag: true,
+                correct_response: jsPsych.timelineVariable('correct')
+            },
+            //...(left out for brevity)
+   ```
+In the data section, you see some _key: value_ pairs. They implement the stimulus definitions (`stimuli.js`) to the presentation (`index.html`) and connect relevant data to the OUTPUT of that trial phase. In this case`'condition', 'word', 'prime', 'id'` and `'correct_response'` do so by referencing timelineVariable information from `stimuli.js`, whereas `'trial_phase'` and `'useful_data_flag'` are added there directly. The 'useful_data_flag' can be used for filtering your output. You can alter or add data (key, value pars) according to your own goals and needs, but you would need to edit the present_block itself, so be careful!
+
+The output data of a `'present_word'` 'trial' (our 'trial' is in fact a _sub trial_ phase) may look like this:
+
 
 
 ## Prepare for the data server (only for people affiliated with our lab!)
