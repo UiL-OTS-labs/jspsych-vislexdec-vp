@@ -22,11 +22,11 @@
     <script src="https://web-experiments.lab.hum.uu.nl/jspsych/uil-utils/dev/jspsych-uil-utils.js"></script>
 
     <!-- Uil OTS scripts -->
+    <script src="instructions.js"></script>
     <script src="globals.js"></script>
     <script src="consent.js"></script>
-    <script src="instructions.js"></script>
-    <script src="stimuli.js"></script>
     <script src="survey.js"></script>
+    <script src="stimuli.js"></script>
     <script src="keyboard.js"></script>
 
     <style>
@@ -284,19 +284,15 @@
                 // assign values from interactions
                 let correct_key = getCorrectKey();
                 let incorrect_key = getIncorrectKey();
-
                 let answer;
                 let correct;
-
                 // now, if this is the first time, we should set the keyboard exp vars
                 if ( yes_key == undefined ){
                     yes_key = correct_key;
                 }
-                
                 if ( no_key == undefined ){
                     no_key = incorrect_key;
                 }
-
                 let key_chosen_ascii = data.key_press;
                 let key_chosen_char = upperCaseFromASCII(key_chosen_ascii);
                 
@@ -307,7 +303,6 @@
                 } else { 
                     answer = undefined;
                 };
-
                 correct = answer == data.correct_response;
                 data.correct = correct;
                 data.key_chosen_ascii = key_chosen_ascii;
