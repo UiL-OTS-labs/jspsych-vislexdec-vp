@@ -47,22 +47,11 @@ const TEST_ITEMS = [
 //     {list_name: LISTS[1], table: LIST_2}
 // ];
 
-/**
- * Get the list of practice items
- *
- * Returns an object with a list and a table, the list will always indicate
- * "practice" since it are the practice items
- *
- * @returns {object} object with group and table fields
- */
+
 function getPracticeItems() {
     return {list_name : "practice", table : PRACTICE_ITEMS};
 }
 
-/**
- * This function will pick a random list from the TEST_ITEMS array.
- * @returns {object} object with one or more "lists" and table fields
- */
 function pickRandomList() {
     let range = function (n) {
         let empty_array = [];

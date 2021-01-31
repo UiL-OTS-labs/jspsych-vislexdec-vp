@@ -8,14 +8,6 @@
  * utf8 text encoding.
  */
 
-/*
- * HTML string that shows the instruction before the practice
- * The goal of this instruction is that the participant knows
- * what to do in the task.
- * The strings are concatenated together by adding (+) them
- * together.
- */
-
 // GENERIC TESTS/CHECKS
 const GENERIC_CHECK = `
     <h3>In order to participate, please make sure that you:</h3>
@@ -29,24 +21,19 @@ const GENERIC_CHECK = `
     <br>
     <p>Click below if you are ready to proceed</p>
     `;
-    
-const DEBRIEF_MESSAGE = `
-    <h1>End of the experiment</h1><BR><BR>
-    <h2>Thank you for participating!</h2>
-    `;
 
-const DEBRIEF_MESSAGE_DURATION = 3000;
 
 const PRE_PRACTICE_INSTRUCTION =
-    "<strong>Dear participant,</strong><BR><BR>"        +
+    "<strong>Dear participant,</strong><br><br>"        +
     "Thank you for participating in this experiment."   +
-    "<BR><BR>"                                          +
+    "<br><br>"                                          +
+
     "You are now going to see words on the screen, one" +
     " after the other. The words come in pairs. "       +
     "Your task is to indicate for each pair as quickly" +
     " as possible whether you think "                   +
     "<i>both words are real words or not</i>. "         +
-    "Try to make no mistakes.<BR><BR>"                  +
+    "Try to make no mistakes.<br><br>"                  +
 
     "When prompted to do so, please put your "          +
     "<i>index</i> fingers on the two "                  +
@@ -59,7 +46,7 @@ const PRE_PRACTICE_INSTRUCTION =
     "<strong>No</strong>.</li>"                         +
     "</ul>"                                             +
 
-    "First, you can practice.<BR><BR>"                  +
+    "First, you can practice.<br><br>"                  +
     "<i>Click OK to start practicing.</i>"
     ;
 
@@ -74,3 +61,11 @@ const PREPARE_YES_KEY_PROMPT = `
     Hit your <kbd>%correct_key%</kbd> key (<i>'yes'</i>)
     to start.
     `;
+
+const DEBRIEF_MESSAGE = `
+    <h1>End of the experiment</h1><BR><BR>
+    <h2>Thank you for participating!</h2>
+    `;
+
+const DEBRIEF_MESSAGE_DURATION = 3000;
+

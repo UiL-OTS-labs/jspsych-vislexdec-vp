@@ -154,28 +154,20 @@ Note that in it's raw JSON format, data like the values for the "survey_html_res
 The easiest way to test a template _as is_:
 
 1. Download this repository by clicking the green code button above and Download zip.
-2. Unzip the jspsych-vislexdec-vp-main.zip at a location of your choosing.
+2. Unzip at a location of your choosing.
 3. Inside the folder is a file called index.html, double click it in order to open it
    in a browser.
 
 ### Adapting stimuli
 - Open the file `stimuli.js` in your plain text editor.
-- There is a list, called LIST_GROUP1:
+- There is a list, called LIST_1:
 
 ```javacript
-const LIST_1 = [
-    { id: 1, item_type: NON_WORD, word: "slirque", prime: "eyes", correct: 0 },
-    { id: 2, item_type: NON_WORD, word: "crawse", prime: "piano", correct: 0 },
-    { id: 3, item_type: NON_WORD, word: "thwurp", prime: "rabbit", correct: 0 },
-    { id: 4, item_type: NON_WORD, word: "clem", prime: "flower", correct: 0 },
-    { id: 5, item_type: RELATED, word: "white", prime: "snow", correct: 1 },
-    { id: 6, item_type: RELATED, word: "travel", prime: "suitcase", correct: 1 },
-    { id: 7, item_type: UNRELATED, word: "letter", prime: "garden", correct: 1},
-    { id: 8, item_type: UNRELATED, word: "clown", prime: "forest", correct: 1 }
-];
+const LIST_1 = [//...
+
 ```
 -  This list can be adapted to your own needs, i.e, you can replace values, make the list longer (don't forget to increment the 'id' values for new items!).
-- If you need to implement a more complex design, you should read the file and its comment sections a little better. 
+- If you need to implement a more complex design, you should read the `stimuli.js` file (and its comment sections) a little better. 
 - For an example of a Latin square design, please have a look [here](https://github.com/UiL-OTS-labs/jspsych-spr-mw) for some inspiration. 
 
 In short: you can add additional lists if your experiment requires this, but then you also have to edit some other values in stimuli.js in order for your experiment to work as intended.
@@ -191,5 +183,4 @@ For uploading to the UiL-OTS data server you will need to change this to the acc
 
 Good luck!
 
-  
 

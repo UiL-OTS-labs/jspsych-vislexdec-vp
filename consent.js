@@ -13,7 +13,6 @@
 function getConsentData()
 {
     let data = jsPsych.data.get().select('consent_choice_response');
-    console.log(data);
     data = JSON.parse(data.values[0]);
     return data.consent;
 }
