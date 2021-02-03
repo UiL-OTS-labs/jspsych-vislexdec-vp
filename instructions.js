@@ -37,7 +37,7 @@ const PRE_PRACTICE_INSTRUCTION =
 
     "When prompted to do so, please put your "          +
     "<i>index</i> fingers on the two "                  +
-    "keys you've just set:"
+    "keys you've just set:"                             +
 
     "<ul>"                                              +
     "<li>Hit the <kbd>%correct_key%</kbd> key for "     +
