@@ -35,9 +35,9 @@ const PRE_PRACTICE_INSTRUCTION =
     "<i>both words are real words or not</i>. "         +
     "Try to make no mistakes.<br><br>"                  +
 
-    "When prompted to do so, please put your "          +
+    "After clicking OK, please put your "               +
     "<i>index</i> fingers on the two "                  +
-    "keys you've just set:"                             +
+    "keys you've just set."                             +
 
     "<ul>"                                              +
     "<li>Hit the <kbd>%correct_key%</kbd> key for "     +
@@ -50,22 +50,24 @@ const PRE_PRACTICE_INSTRUCTION =
     "<i>Click OK to start practicing.</i>"
     ;
 
-const PRE_TEST_INSTRUCTION =
-    "End of the practice part.<BR><BR>"                 +
-    "Click OK to continue with the real task."
-    ;
-
 const PREPARE_YES_KEY_PROMPT = `
     <strong>Get your index fingers in position!</strong>
-    <BR><BR>
+    <br>
+    <br>
     Hit your <kbd>%correct_key%</kbd> key (<i>'yes'</i>)
     to start.
     `;
 
+const PRE_TEST_INSTRUCTION =
+    "End of the practice part.<br><br>"                 +
+    "Click OK to continue with the real task."
+    ;
+
 const DEBRIEF_MESSAGE = `
-    <h1>End of the experiment</h1><BR><BR>
+    <h1>End of the experiment</h1>
+    <br>
+    <br>
     <h2>Thank you for participating!</h2>
     `;
 
 const DEBRIEF_MESSAGE_DURATION = 3000;
-
