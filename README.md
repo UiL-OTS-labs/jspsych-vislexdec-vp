@@ -10,14 +10,17 @@ The participant first sees a fixation cross, then a prime is presented, followed
 - The _prime_ is a string of letters and can be a _real word_ or a _nonword_.
 - The _'test stimulus'_ is a string of letters and can also be a _real word_ or a _nonword_.
 
+### Reference:
+          Rubenstein, H., Garfield, L., & Millikan, J.A. (1970). 
+          Homographic entries in the internal lexicon. 
+          Journal of Verbal Learning and Verbal Behavior, 9, 487≠494.
+
 ## Longer description
 There are many (slightly) different variations of a lexical decision task. 
 
 In this version, a trial consists of subsequently presenting _two_ words or nonwords. The participant needs to make a swift decision whether the _pair_ of presented sets of letters - the test stimuli - are _both_ acutal words or not. 
 
 The idea behind this _primed_ variant is that there may be semantic (or visual or grammatical) associations that influence reaction time in the last decision stage. For instance, after presenting the word 'snow' as a _prime_, there might be a speedup in the reaction time (RT) to the test stimulus if it were 'white', as opposed to --for instance-- 'potato', due to <i>semantic association</i>.
-
-Reference (TODO)
 
 The essential sub trial phases for _one_ trial for this boilerplate experiment are:
 
