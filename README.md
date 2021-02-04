@@ -10,23 +10,17 @@ The participant first sees a fixation cross, then a prime is presented, followed
 - The _prime_ is a string of letters and can be a _real word_ or a _nonword_.
 - The _'test stimulus'_ is a string of letters and can also be a _real word_ or a _nonword_.
 
+In this version, a trial consists of subsequently presenting _two_ words or nonwords. The participant needs to make a swift decision whether the _pair_ of presented sets of letters - the test stimuli - are _both_ acutal words or not. Only in this _last phase_ (the decision phase), as soon as the item is being presented, the participant can respond with the keyboard.
+
+Crucial trial phases (sub trial phases):
+- Fixation cross
+- Visual Prime
+- Lexical decision (decision phase)
+
 ### Reference:
           Rubenstein, H., Garfield, L., & Millikan, J.A. (1970). 
           Homographic entries in the internal lexicon. 
           Journal of Verbal Learning and Verbal Behavior, 9, 487≠494.
-
-## Longer description
-There are many (slightly) different variations of a lexical decision task. 
-
-In this version, a trial consists of subsequently presenting _two_ words or nonwords. The participant needs to make a swift decision whether the _pair_ of presented sets of letters - the test stimuli - are _both_ acutal words or not. 
-
-The essential sub trial phases for _one_ trial for this boilerplate experiment are:
-
-1. Fixation cross presentation (fixed time, no responses are recorded) 
-2. Prime presentation (fixed time, no responses are recorded)
-3. Test stimulus presentation (the last string of letters of the presented pair, lexical decision phase). 
-
-Only in this _last phase_ (the decision phase), as soon as the item is being presented, the participant can respond with the keyboard.
 
 ## Output
 The data of _all_ (sub) _trial phases_ are logged in the data, but the output data can be filtered after data collection in many ways.
