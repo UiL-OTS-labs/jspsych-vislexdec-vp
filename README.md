@@ -66,7 +66,7 @@ Variable name (key) | Description          | Unit  | Type           | Comments  
 stimulus"           | stimulus (html)      |       | string/html    |                                      | yes             |                  |
 "key_press"         | Keyboard response    |       | string/object? | https://en.wikipedia.org/wiki/ASCII  | yes             |                  | html-keyboard-response
 "condition"         | Condition            |       | string         | See ```stimuli.js```                 | no              | yes              |
-"word"              | Decision phase item  |       | string/html    | See ```stimuli.js, index.html        | no              | yes              | 
+"word"              | Decision phase item  |       | string/html    | See ```stimuli.js, index.html```     | no              | yes              | 
 "prime"             | Prime phase item     |       | string/html    | (...)                                | no              | yes              |
 "id"                | ID/code              |       |                | (...)                                | yes             |                  |
 "trial_phase"       | Trial phase          |       |                | (...)                                | no              | yes              | 
