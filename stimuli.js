@@ -8,7 +8,7 @@ const UNRELATED = "UNRELATED";
 const RELATED = "RELATED";
 const PRACTICE = "PRACTICE";
 const LISTS = [
-    "my_one_and_only_list",
+    "Default Group",
 ];
 
 // In case of more complex design, the above could be, for example:
@@ -46,23 +46,3 @@ const TEST_ITEMS = [
 //     {list_name: LISTS[0], table: LIST_1},
 //     {list_name: LISTS[1], table: LIST_2}
 // ];
-
-
-function getPracticeItems() {
-    return {list_name : "practice", table : PRACTICE_ITEMS};
-}
-
-function pickRandomList() {
-    let range = function (n) {
-        let empty_array = [];
-        let i;
-        for (i = 0; i < n; i++) {
-            empty_array.push(i);
-        }
-        return empty_array;
-    }
-    let num_lists = TEST_ITEMS.length;
-    var shuffled_range = jsPsych.randomization.repeat(range(num_lists), 1);
-    var retlist = TEST_ITEMS[shuffled_range[0]];
-    return retlist;
-}
