@@ -112,14 +112,14 @@
      window.addEventListener('load', main);
      function main() {
          // Option 1: client side randomization:
-         // let stimuli = pickRandomList();
-         // initExperiment(stimuli);
+         let stimuli = pickRandomList();
+         initExperiment(stimuli);
 
          // Option 2: server side balancing:
-         uil.session.start(ACCESS_KEY, (group_name) => {
-             let stimuli = findList(group_name);
-             initExperiment(stimuli);
-         });
+         // uil.session.start(ACCESS_KEY, (group_name) => {
+         //     let stimuli = findList(group_name);
+         //     initExperiment(stimuli);
+         // });
      }
 
      function pickRandomList() {
