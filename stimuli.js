@@ -51,18 +51,3 @@ const TEST_ITEMS = [
 function getPracticeItems() {
     return {list_name : "practice", table : PRACTICE_ITEMS};
 }
-
-function pickRandomList() {
-    let range = function (n) {
-        let empty_array = [];
-        let i;
-        for (i = 0; i < n; i++) {
-            empty_array.push(i);
-        }
-        return empty_array;
-    }
-    let num_lists = TEST_ITEMS.length;
-    var shuffled_range = jsPsych.randomization.repeat(range(num_lists), 1);
-    var retlist = TEST_ITEMS[shuffled_range[0]];
-    return retlist;
-}
