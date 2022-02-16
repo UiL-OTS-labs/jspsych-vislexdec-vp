@@ -125,7 +125,11 @@
      function findList(name) {
          let list = TEST_ITEMS.find((entry) => entry.list_name === name);
          if (!list) {
-             console.error('List not found "%s"', name);
+             let found = TEST_ITEMS.map((entry) => `"${entry.list_name}"`).join(', ');
+             console.error(
+                `List not found "${name}".\n` +
+                'This name was configured on the UiL datastore server.\n' +
+                `The following lists exist in stimuli.js: \n${found}`)
          }
          return list;
      }
