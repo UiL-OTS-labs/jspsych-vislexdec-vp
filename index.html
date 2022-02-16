@@ -109,14 +109,29 @@
     </head>
     <body></body>
     <script>
-    
-    // Wait till the browser has loaded all files, then execute the
-    // contents of this method
-    window.addEventListener('load', function() {
+     window.addEventListener('load', main);
+     function main() {
+         // Option 1: client side randomization:
+         // let stimuli = pickRandomList();
+         // initExperiment(stimuli);
 
-        // prep stimuli
-        let stimuli = pickRandomList();
-        console.log("The selected list is %s", stimuli.list_name);
+         // Option 2: server side randomization:
+         uil.session.start(ACCESS_KEY, (group_name) => {
+             let stimuli = findList(group_name);
+             initExperiment(stimuli);
+         });
+     }
+
+     function findList(name) {
+         let list = TEST_ITEMS.find((entry) => entry.list_name === name);
+         if (!list) {
+             console.error('List not found "%s"', name);
+         }
+         return list;
+     }
+
+     function initExperiment(stimuli) {
+        console.log('The selected list is "%s"', stimuli.list_name);
 
 
         var handpref = undefined;
@@ -425,6 +440,6 @@
             paragraph.innerHTML = BAIL_OUT_MOBILE_TEXT;
             document.body.appendChild(paragraph);
         }
-    })
+    }
     </script>
 </html>

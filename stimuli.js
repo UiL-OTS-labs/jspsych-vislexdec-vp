@@ -8,7 +8,7 @@ const UNRELATED = "UNRELATED";
 const RELATED = "RELATED";
 const PRACTICE = "PRACTICE";
 const LISTS = [
-    "my_one_and_only_list",
+    "Default Group",
 ];
 
 // In case of more complex design, the above could be, for example:
