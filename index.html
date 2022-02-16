@@ -149,6 +149,19 @@
          return list;
      }
 
+
+     /**
+      * Get the list of practice items
+      *
+      * Returns an object with a list and a table, the list will always indicate
+      * "practice" since it are the practice items
+      *
+      * @returns {object} object with list and table fields
+      */
+     function getPracticeItems() {
+         return {list_name : "practice", table : PRACTICE_ITEMS};
+     }
+
      function initExperiment(stimuli) {
         console.log('The selected list is "%s"', stimuli.list_name);
 

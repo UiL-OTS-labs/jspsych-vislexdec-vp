@@ -46,8 +46,3 @@ const TEST_ITEMS = [
 //     {list_name: LISTS[0], table: LIST_1},
 //     {list_name: LISTS[1], table: LIST_2}
 // ];
-
-
-function getPracticeItems() {
-    return {list_name : "practice", table : PRACTICE_ITEMS};
-}
