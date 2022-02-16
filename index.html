@@ -163,8 +163,9 @@
 
         // Data one would like to add to __all__ trials, according to:
         // https://www.jspsych.org/overview/data/
-        
-        let subject_id = jsPsych.randomization.randomID(8);
+
+        let subject_id = uil.session.isActive() ?
+                         uil.session.subjectId() : jsPsych.randomization.randomID(8);
         let list_name = stimuli.list_name;
 
         jsPsych.data.addProperties({
