@@ -19,21 +19,21 @@ const LISTS = [
 // ];
 
 const PRACTICE_ITEMS = [
-    { id: 1, item_type: PRACTICE, word: "palve", prime: "onion", correct: 0 },
-    { id: 2, item_type: PRACTICE, word: "hot", prime: "stapler", correct: 1}
+    { id: 1, item_type: PRACTICE, word: "palve", prime: "onion", expected_response: 0 },
+    { id: 2, item_type: PRACTICE, word: "hot", prime: "stapler", expected_response: 1}
 ];
 
 // 'Test' items and their timelineVariable 'key: value' pairs
 
 const LIST_1 = [
-    { id: 1, item_type: NON_WORD, word: "slirque", prime: "eyes", correct: 0 },
-    { id: 2, item_type: NON_WORD, word: "crawse", prime: "piano", correct: 0 },
-    { id: 3, item_type: NON_WORD, word: "thwurp", prime: "rabbit", correct: 0 },
-    { id: 4, item_type: NON_WORD, word: "clem", prime: "flower", correct: 0 },
-    { id: 5, item_type: RELATED, word: "white", prime: "snow", correct: 1 },
-    { id: 6, item_type: RELATED, word: "travel", prime: "suitcase", correct: 1 },
-    { id: 7, item_type: UNRELATED, word: "letter", prime: "garden", correct: 1},
-    { id: 8, item_type: UNRELATED, word: "clown", prime: "forest", correct: 1 }
+    { id: 1, item_type: NON_WORD, word: "slirque", prime: "eyes", expected_response: 0 },
+    { id: 2, item_type: NON_WORD, word: "crawse", prime: "piano", expected_response: 0 },
+    { id: 3, item_type: NON_WORD, word: "thwurp", prime: "rabbit", expected_response: 0 },
+    { id: 4, item_type: NON_WORD, word: "clem", prime: "flower", expected_response: 0 },
+    { id: 5, item_type: RELATED, word: "white", prime: "snow", expected_response: 1 },
+    { id: 6, item_type: RELATED, word: "travel", prime: "suitcase", expected_response: 1 },
+    { id: 7, item_type: UNRELATED, word: "letter", prime: "garden", expected_response: 1},
+    { id: 8, item_type: UNRELATED, word: "clown", prime: "forest", expected_response: 1 }
 ];
 
 const TEST_ITEMS = [
