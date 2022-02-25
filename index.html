@@ -324,7 +324,7 @@
                 id: jsPsych.timelineVariable('id'),
                 trial_phase: 'present_word',
                 useful_data_flag: true,
-                expected_answer: jsPsych.timelineVariable('expected_response')
+                expected_answer: jsPsych.timelineVariable('expected_answer')
             },
             on_finish: function(data){
                 let convertToKeyCode = jsPsych.pluginAPI.convertKeyCharacterToKeyCode
